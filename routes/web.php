@@ -37,7 +37,7 @@ Route::middleware([ 'auth:sanctum', 'verified'])->get('/applicants', Applicant::
 
 
 Route::middleware([ 'auth:sanctum', 'verified'])->get('/client-class', Applicant::class, function () {
-    return view('livewire.class-client');
+    return view('livewire.classes');
 })->name('client-class');
 
 Route::middleware([ 'auth:sanctum', 'verified'])->get('/classes', Classes::class, function () {
@@ -46,8 +46,14 @@ Route::middleware([ 'auth:sanctum', 'verified'])->get('/classes', Classes::class
 
 
 Route::middleware([ 'auth:sanctum', 'verified'])->get('/applicantinfo/{id}', ApplicantInfo::class, function () {
-    return view('livewire.applicantinfo');
+    return view('livewire.applicant-info');
 })->name('applicantinfo');
+// Route::middleware([ 'auth:sanctum', 'verified'])->get('/applicantinfo', ApplicantInfo::class, function () {
+//     return view('livewire.applicant-info');
+// })->name('applicantinfo');
+
+// route()
+
 
 // Route::middleware([
 //     'auth:sanctum',

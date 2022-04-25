@@ -74,15 +74,23 @@
                             <div class="px-4 py-5 bg-white sm:p-6">
                               <div class="grid grid-cols-6 gap-6">
 
-                                <div class="col-span-6 sm:col-span-3">
-                                  <label for="country" class="block text-sm font-medium text-gray-700">Job Application Status</label>
-                                  <select id="country" name="country" autocomplete="country-name" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                    <option>Schedule for Pre</option>
-                                    <option>Schedule for Final</option>
-                                    <option>Selected</option>
+                              
+                                <div class="mt-4">
+                                  <x-jet-label for="particular" value="{{ __('Job Application Status') }}" />
+                                  <select  wire:model="app_data.particular" name="particular" class="block mt-1 w-full">
+                                    <option value="Schedule for Pre Interview">Schedule for Pre Interview</option>
+                                    <option value="Schedule for final">Schedule for Final</option>
+                                    <option value="Selected">Selected</option>
+                                    <option value="Rejected">Rejected</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Signed EL">Signed EL</option>
+                                    <option value="Refused EL">Refused EL</option>
+                                    <option value="Assigned to class">Assigned to class</option>
+                                    <option value="Endorsed to processing">Endorsed to processing</option>
+                                    <option value="Deployed">Deployed</option>
                                   </select>
                                 </div>
-                  
+                                @error('particular') <span class="error">{{ $message }}</span> @enderror
                                 {{-- <div class="col-span-6">
                                   <label for="remarks" class="block text-sm font-medium text-gray-700">Remarks</label>
                                   <input type="text" wire:model="app_data.remarks" autocomplete="street-address" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
@@ -94,6 +102,7 @@
                                   
                                   <x-jet-input-error for="app_data.remarks" class="mt-2" />
                                 </div>
+                                @error('remarks') <span class="error">{{ $message }}</span> @enderror
                   
                                 
                               </div>
@@ -173,8 +182,8 @@
                                     
                                       @if ($applicant->role_id == '1' ) <span >Admin</span>
                                     @elseif ($applicant->role_id == '2') <span >Recruitment</span>
-                                    @elseif ($applicant->role_id == '3') <span >Laison</span>
-                                    @elseif ($applicant->role_id == '4') <span >Processing</span>
+                                    @elseif ($applicant->role_id == '3') <span >Processing</span>
+                          
                                     @endif  
                       
                                     </td>

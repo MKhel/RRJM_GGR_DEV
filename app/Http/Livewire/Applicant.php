@@ -39,22 +39,40 @@ class Applicant extends Component
 
 
     public $user;
+    public $user_data;
     
+
+    protected $rules = [
+        'applicant.sn_number' => 'required|unique:users,sn_number',
+        'applicant.class_name' => 'required|unique:users,class_name',
+        'applicant.class_name' => 'required|unique:users,class_name',
+        'applicant.first_name' => 'required|unique:users,first_name',
+        'applicant.middle_name' => 'required|unique:users,middle_name',
+        'applicant.last_name' => 'required|unique:users,last_name',
+        'applicant.contact_number' => 'required|unique:users,contact_number',
+        'applicant.email_address' => 'required|unique:users,email_address',
+        'applicant.home_address' => 'required|unique:users,home_address',
+        'applicant.city' => 'required|unique:users,city',
+        'applicant.province' => 'required|unique:users,province',
+        'applicant.zip_code' => 'required|unique:users,zip_code',
+        
+    ];
     // protected $rules = [
     //     'applicant' => ['required'],
     //     'user_id'  => ['required', 'unique:tags,name', 'min:5', 'max:10'],
     // ];
 
-    // public function mount() 
+    // public function mount($id) 
     // {
-    //     $this->class = classes::get()
+    //     $this->user_data = User::find($id)->dd();
     // }
+    
     public function render()
     {   
         //$applicants = User::all();
         // $applicants = Applicants::paginate(5);
         $user_id =  User::all();
-        $class  = classes::get();
+        $class  = classes::all();
                   
         return view('livewire.applicants', [
             //'applicants' => $applicants,
@@ -62,7 +80,7 @@ class Applicant extends Component
             'class' => $class,
             'applicants' => Applicants::when($this->searchQuery, function($query, $searchQuery){
                 return $query->where('sn_number', 'LIKE', "%$searchQuery%" );
-                })->paginate(5)
+                })->latest()->paginate(5)
 
             //'applicants' => Applicants::where('sn_number', "$this->searchQuery")->paginate(5),
         ]);
@@ -75,6 +93,7 @@ class Applicant extends Component
     {   
         $this->reset(['applicant']);
         //$this->user_id = $user_id;
+        $this->applicant['searchQuery'] = '';
         $this->confirmingApplicantAdd = true;
     }
 
@@ -93,7 +112,7 @@ class Applicant extends Component
         // $files = file('photo');
         // $fileName = time().'.'.$files->extension();
         // $files->move(public_path('images'),$fileName);
-
+        // $this->validate();
         $app_data = [
             'user_id' => auth()->id(),
             //'user_id' => $this->applicant['user_id'],
@@ -116,13 +135,14 @@ class Applicant extends Component
 
 
         Applicants::create($app_data);
-
+       //$this->applicant = Applicants::where('user_id', auth()->user()->id)->get('id');
         
         $useractivity = [
             'user_id' => auth()->user()->id,
+            'role_id' => auth()->user()->role_id,
             'user_name' => auth()->user()->name,
-            'remarks' => 'New Applicant Encoded',
-            'applicant_id' => auth()->user()->id,
+            'applicant_id' => '0',
+            'remarks' => 'Encoded',
             'particular' => 'asdad'
 
             
@@ -131,6 +151,7 @@ class Applicant extends Component
         UserActivities::create($useractivity);
         session()->flash('message', 'Post successfully updated.');
         $this->confirmingApplicantAdd = false;
+        
         // return $this->saveUseActiviy();
 
     }
@@ -155,7 +176,7 @@ class Applicant extends Component
     public function DeleteApplicant( Applicants $applicant)
     {   
         $applicant->delete();
-        $this->confirmingApplicantDeletion = false;
+        $this->confirmingApplicantDeletion = true;
     }
 
     // public function viewApplicant($id)

@@ -16,6 +16,7 @@ class ApplicantInfo extends Component
 
     protected $rules = [
         'app_data.remarks' => 'required|unique:users,remarks',
+        'app_data.particular' => 'required|unique:users,particular',
     ];
     public function mount($id)
     {
@@ -27,7 +28,7 @@ class ApplicantInfo extends Component
     public function render()
     {   
 
-        $applicant = UserActivities::where('applicant_id', $this->app_data->id)->paginate(5);
+        $applicant = UserActivities::where('applicant_id', $this->app_data->id)->latest()->paginate(5);
 
         return view('livewire.applicant-info', [
             'applicants' => $applicant,
@@ -37,7 +38,12 @@ class ApplicantInfo extends Component
 
     public function saveUserActivity($id)
     {
-        
+        // $useractivity = $this->validate([
+        //     'app_data.remarks' => 'required|unique:users,remarks',
+        // 'app_data.particular' => 'required|unique:users,particular',
+        // ]);
+
+        $useractivity = $this->validate();
         $useractivity = [
 
             'user_id' => auth()->user()->id,
@@ -45,10 +51,10 @@ class ApplicantInfo extends Component
             'user_name' => auth()->user()->name,
             'remarks' => $this->app_data['remarks'],
             'applicant_id' => $id,
-            'particular' => 'asdad'
+            'particular' => $this->app_data['particular']
 
         ];
         UserActivities::create($useractivity);
-        session()->flash('message', 'Post successfully updated.');
+        //session()->flash('message', 'Post successfully updated.');
     }
 }
