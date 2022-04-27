@@ -21,6 +21,7 @@ class ApplicantInfo extends Component
     public function mount($id)
     {
         $this->app_data = Applicant::find($id);
+        $this->user_activity = UserActivities::find($id);
         //$this->user_activity = UserActivities::where('applicant_id', $id)->paginate(5);
         
         
@@ -29,9 +30,11 @@ class ApplicantInfo extends Component
     {   
 
         $applicant = UserActivities::where('applicant_id', $this->app_data->id)->latest()->paginate(5);
-
+        $status = UserActivities::where('applicant_id', $this->user_activity->id)->latest()->get('particular');
+       
         return view('livewire.applicant-info', [
             'applicants' => $applicant,
+            'status' => $status
         ]);
         //return view('livewire.applicant-info');
     }
@@ -43,7 +46,7 @@ class ApplicantInfo extends Component
         // 'app_data.particular' => 'required|unique:users,particular',
         // ]);
 
-        $useractivity = $this->validate();
+        //$this->validate();
         $useractivity = [
 
             'user_id' => auth()->user()->id,
@@ -55,6 +58,6 @@ class ApplicantInfo extends Component
 
         ];
         UserActivities::create($useractivity);
-        //session()->flash('message', 'Post successfully updated.');
+        session()->flash('message', 'Status update successfully.');
     }
 }

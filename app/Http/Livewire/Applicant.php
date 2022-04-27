@@ -31,7 +31,7 @@ class Applicant extends Component
     public $photo;
     public $searchQuery;
     public $allApplicants;
-    public $LinedUpApplicants;
+    public $LinedUpApp;
     public $InterviewApplicants;
     public $class_name;
     public $classses;
@@ -40,9 +40,13 @@ class Applicant extends Component
 
     public $user;
     public $user_data;
+
+
+    public $isDisabled = '';
     
 
     protected $rules = [
+        'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         'applicant.sn_number' => 'required|unique:users,sn_number',
         'applicant.class_name' => 'required|unique:users,class_name',
         'applicant.class_name' => 'required|unique:users,class_name',
@@ -79,11 +83,16 @@ class Applicant extends Component
             'user_id' => $user_id,
             'class' => $class,
             'applicants' => Applicants::when($this->searchQuery, function($query, $searchQuery){
-                return $query->where('sn_number', 'LIKE', "%$searchQuery%" );
-                })->latest()->paginate(5)
-
-            //'applicants' => Applicants::where('sn_number', "$this->searchQuery")->paginate(5),
+                return $query->where('sn_number', 'LIKE', "%$searchQuery%");
+                })->latest()->with('App_Status')->paginate(10)->dd(),
+            //'applicants' => Applicants::where('sn_number', $this->searchQuery)->paginate(10)
+            // 'applicants' => Applicants::query()
+            // ->when($this->searchQuery, function($query, $searchQuery){ $query->where('sn_number', 'LIKE', %.$searchQuery.%");})
+            // ->latest()->paginate(5)
+            // // 'applicants' => Applicants::where('sn_number', "$this->searchQuery")->paginate(5)
         ]);
+
+    
             
       
     }
@@ -92,8 +101,9 @@ class Applicant extends Component
     public function confirmApplicantAdd()
     {   
         $this->reset(['applicant']);
+        $this->reset(['photo']);
         //$this->user_id = $user_id;
-        $this->applicant['searchQuery'] = '';
+        $this->isDisabled = 'disabled';
         $this->confirmingApplicantAdd = true;
     }
 
@@ -112,16 +122,16 @@ class Applicant extends Component
         // $files = file('photo');
         // $fileName = time().'.'.$files->extension();
         // $files->move(public_path('images'),$fileName);
-        // $this->validate();
+       
         $app_data = [
             'user_id' => auth()->id(),
             //'user_id' => $this->applicant['user_id'],
             'sn_number' => $this->applicant['sn_number'],
             //'photo' => $this->applicant['photo'],
-            'photo' => '',
-           // $photo ['photo'] = $this->applicant->store('photo', 'storage'),
+            //'photo' => '',
+            
+            
             'class_name' => $this->applicant['class_name'],
-            //'class_name' => 'Asklepios',
             'first_name' => $this->applicant['first_name'],
             'middle_name' => $this->applicant['middle_name'],
             'last_name' => $this->applicant['last_name'],
@@ -133,6 +143,9 @@ class Applicant extends Component
             'zip_code' => $this->applicant['zip_code'],
         ];
 
+        if ($this->photo) {
+            $app_data['photo'] = $this->photo->store('/public', 'avatars');
+        }
 
         Applicants::create($app_data);
        //$this->applicant = Applicants::where('user_id', auth()->user()->id)->get('id');
@@ -142,16 +155,16 @@ class Applicant extends Component
             'role_id' => auth()->user()->role_id,
             'user_name' => auth()->user()->name,
             'applicant_id' => '0',
-            'remarks' => 'Encoded',
-            'particular' => 'asdad'
+            'remarks' => 'New Applicant',
+            'particular' => 'Encoded'
 
             
 
         ];
         UserActivities::create($useractivity);
-        session()->flash('message', 'Post successfully updated.');
+        session()->flash('message', 'New applicant successfully created.');
         $this->confirmingApplicantAdd = false;
-        
+        $this->isDisabled = '';
         // return $this->saveUseActiviy();
 
     }

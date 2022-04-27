@@ -17,14 +17,21 @@ class Classes extends Component
     public $confirmingClassDeletion = false;
     public $confirmingClassAdd = false;
 
+    public $searchQuery;
+
     public function render()
     {   
         
 
-        $Classes = client::paginate(5); 
+
         return view('livewire.classes', [
-                'client' => $Classes
+                
+                'client' => client::when($this->searchQuery, function($query, $searchQuery){
+                    return $query->where('class_name', 'LIKE', "%$searchQuery%" );
+                    })->latest()->paginate(5)
         ]);
+
+        
     }
     public function confirmClassAdd()
     {   

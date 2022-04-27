@@ -38,14 +38,15 @@
                                     "
                                 
                                     placeholder="Seach Applicant..."
-                                  />
+                                   {{ $isDisabled }}/>
                                 </div>
 
                                 <div class="relative ml-2 mt-0">
                                 
                                     <select name="role_id" class="block mt-1 w-full">
-                                        <option wire:click="sortBy('first_name')">For LineUp</option>
-                                        <option value="2">For Process</option>
+                                        <option value="">-- Select --</option>
+                                        <option wire:model="LinedUpApp">For LineUp</option>
+                                        <option value="2">For Selected</option>
                                         <option value="3">For Deployement</option>
                                         <option value="4">Deployed</option>
                                     </select>
@@ -128,7 +129,7 @@
                                         </td>
                                         <td class="whitespace-no-wrap border-b border-gray-200">
                                             <div class="text-center">
-                                                <p class="text-sm font-medium leading-5 text-gray-900"> For LinedUp</p>
+                                                <p class="text-sm font-medium leading-5 text-gray-900"></p>
                                             </div>
                                         </td>
                                     
@@ -212,8 +213,8 @@
                                     <div class="col-span sm:col-span-4 mt-3">
                                         <x-jet-label for="photo" value="{{ __('Applicant Picture')}}" />
                                         
-                                        <x-jet-input id="photo" type="file" class="mt-1 block w-full" wire:model="applicant.photo"  />
-                                        <x-jet-input-error for="applicant.photo" class="mt-2" />
+                                        <x-jet-input id="photo" type="file" class="mt-1 block w-full" wire:model="photo"  />
+                                        <x-jet-input-error for="photo" class="mt-2" />
                                     </div>
                                     {{-- <div class="form-group">
                                         <label for="customFile">Profile Photo</label>
@@ -248,10 +249,16 @@
                                     <div class="mt-4">
                                         <x-jet-label for="class_name" value="{{ __('Class') }}" />
                                         <select  wire:model="applicant.class_name" name="class_name" class="block mt-1 w-full">
-                                       
+                                            <option value="0" >--Select Class--</option>
                                             @foreach ($class as $classes)
-                                            <option value="{{$classes->class_name}} "> {{$classes->class_name}}</option>
-                                        @endforeach
+                                                
+                                            
+                                     
+                                                    <option value="{{$classes->class_name}}" > {{$classes->class_name}}</option>
+                                        
+                                            @endforeach
+                                            
+                                            
                                         
                                  
                                         </select>
@@ -333,7 +340,7 @@
                                 Are you sure, you want to delete this applicant?
                              </x-slot>
                             <x-slot name="footer">
-                                <x-jet-secondary-button wire:click="$set('confirmingApplicantDeletion', false)" wire:loading.attr="disabled">
+                                <x-jet-secondary-button wire:click="$set('confirmingApplicantDeletion', 'false')" wire:loading.attr="disabled">
                                     {{ __('Close') }}
                                 </x-jet-secondary-button>
                     

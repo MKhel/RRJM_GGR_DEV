@@ -16,7 +16,9 @@ module.exports = {
         },
     },
 
-    plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
+    plugins: [
+      require('@tailwindcss/forms'), 
+      require('@tailwindcss/typography')],
 };
 
 module.exports = {
@@ -41,4 +43,12 @@ module.exports = {
         yellow: colors.yellow,
       },
     },
+  }
+
+  module.exports = {
+    content: ["./src/**/*.{html,js}"],
+    theme: {
+      extend: {},
+    },
+    plugins: [],
   }
