@@ -24,10 +24,12 @@ return new class extends Migration
             $table->string('last_name');
             $table->integer('contact_number');
             $table->string('email_address');
+            $table->date('birthdate');
             $table->string('home_address');
             $table->string('city');
             $table->string('province');
             $table->integer('zip_code');
+            $table->string('status');
             $table->timestamps();
         });
     }

@@ -1,21 +1,14 @@
 <div>
     <div class="container my-12 py-12 mx-auto px-4">
-        
 
-        
         <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
                 
             <div class="flex flex-col">
                 <div class="flex flex-col mt-4">
                     <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-                        
-                        
-                                          
+                   
                             <div class="sm:flex items-center justify-between">
-    
-                                
-                            
-                               
+   
                             <div class="w-full flex justify-left">
                                 <div class="w-1/4 mb-4 ">
                                   <label for="searchApplicant" class="form-label inline-block mb-2 text-gray-700">Search</label>
@@ -43,12 +36,28 @@
 
                                 <div class="relative ml-2 mt-0">
                                 
-                                    <select name="role_id" class="block mt-1 w-full">
-                                        <option value="">-- Select --</option>
-                                        <option wire:model="LinedUpApp">For LineUp</option>
-                                        <option value="2">For Selected</option>
-                                        <option value="3">For Deployement</option>
-                                        <option value="4">Deployed</option>
+                                    <select wire:model="orderBy" class="block mt-1 w-full">
+                                        <option value="Refused EL">Encoded</option>
+                                        <option value="Schedule for Pre Interview">Schedule for Pre Interview</option>
+                                        <option value="Schedule for final">Schedule for Final</option>
+                                        <option value="Selected">Selected</option>
+                                        <option value="Rejected">Rejected</option>
+                                        <option value="Pending">Pending</option>
+                                        <option value="Signed EL">Signed EL</option>
+                                        <option value="Refused EL">Refused EL</option>
+                                        <option value="Assigned to class">Assigned to class</option>
+                                        <option value="Endorsed to processing">Endorsed to processing</option>
+                                        <option value="Deployed">Deployed</option>
+                                    </select>
+                                </div>
+                                <div class="relative ml-2 mt-0">
+                                
+                                    <select wire:model="perPage" class="block mt-1 w-full">
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="30">30</option>
+                                        <option value="50">50</option>
                                     </select>
                                 </div>
                                     </div>   
@@ -129,7 +138,12 @@
                                         </td>
                                         <td class="whitespace-no-wrap border-b border-gray-200">
                                             <div class="text-center">
-                                                <p class="text-sm font-medium leading-5 text-gray-900"></p>
+                                                {{-- @forelse ($applicants as $status)
+                                                    <p class="text-sm font-medium leading-5 text-gray-900">{{ $status }}</p>
+                                                @empty
+                                                    <p class="text-sm font-medium leading-5 text-gray-900">Encoded</p>
+                                                @endforelse --}}
+                                                <p class="text-sm font-medium leading-5 text-gray-900">{{ $applicant->status }}</p>
                                             </div>
                                         </td>
                                     
@@ -293,6 +307,13 @@
                                         <x-jet-label for="email_address" value="{{ __('Email Address')}}" />
                                         <x-jet-input id="email_address" type="email" class="mt-1 block w-full" wire:model="applicant.email_address" />
                                         @error('email_address') <span class="error">{{ $message }}</span> @enderror
+                                    </div>
+
+                                    <div class="col-span sm:col-span-4 mt-3">
+                                        <x-jet-label for="birthdate" value="{{ __('Birthdate')}}" />
+                                                <x-jet-input name="birthdate" type="date" class="mt-1 block w-full" wire:model="applicant.birthdate" />
+                                                <i class="fas fa-calendar datepicker-toggle-icon"></i>   
+                                        @error('birthdate') <span class="error">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="col-span sm:col-span-4 mt-3">
                                         <x-jet-label for="home_address" value="{{ __('Home Address')}}" />

@@ -57,7 +57,11 @@
                           <dd class="mt-1 ml-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ $app_data->class_name }}</dd>
                         </div>
                         <div class="flex mt-4 px-py sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                          <dt class="px-2 py-3 text-sm text-white bg-indigo-600 font-medium text-gray-500 uppercase">{{ $status[0] }}</dt>
+                          {{-- @foreach($stat as $applicant)
+                          <dt class="px-3 py-2 text-sm text-white bg-indigo-600 font-medium text-gray-500 border rounded uppercase">{{ $applicant->particular}}</dt>
+                          @endforeach --}}
+                          <dt class="px-3 py-2 text-sm text-white bg-indigo-600 font-medium text-gray-500 border rounded uppercase">{{ $stat->particular}}</dt>
+                         
                         </div>
                         
                         
@@ -159,20 +163,16 @@
                 <div class="max-w-2xl mx-auto mt-4">
                   
                   <div>
-                    <div class="bg-white shadow overflow-hidden sm:rounded-lg mt-2">
+                    <div class="bg-white shadow overflow-hidden sm:rounded-lg ">
                       <div class="px-4 py-5 sm:px-6">
                         <h3 class="text-lg leading-6 font-medium text-gray-900">Status Update</h3>
                         <p class="mt-1 max-w-2xl text-sm text-gray-500">Update the status of this applicant.</p>
                       </div>
-
-                      <div class="mt-5 md:mt-0 md:col-span-2">
-     
                           <div class="shadow overflow-hidden sm:rounded-md">
-                            <div class="px-4 py-5 bg-white sm:p-6">
-                              <div class="grid grid-cols-6 gap-6">
-
+                            <div class="px-4 py-1 bg-white sm:p-6">
+                            
                               
-                                <div class="mt-4">
+                                <div class="">
                                   <x-jet-label for="particular" value="{{ __('Job Application Status') }}" />
                                   <select  wire:model="app_data.particular" name="particular" class="block mt-1 w-full">
                                     <option value="0">--Select Status--</option>
@@ -187,7 +187,7 @@
                                     <option value="Endorsed to processing">Endorsed to processing</option>
                                     <option value="Deployed">Deployed</option>
                                   </select>
-                                </div>
+                  
                                 @error('particular') <span class="error">{{ $message }}</span> @enderror
                                 {{-- <div class="col-span-6">
                                   <label for="remarks" class="block text-sm font-medium text-gray-700">Remarks</label>
@@ -219,8 +219,6 @@
                               </x-jet-button>
                             </div>
                           </div>
-                  
-                      </div>
                     </div>
                     
                     {{-- <x-jet-form-section submit="updateProfileInformation">

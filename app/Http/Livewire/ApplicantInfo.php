@@ -13,6 +13,7 @@ class ApplicantInfo extends Component
     public $app_data;
     public $useractivity;
     public $user_activity;
+    public $stat;
 
     protected $rules = [
         'app_data.remarks' => 'required|unique:users,remarks',
@@ -22,6 +23,7 @@ class ApplicantInfo extends Component
     {
         $this->app_data = Applicant::find($id);
         $this->user_activity = UserActivities::find($id);
+        //$this->stat = UserActivities::where('applicant_id', $this->app_data->id)->latest()->first('particular');
         //$this->user_activity = UserActivities::where('applicant_id', $id)->paginate(5);
         
         
@@ -30,11 +32,12 @@ class ApplicantInfo extends Component
     {   
 
         $applicant = UserActivities::where('applicant_id', $this->app_data->id)->latest()->paginate(5);
-        $status = UserActivities::where('applicant_id', $this->user_activity->id)->latest()->get('particular');
-       
+        $stat = UserActivities::where('applicant_id', $this->app_data->id)->latest()->first('particular');
+        //$status = UserActivities::where('applicant_id', $this->user_activity->id)->latest()->get('particular');
+    
         return view('livewire.applicant-info', [
             'applicants' => $applicant,
-            'status' => $status
+            'stat' => $stat
         ]);
         //return view('livewire.applicant-info');
     }
@@ -58,6 +61,10 @@ class ApplicantInfo extends Component
 
         ];
         UserActivities::create($useractivity);
+        $app_stat = [
+            'status' => $this->app_data['particular'],
+        ];
+        Applicant::find($id)->update($app_stat);       
         session()->flash('message', 'Status update successfully.');
     }
 }

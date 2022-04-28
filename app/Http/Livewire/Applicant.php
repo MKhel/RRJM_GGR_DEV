@@ -40,6 +40,7 @@ class Applicant extends Component
 
     public $user;
     public $user_data;
+    public $app_id;
 
 
     public $isDisabled = '';
@@ -49,7 +50,7 @@ class Applicant extends Component
         'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         'applicant.sn_number' => 'required|unique:users,sn_number',
         'applicant.class_name' => 'required|unique:users,class_name',
-        'applicant.class_name' => 'required|unique:users,class_name',
+        'applicant.birthdate' => 'required|unique:users,birthdate',
         'applicant.first_name' => 'required|unique:users,first_name',
         'applicant.middle_name' => 'required|unique:users,middle_name',
         'applicant.last_name' => 'required|unique:users,last_name',
@@ -66,9 +67,9 @@ class Applicant extends Component
     //     'user_id'  => ['required', 'unique:tags,name', 'min:5', 'max:10'],
     // ];
 
-    // public function mount($id) 
+    // public function mount() 
     // {
-    //     $this->user_data = User::find($id)->dd();
+    //     $this->user_activity = Applicants::find('id')->with('useractivities')->dd();
     // }
     
     public function render()
@@ -77,6 +78,7 @@ class Applicant extends Component
         // $applicants = Applicants::paginate(5);
         $user_id =  User::all();
         $class  = classes::all();
+        //$status = UserActivities::all()->with('applicant');
                   
         return view('livewire.applicants', [
             //'applicants' => $applicants,
@@ -84,7 +86,10 @@ class Applicant extends Component
             'class' => $class,
             'applicants' => Applicants::when($this->searchQuery, function($query, $searchQuery){
                 return $query->where('sn_number', 'LIKE', "%$searchQuery%");
-                })->latest()->with('App_Status')->paginate(10)->dd(),
+                })->latest()->with('useractivities')->orderBy('status', "asc", $this->orderBy)->paginate($this->perPage),
+        
+
+        
             //'applicants' => Applicants::where('sn_number', $this->searchQuery)->paginate(10)
             // 'applicants' => Applicants::query()
             // ->when($this->searchQuery, function($query, $searchQuery){ $query->where('sn_number', 'LIKE', %.$searchQuery.%");})
@@ -125,12 +130,9 @@ class Applicant extends Component
        
         $app_data = [
             'user_id' => auth()->id(),
-            //'user_id' => $this->applicant['user_id'],
             'sn_number' => $this->applicant['sn_number'],
             //'photo' => $this->applicant['photo'],
             //'photo' => '',
-            
-            
             'class_name' => $this->applicant['class_name'],
             'first_name' => $this->applicant['first_name'],
             'middle_name' => $this->applicant['middle_name'],
@@ -141,6 +143,8 @@ class Applicant extends Component
             'city' => $this->applicant['city'],
             'province' => $this->applicant['province'],
             'zip_code' => $this->applicant['zip_code'],
+            'birthdate' => $this->applicant['birthdate'],
+            'status'   => "Encoded",
         ];
 
         if ($this->photo) {
@@ -148,13 +152,14 @@ class Applicant extends Component
         }
 
         Applicants::create($app_data);
-       //$this->applicant = Applicants::where('user_id', auth()->user()->id)->get('id');
+        $this->app_id = Applicants::where('user_id', auth()->user()->id)->first('id');
+
         
         $useractivity = [
             'user_id' => auth()->user()->id,
             'role_id' => auth()->user()->role_id,
             'user_name' => auth()->user()->name,
-            'applicant_id' => '0',
+            'applicant_id' => $this->app_id->id,
             'remarks' => 'New Applicant',
             'particular' => 'Encoded'
 
@@ -164,7 +169,7 @@ class Applicant extends Component
         UserActivities::create($useractivity);
         session()->flash('message', 'New applicant successfully created.');
         $this->confirmingApplicantAdd = false;
-        $this->isDisabled = '';
+        // $this->isDisabled = '';
         // return $this->saveUseActiviy();
 
     }

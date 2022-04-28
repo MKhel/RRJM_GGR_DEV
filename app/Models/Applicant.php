@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Applicant extends Model
 {
     use HasFactory;
+    protected $table = "applicants";
     protected $fillable = [
         'user_id',
         'sn_number',
@@ -17,16 +18,19 @@ class Applicant extends Model
         'middle_name',
         'last_name',
         'contact_number',
-        'contact_number',
         'email_address',
+        'birthdate',
         'home_address',
         'city',
         'province',
         'zip_code',
+        'status',
       ];
 
 
-    public function App_Status() {
-        return $this->hasMany(UserActivities::class, 'applicant_id', 'applicant_id');
+    public function useractivities()
+    {
+        //return $this->hasMany(UserActivities::class, 'applicant_id', 'applicant_id')->latest('particular');
+        return $this->hasMany(UserActivities::class);
     }
 }

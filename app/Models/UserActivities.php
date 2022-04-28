@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Applicant;
 
 class UserActivities extends Model
 {
     use HasFactory;
+    protected $table = "user_activities";
     protected $fillable = [
         'user_name',
         'particular',
@@ -16,4 +18,9 @@ class UserActivities extends Model
         'role_id',
         'applicant_id'
       ];
+    
+    public function applicant()
+    {
+      return $this->belongsTo(Applicant::class, 'id', 'applicant_id');
+    }
 }
