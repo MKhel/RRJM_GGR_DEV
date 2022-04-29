@@ -31,6 +31,10 @@ class Applicant extends Model
     public function useractivities()
     {
         //return $this->hasMany(UserActivities::class, 'applicant_id', 'applicant_id')->latest('particular');
-        return $this->hasMany(UserActivities::class);
+        return $this->hasMany(User::class, "id", auth()->user()->id)->where('user_id', auth()->user()->id);
+    }
+    public function user()
+    {
+        return $this->hasMany(User::class);
     }
 }

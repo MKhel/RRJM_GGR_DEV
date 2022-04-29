@@ -19,6 +19,11 @@ class Classes extends Component
 
     public $searchQuery;
 
+    protected $rules = [
+        'Classes.class_name' => 'required|unique:classes,class_name',
+        'Classes.target_number' => 'required|unique:classes,target_number',
+    ];
+
     public function render()
     {   
         
@@ -39,7 +44,9 @@ class Classes extends Component
         $this->confirmingClassAdd = true;
     }
     public function saveClass()
-    {
+    {   
+
+        $app_data = $this->validate();
 
         $app_data = [
             'class_name' => $this->Classes['class_name'],

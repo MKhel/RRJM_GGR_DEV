@@ -36,10 +36,11 @@
                               </div>
                      
                             </div>
-                        
+                            @can('cannot add applicant')
                             <x-jet-button class="ml-4" wire:click="confirmClassAdd">
                                 {{ __('Create Class') }}
                             </x-jet-button>
+                            @endcan
                         </div>
         @foreach ($client as $class)
             
@@ -78,18 +79,18 @@
             
                  
             <form class="w-full max-w-lg">
-                <div class="flex flex-wrap -mx-5 mb-6">
+                <div class="mb-6">
                   
-                  <div class=" sm:col-span-4 mt-3">
+                  <div class="mt-3">
                     <x-jet-label for="class_name" value="{{ __('Class Name')}}" />
                     <x-jet-input id="class_name" type="text" class="appearance-none mt-1 block w-full" wire:model.def="Classes.class_name" />
-                    <x-jet-input-error for="Classes.name" class="mt-2" />
+                    <x-jet-input-error for="Classes.class_name" class="mt-2" />
                   </div>
 
-                  <div class=" sm:col-span-4 mt-3">
+                  <div class="mt-3">
                     <x-jet-label for="Target Number" value="{{ __('Target Number')}}" />
-                    <x-jet-input id="Target Number" type="text" class="appearance-none mt-1 block w-full" wire:model.def="Classes.target_number" />
-                    <x-jet-input-error for="Target Number" class="mt-2" />
+                    <x-jet-input name="target_number" id="Target Number" type="number" class="appearance-none mt-1 block w-full" wire:model.def="Classes.target_number" />
+                    <x-jet-input-error for="Classes.target_number" class="mt-2" />
                   </div>
 
                 </div>

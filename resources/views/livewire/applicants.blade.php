@@ -36,7 +36,7 @@
 
                                 <div class="relative ml-2 mt-0">
                                 
-                                    <select wire:model="orderBy" class="block mt-1 w-full">
+                                    <select wire:model="orderBy" class="block mt-1 w-full border-green-400 focus:border-green-400 focus:ring-opacity-50 rounded-md shadow-sm">
                                         <option value="Refused EL">Encoded</option>
                                         <option value="Schedule for Pre Interview">Schedule for Pre Interview</option>
                                         <option value="Schedule for final">Schedule for Final</option>
@@ -96,9 +96,11 @@
                                         <th
                                             class="px-6 py-3 text-sm font-medium leading-4  text-gray-900 bg-gray-50">
                                             EDIT</th>
+                                        @can('delete')
                                         <th
                                             class="px-6 py-3 text-sm font-medium leading-4  text-gray-900 bg-gray-50">
                                             DELETE</th>
+                                        @endcan
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -189,7 +191,8 @@
                                             
                                             </x-jet-button>
                                         </td>
-                                        
+                                        @can('delete')
+                                            
                                     
                                         <td class="text-center leading-5 text-red-500 whitespace-no-wrap border-b border-gray-200">
                                            
@@ -202,6 +205,8 @@
                                             
                                             </x-jet-danger-button>
                                         </td>
+                                        
+                                        @endcan
                                     </div>
                                         
                                         
@@ -258,7 +263,7 @@
                                     <div class="col-span sm:col-span-4  mt-6">
                                         <x-jet-label for="sn_number" value="{{ __('#SN Number')}}" />
                                         <x-jet-input id="sn_number" type="text" class="mt-1 block w-full" wire:model="applicant.sn_number" required />
-                                        @error('sn_number') <span class="error">{{ $message }}</span> @enderror
+                                        <x-jet-input-error for="applicant.sn_number" class="mt-2" />
                                     </div>
                                     <div class="mt-4">
                                         <x-jet-label for="class_name" value="{{ __('Class') }}" />
@@ -276,67 +281,73 @@
                                         
                                  
                                         </select>
-                                        @error('class_name') <span class="error">{{ $message }}</span> @enderror
+                                        <x-jet-input-error for="applicant.class_name" class="mt-2" />
+                                       
                                     </div>
                                     
 
                                     <div class="col-span sm:col-span-4 mt-3">
                                         <x-jet-label for="first_name" value="{{ __('First Name')}}" />
                                         <x-jet-input id="first_name" type="text" class="mt-1 block w-full" wire:model="applicant.first_name" />
-                                        @error('first_name') <span class="error">{{ $message }}</span> @enderror
+                                        <x-jet-input-error for="applicant.first_name" class="mt-2" />
+                                        
                                     </div>
                                     <div class="col-span sm:col-span-4 mt-3">
                                         <x-jet-label for="middle_name" value="{{ __('Middle Name')}}" />
                                         <x-jet-input id="middle_name" type="text" class="mt-1 block w-full" wire:model="applicant.middle_name" />
-                                        @error('middle_name') <span class="error">{{ $message }}</span> @enderror
+                                        <x-jet-input-error for="applicant.middle_name" class="mt-2" />
+                                       
                                     </div>
 
                                     <div class="col-span sm:col-span-4 mt-3">
                                         <x-jet-label for="last_name" value="{{ __('Last Name')}}" />
                                         <x-jet-input id="last_name" type="text" class="mt-1 block w-full" wire:model="applicant.last_name" />
-                                        @error('last_name') <span class="error">{{ $message }}</span> @enderror
+                                        <x-jet-input-error for="applicant.last_name" class="mt-2" />
+                                        
                                     </div>
 
                                     <div class="col-span sm:col-span-4 mt-3">
                                         <x-jet-label for="contact_number" value="{{ __('Contact Number')}}" />
                                         <x-jet-input id="contact_number" type="number" class="mt-1 block w-full" wire:model="applicant.contact_number" />
-                                        @error('contact_number') <span class="error">{{ $message }}</span> @enderror
+                                        <x-jet-input-error for="applicant.last_name" class="mt-2" />
                                     </div>
 
                                     <div class="col-span sm:col-span-4 mt-3">
                                         <x-jet-label for="email_address" value="{{ __('Email Address')}}" />
                                         <x-jet-input id="email_address" type="email" class="mt-1 block w-full" wire:model="applicant.email_address" />
-                                        @error('email_address') <span class="error">{{ $message }}</span> @enderror
+                                        <x-jet-input-error for="applicant.email_address" class="mt-2" />
+                                       
                                     </div>
 
                                     <div class="col-span sm:col-span-4 mt-3">
                                         <x-jet-label for="birthdate" value="{{ __('Birthdate')}}" />
-                                                <x-jet-input name="birthdate" type="date" class="mt-1 block w-full" wire:model="applicant.birthdate" />
-                                                <i class="fas fa-calendar datepicker-toggle-icon"></i>   
-                                        @error('birthdate') <span class="error">{{ $message }}</span> @enderror
+                                        <x-jet-input name="birthdate" type="date" class="mt-1 block w-full" wire:model="applicant.birthdate" />
+                                        <i class="fas fa-calendar datepicker-toggle-icon"></i>   
+                                        <x-jet-input-error for="applicant.birthdate" class="mt-2" />
                                     </div>
+
                                     <div class="col-span sm:col-span-4 mt-3">
                                         <x-jet-label for="home_address" value="{{ __('Home Address')}}" />
                                         <x-jet-input id="home_address" type="text" class="mt-1 block w-full" wire:model="applicant.home_address" />
-                                        @error('home_address') <span class="error">{{ $message }}</span> @enderror
+                                        <x-jet-input-error for="applicant.home_address" class="mt-2" />
                                     </div>
 
                                     <div class="col-span sm:col-span-4 mt-3">
                                         <x-jet-label for="city" value="{{ __('City')}}" />
                                         <x-jet-input id="city" type="text" class="mt-1 block w-full" wire:model="applicant.city" />
-                                        @error('city') <span class="error">{{ $message }}</span> @enderror
+                                        <x-jet-input-error for="applicant.city" class="mt-2" />
                                     </div>
+
                                     <div class="col-span sm:col-span-4 mt-3">
                                         <x-jet-label for="province" value="{{ __('Province')}}" />
                                         <x-jet-input id="province" type="text" class="mt-1 block w-full" wire:model="applicant.province" />
-                                        @error('province') <span class="error">{{ $message }}</span> @enderror
+                                        <x-jet-input-error for="applicant.province" class="mt-2" />
                                     </div>
                                     
-                                     
                                     <div class="col-span sm:col-span-4  mt-3">
                                         <x-jet-label for="zip_code" value="{{ __('Zip Code')}}" />
                                         <x-jet-input id="zip_code" type="number" class="mt-1 block w-full" wire:model="applicant.zip_code" />
-                                        @error('zip_code') <span class="error">{{ $message }}</span> @enderror
+                                        <x-jet-input-error for="applicant.zip_code" class="mt-2" /> 
                                     </div>
                                      
                                

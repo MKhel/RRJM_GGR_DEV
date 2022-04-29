@@ -22,6 +22,10 @@ return new class extends Migration
             $table->string('particular');
             $table->string('remarks');
             $table->timestamps();
+            // $table->foreign('applicant_id')
+            //       ->references('id')
+            //       ->on('applicants')
+            //       ->onDelete('cascade');
         });
     }
 

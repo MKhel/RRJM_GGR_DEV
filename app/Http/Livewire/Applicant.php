@@ -48,18 +48,18 @@ class Applicant extends Component
 
     protected $rules = [
         'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        'applicant.sn_number' => 'required|unique:users,sn_number',
-        'applicant.class_name' => 'required|unique:users,class_name',
-        'applicant.birthdate' => 'required|unique:users,birthdate',
-        'applicant.first_name' => 'required|unique:users,first_name',
-        'applicant.middle_name' => 'required|unique:users,middle_name',
-        'applicant.last_name' => 'required|unique:users,last_name',
-        'applicant.contact_number' => 'required|unique:users,contact_number',
-        'applicant.email_address' => 'required|unique:users,email_address',
-        'applicant.home_address' => 'required|unique:users,home_address',
-        'applicant.city' => 'required|unique:users,city',
-        'applicant.province' => 'required|unique:users,province',
-        'applicant.zip_code' => 'required|unique:users,zip_code',
+        'applicant.sn_number' => 'required|unique:Applicants,sn_number',
+        'applicant.class_name' => ['required'],
+        'applicant.birthdate' => 'required|unique:Applicants,birthdate',
+        'applicant.first_name' => 'required|unique:Applicants,first_name',
+        'applicant.middle_name' => 'required|unique:Applicants,middle_name',
+        'applicant.last_name' => 'required|unique:Applicants,last_name',
+        'applicant.contact_number' => 'required|unique:Applicants,contact_number',
+        'applicant.email_address' => 'required|unique:Applicants,email_address',
+        'applicant.home_address' => ['required'],
+        'applicant.city' => ['required'],
+        'applicant.province' => ['required'],
+        'applicant.zip_code' => ['required'],
         
     ];
     // protected $rules = [
@@ -69,7 +69,8 @@ class Applicant extends Component
 
     // public function mount() 
     // {
-    //     $this->user_activity = Applicants::find('id')->with('useractivities')->dd();
+    //     $this->app_id = User::with('applicant')->get()->dd();
+    //     //$this->app_id = Applicants::with('useractivities')->get()->dd();
     // }
     
     public function render()
@@ -78,7 +79,11 @@ class Applicant extends Component
         // $applicants = Applicants::paginate(5);
         $user_id =  User::all();
         $class  = classes::all();
-        //$status = UserActivities::all()->with('applicant');
+        //$app_id = Applicants::where('user_id', auth()->user()->id)->get('id')->dd();
+        
+        //$app_id = Applicants::where(auth()->user()->id, 'user_id' )->where('applicant_id')->dd();
+        //$status = Applicants::with('useractivities')->get()->dd();
+        //$app_id = User::with('applicant')->get()->dd();
                   
         return view('livewire.applicants', [
             //'applicants' => $applicants,
@@ -86,7 +91,7 @@ class Applicant extends Component
             'class' => $class,
             'applicants' => Applicants::when($this->searchQuery, function($query, $searchQuery){
                 return $query->where('sn_number', 'LIKE', "%$searchQuery%");
-                })->latest()->with('useractivities')->orderBy('status', "asc", $this->orderBy)->paginate($this->perPage),
+                })->latest()->orderBy('status', "asc", $this->orderBy)->paginate($this->perPage),
         
 
         
@@ -118,7 +123,7 @@ class Applicant extends Component
         // $validatedData = $this->validate([
         //     'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         // ]);
-        
+        $app_data = $this->validate();
         // $app_data = $this->validate([
         // 'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048']);
         // $this->validate([
@@ -152,18 +157,19 @@ class Applicant extends Component
         }
 
         Applicants::create($app_data);
-        $this->app_id = Applicants::where('user_id', auth()->user()->id)->first('id');
+        //$this->app_id = User::with('applicant')->get();
+        $this->app_id = Applicants::where('user_id', auth()->user()->id)->get('id');
+        //$this->app_id = Applicants::get()->latest()->first('id')->dd();
 
         
         $useractivity = [
             'user_id' => auth()->user()->id,
             'role_id' => auth()->user()->role_id,
             'user_name' => auth()->user()->name,
-            'applicant_id' => $this->app_id->id,
+            'applicant_id' => $this->app_id,
             'remarks' => 'New Applicant',
             'particular' => 'Encoded'
 
-            
 
         ];
         UserActivities::create($useractivity);

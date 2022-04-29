@@ -6,6 +6,7 @@ use App\Http\Livewire\Applicant as LivewireApplicant;
 use Livewire\Component;
 use App\Models\Applicant;
 use App\Models\UserActivities;
+use App\Models\User;
 
 class ApplicantInfo extends Component
 {   
@@ -14,30 +15,29 @@ class ApplicantInfo extends Component
     public $useractivity;
     public $user_activity;
     public $stat;
+    public $status;
 
     protected $rules = [
-        'app_data.remarks' => 'required|unique:users,remarks',
-        'app_data.particular' => 'required|unique:users,particular',
+        'app_data.remarks' => 'required|unique:users,id',
+        'app_data.particular' => 'required|unique:users,id',
     ];
     public function mount($id)
     {
         $this->app_data = Applicant::find($id);
         $this->user_activity = UserActivities::find($id);
-        //$this->stat = UserActivities::where('applicant_id', $this->app_data->id)->latest()->first('particular');
-        //$this->user_activity = UserActivities::where('applicant_id', $id)->paginate(5);
-        
-        
+        $this->stats = UserActivities::where('applicant_id', $id)->latest()->first('particular');
+        //$this->user_activity = UserActivities::where('applicant_id', $id)->paginate(5);  
     }
     public function render()
     {   
 
         $applicant = UserActivities::where('applicant_id', $this->app_data->id)->latest()->paginate(5);
-        $stat = UserActivities::where('applicant_id', $this->app_data->id)->latest()->first('particular');
+        //$stat = UserActivities::where('applicant_id', $this->app_data->id)->latest()->first('particular');
         //$status = UserActivities::where('applicant_id', $this->user_activity->id)->latest()->get('particular');
     
         return view('livewire.applicant-info', [
             'applicants' => $applicant,
-            'stat' => $stat
+            //'stat' => $stat
         ]);
         //return view('livewire.applicant-info');
     }

@@ -57,10 +57,15 @@
                           <dd class="mt-1 ml-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ $app_data->class_name }}</dd>
                         </div>
                         <div class="flex mt-4 px-py sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                          {{-- @foreach($stat as $applicant)
-                          <dt class="px-3 py-2 text-sm text-white bg-indigo-600 font-medium text-gray-500 border rounded uppercase">{{ $applicant->particular}}</dt>
-                          @endforeach --}}
+                          
+                          <dt class="px-3 py-2 text-sm text-white bg-indigo-600 font-medium text-gray-500 border rounded uppercase">{{ $app_data->status}}</dt>
+                      
+                          {{-- @if ($status == null)
                           <dt class="px-3 py-2 text-sm text-white bg-indigo-600 font-medium text-gray-500 border rounded uppercase">{{ $stat->particular}}</dt>
+                          @else
+                          <dt class="px-3 py-2 text-sm text-white bg-indigo-600 font-medium text-gray-500 border rounded uppercase">{{ $status->particular}}</dt>
+                          @endif --}}
+                         
                          
                         </div>
                         
