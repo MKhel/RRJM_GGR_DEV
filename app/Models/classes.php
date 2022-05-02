@@ -12,4 +12,7 @@ class classes extends Model
         'class_name',
         'target_number'
       ];
+    public function applicant() {
+        return $this->hasMany(Applicant::class, 'class_name', 'class_name' );
+    }
 }

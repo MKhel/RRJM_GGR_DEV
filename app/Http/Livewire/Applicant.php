@@ -26,7 +26,7 @@ class Applicant extends Component
 
     public $perPage = '';
     public $search = '';
-    public $orderBy = 'id';
+    public $orderBy = '';
     public $orderAsc = true;
     public $photo;
     public $searchQuery;
@@ -42,8 +42,11 @@ class Applicant extends Component
     public $user_data;
     public $app_id;
 
+    public $searchQ;
 
     public $isDisabled = '';
+
+    
     
 
     protected $rules = [
@@ -79,6 +82,9 @@ class Applicant extends Component
         // $applicants = Applicants::paginate(5);
         $user_id =  User::all();
         $class  = classes::all();
+        $searchQuery = '%'. $this->searchQuery . '%';
+        $perPage  = $this->perPage;
+        $sortBy = $this->orderBy;
         //$app_id = Applicants::where('user_id', auth()->user()->id)->get('id')->dd();
         
         //$app_id = Applicants::where(auth()->user()->id, 'user_id' )->where('applicant_id')->dd();
@@ -89,10 +95,21 @@ class Applicant extends Component
             //'applicants' => $applicants,
             'user_id' => $user_id,
             'class' => $class,
-            'applicants' => Applicants::when($this->searchQuery, function($query, $searchQuery){
-                return $query->where('sn_number', 'LIKE', "%$searchQuery%");
-                })->latest()->orderBy('status', "asc", $this->orderBy)->paginate($this->perPage),
-        
+            // 'applicants' => Applicants::when($this->searchQuery, function($query, $searchQuery){
+            //     return $query->where('sn_number', 'LIKE', "%$searchQuery%")
+            //                  ->orWhere('class_name', 'LIKE', "%$searchQuery%");
+            //     })->latest()->orderBy('status', "desc", $this->orderBy)->paginate($this->perPage),
+            
+            'applicants' => Applicants::where('sn_number', 'LIKE', $searchQuery)
+                                        ->orwhere('class_name', 'LIKE', $searchQuery)
+                                        ->orwhere('status', 'LIKE', $searchQuery)
+                                        ->orwhere('first_name', 'LIKE', $searchQuery)
+                                        ->orwhere('middle_name', 'LIKE', $searchQuery)
+                                        ->orwhere('last_name', 'LIKE', $searchQuery)
+                                        ->sortby('status', $sortBy)
+                                        ->latest()
+                                        //->so('status', 'asc', $sortBy)
+                                        ->paginate($perPage),
 
         
             //'applicants' => Applicants::where('sn_number', $this->searchQuery)->paginate(10)
@@ -112,7 +129,6 @@ class Applicant extends Component
     {   
         $this->reset(['applicant']);
         $this->reset(['photo']);
-        //$this->user_id = $user_id;
         $this->isDisabled = 'disabled';
         $this->confirmingApplicantAdd = true;
     }
@@ -120,23 +136,14 @@ class Applicant extends Component
 
     public function saveApplicant()
     {   
-        // $validatedData = $this->validate([
-        //     'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        // ]);
+
         $app_data = $this->validate();
-        // $app_data = $this->validate([
-        // 'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048']);
-        // $this->validate([
-        //     'photo' => 'required|mimes:jpg,png,jpeg|max:5048'
-        // ]);
-        // $files = file('photo');
-        // $fileName = time().'.'.$files->extension();
-        // $files->move(public_path('images'),$fileName);
+
        
         $app_data = [
             'user_id' => auth()->id(),
             'sn_number' => $this->applicant['sn_number'],
-            //'photo' => $this->applicant['photo'],
+            //'photo' => $this->applicant->file['photo'],
             //'photo' => '',
             'class_name' => $this->applicant['class_name'],
             'first_name' => $this->applicant['first_name'],
@@ -157,16 +164,13 @@ class Applicant extends Component
         }
 
         Applicants::create($app_data);
-        //$this->app_id = User::with('applicant')->get();
-        $this->app_id = Applicants::where('user_id', auth()->user()->id)->get('id');
-        //$this->app_id = Applicants::get()->latest()->first('id')->dd();
+        $this->app_id = Applicants::where('user_id', auth()->user()->id)->latest()->first('id');
 
-        
         $useractivity = [
             'user_id' => auth()->user()->id,
             'role_id' => auth()->user()->role_id,
             'user_name' => auth()->user()->name,
-            'applicant_id' => $this->app_id,
+            'applicant_id' => $this->app_id->id,
             'remarks' => 'New Applicant',
             'particular' => 'Encoded'
 
@@ -175,37 +179,20 @@ class Applicant extends Component
         UserActivities::create($useractivity);
         session()->flash('message', 'New applicant successfully created.');
         $this->confirmingApplicantAdd = false;
-        // $this->isDisabled = '';
+        $this->isDisabled = '';
         // return $this->saveUseActiviy();
 
     }
-    // public function saveUseActiviy()
-    // {
-
-        // $useractivity = [
-        //     'particular' => auth()->user()->role_id,
-        //     'user_name' => auth()->user()->name,
-        //     'remarks' => 'New Applicant Encoded',
-        //     'applicant_id' => $this->applicant->user_id,
-
-        // ];
-        // UserActivities::create($useractivity);
-    // }
 
     public function confirmApplicantDelete($id)
     {  
+        $this->isDisabled = '';
         $this->confirmingApplicantDeletion = $id;
     }
 
     public function DeleteApplicant( Applicants $applicant)
     {   
         $applicant->delete();
-        $this->confirmingApplicantDeletion = true;
+        $this->confirmingApplicantDeletion = false;
     }
-
-    // public function viewApplicant($id)
-    // {  
-    //     $applicants->app_data = Applicants::get()->where('id', "$id");
-    //     return redirect()->to('applicantinfo');
-    // }
 }

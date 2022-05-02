@@ -37,4 +37,8 @@ class Applicant extends Model
     {
         return $this->hasMany(User::class);
     }
+    public function applicantCount()
+    {
+        return $this->hasMany(Classes::class, 'class_name', 'class_name');
+    }
 }

@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Applicant;
 use App\Http\Livewire\ApplicantInfo;
 use App\Http\Livewire\Classes;
+use App\Http\Livewire\Dashboard;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,8 +27,8 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
+    Route::get('/dashboard', Dashboard::class, function () {
+        return view('livewire.dashboard');
     })->name('dashboard');
 });
 

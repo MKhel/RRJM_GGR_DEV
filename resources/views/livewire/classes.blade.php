@@ -36,11 +36,19 @@
                               </div>
                      
                             </div>
-                            @can('cannot add applicant')
-                            <x-jet-button class="ml-4" wire:click="confirmClassAdd">
-                                {{ __('Create Class') }}
-                            </x-jet-button>
-                            @endcan
+
+                            @if (auth()->user()->role_id == 1)
+                                <x-jet-button class="ml-4" wire:click="confirmClassAdd">
+                                    {{ __('Create Class') }}
+                                </x-jet-button>
+                            @else
+                                @can('cannot add applicant')
+                                <x-jet-button class="ml-4" wire:click="confirmClassAdd">
+                                    {{ __('Create Class') }}
+                                </x-jet-button>
+                                @endcan
+                            @endif
+                            
                         </div>
         @foreach ($client as $class)
             
@@ -59,6 +67,10 @@
                     </x-slot>
                     <x-slot name="content3" class="text-center">
                         <p>{{ $class->created_at }} </p>
+                    </x-slot>
+                    
+                    <x-slot name="content4" class="text-center">
+                            <p>{{ $class->applicant_count }}</p>
                     </x-slot>
                     
                 </x-jet-applicant-heading>

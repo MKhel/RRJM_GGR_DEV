@@ -2,10 +2,12 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Livewire\Applicant as LivewireApplicant;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\classes as client;
-
+use App\Models\Applicant;
+use Illuminate\Console\Application;
 
 class Classes extends Component
 {
@@ -21,19 +23,23 @@ class Classes extends Component
 
     protected $rules = [
         'Classes.class_name' => 'required|unique:classes,class_name',
-        'Classes.target_number' => 'required|unique:classes,target_number',
+        'Classes.target_number' => ['required'],
     ];
 
     public function render()
     {   
         
 
-
+        //$applicant_count =  Applicant::where('status', "LIKE","Encoded")->withcount('a');
+       // $applicant_count = client::withcount('applicant')->get();
+        //return "$applicant_count";
         return view('livewire.classes', [
                 
                 'client' => client::when($this->searchQuery, function($query, $searchQuery){
                     return $query->where('class_name', 'LIKE', "%$searchQuery%" );
-                    })->latest()->paginate(5)
+                    })->latest()->withcount('applicant')->paginate(5),
+               // 'app_count' => $applicant_count
+                //'app_count' => Applicant::where('id')->withCount()
         ]);
 
         
