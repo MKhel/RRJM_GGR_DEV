@@ -42,7 +42,7 @@
                                     {{ __('Create Class') }}
                                 </x-jet-button>
                             @else
-                                @can('cannot add applicant')
+                                @can('cannot add class')
                                 <x-jet-button class="ml-4" wire:click="confirmClassAdd">
                                     {{ __('Create Class') }}
                                 </x-jet-button>

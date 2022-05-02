@@ -229,7 +229,7 @@
                                             </td>
                                           
                                         @else
-                                           @can
+                                           @can('cannot delete applicant')
                                             <td class="text-center leading-5 text-red-500 whitespace-no-wrap border-b border-gray-200">
                                             
                                                 <x-jet-danger-button wire:click="confirmApplicantDelete( {{ $applicant->id }} )" wire:loading.attr="disabled">

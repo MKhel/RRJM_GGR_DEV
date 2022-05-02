@@ -106,7 +106,7 @@ class Applicant extends Component
                                         ->orwhere('first_name', 'LIKE', $searchQuery)
                                         ->orwhere('middle_name', 'LIKE', $searchQuery)
                                         ->orwhere('last_name', 'LIKE', $searchQuery)
-                                        ->sortby('status', $sortBy)
+                                        //->sortby('status', $sortBy)
                                         ->latest()
                                         //->so('status', 'asc', $sortBy)
                                         ->paginate($perPage),
