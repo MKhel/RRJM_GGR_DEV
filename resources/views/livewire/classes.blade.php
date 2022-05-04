@@ -66,7 +66,7 @@
                         <p> {{ $class->target_number }} </p>
                     </x-slot>
                     <x-slot name="content3" class="text-center">
-                        <p>{{ $class->created_at }} </p>
+                        <p>{{ $class->created_at->format('d M Y') }} </p>
                     </x-slot>
                     
                     <x-slot name="content4" class="text-center">

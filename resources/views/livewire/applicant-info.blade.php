@@ -5,9 +5,19 @@
               <div class="flex items-stretch bg-white justify-items-center">
                 
                 <div class="px-6 py-6 ">
-                  <div class="box-content h-30 w-30 p-4 border-4 hover:box-content">
-                    <img class="h-30 w-30"  src="https://source.unsplash.com/user/erondu" alt="">
-                  </div>
+                    @if ($app_data->photo != null)
+                    <div class="ml-4 pb-3 pt-4">
+                      <div class="box-content h-30 w-30 p-4 border-4 hover:box-content">
+                        <img class="h-52 w-52"  src="{{asset('storage')}}/{{$app_data->photo}}" alt="IMG">
+                      </div>
+                    </div>
+                    @else
+                    <div class="relative bg-white rounded-lg overflow-hidden group-hover:opacity-75 lg:aspect-w-2 sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-2">
+                      <img src="https://tailwindui.com/img/ecommerce-images/home-page-02-edition-01.jpg" alt="Desk with leather desk pad, walnut desk organizer, wireless keyboard and mouse, and porcelain mug." class="w-full h-full object-center object-cover">
+                    </div>
+                    @endif
+
+                    
                   
                   
                   <div class="text-center mt-2 item-center">

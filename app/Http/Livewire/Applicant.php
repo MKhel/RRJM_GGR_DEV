@@ -11,6 +11,7 @@ Use App\Models\classes;
 use Livewire\WithFileUploads;
 use App\Models\UserActivities;
 use App\Providers\AuthServiceProvider;
+use Illuminate\Support\Facades\Storage;
 
 
 class Applicant extends Component
@@ -50,7 +51,7 @@ class Applicant extends Component
     
 
     protected $rules = [
-        'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
         'applicant.sn_number' => 'required|unique:Applicants,sn_number',
         'applicant.class_name' => ['required'],
         'applicant.birthdate' => 'required|unique:Applicants,birthdate',
@@ -123,47 +124,115 @@ class Applicant extends Component
             
       
     }
-
+    
 
     public function confirmApplicantAdd()
     {   
-        $this->reset(['applicant']);
-        $this->reset(['photo']);
+        //$this->reset(['applicant']);
+        //$this->reset(['photo']);
         $this->isDisabled = 'disabled';
         $this->confirmingApplicantAdd = true;
+        // if ($this->confirmApplicantAdd = true) {
+        //     $this->isDisabled = 'disabled';
+        // } else {
+        //     $this->confirmApplicantAdd = false;
+        //     $this->isDisabled = '';
+        // }
+        
+    }
+
+    public function upload()
+    {
+        // $this->validate([
+        //     //'photo' => 'image|max:1024', // 1MB Max
+        //     //'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        // ]);
+        $app_data['photo'] = $this->photo['photo']->store('avatars', 'public');
+        //$this->photo->store('/public', 'avatars');
     }
 
 
     public function saveApplicant()
     {   
+        $upload = $this->validate();
 
-        $app_data = $this->validate();
+        $uploadPhoto = $this->photo->store('avatars');
+        $upload = new Applicants;
+        $upload->photo=$uploadPhoto;
+        $upload->user_id = auth()->id();
+        $upload->sn_number = $this->applicant['sn_number'];
+        $upload->class_name = $this->applicant['class_name'];
+        $upload->first_name = $this->applicant['first_name'];
+        $upload->middle_name = $this->applicant['middle_name'];
+        $upload->last_name = $this->applicant['last_name'];
+        $upload->contact_number = $this->applicant['contact_number'];
+        $upload->email_address = $this->applicant['email_address'];
+        $upload->home_address = $this->applicant['home_address'];
+        $upload->city = $this->applicant['city'];
+        $upload->province = $this->applicant['province'];
+        $upload->zip_code = $this->applicant['zip_code'];
+        $upload->birthdate = $this->applicant['birthdate'];
+        $upload->status = "Encoded";
+        // $upload->upload = [
+        //     'user_id' => auth()->id(),
+        //     'sn_number' => $this->applicant['sn_number'],
+        //     //'photo' => $this->photo['photo'],
+        //     //'photo' => $this->photo['photo']->store('avatars', 'public'),
+        //     //'photo' => $this->applicant->file('public', 'avatars')->photo['photo'],
+        //     //'photo' => $photo,
+        //     'class_name' => $this->applicant['class_name'],
+        //     'first_name' => $this->applicant['first_name'],
+        //     'middle_name' => $this->applicant['middle_name'],
+        //     'last_name' => $this->applicant['last_name'],
+        //     'contact_number' => $this->applicant['contact_number'],
+        //     'email_address' => $this->applicant['email_address'],
+        //     'home_address' => $this->applicant['home_address'],
+        //     'city' => $this->applicant['city'],
+        //     'province' => $this->applicant['province'],
+        //     'zip_code' => $this->applicant['zip_code'],
+        //     'birthdate' => $this->applicant['birthdate'],
+        //     'status'   => "Encoded",
+        // ];
+        $upload->save();
 
-       
-        $app_data = [
-            'user_id' => auth()->id(),
-            'sn_number' => $this->applicant['sn_number'],
-            //'photo' => $this->applicant->file['photo'],
-            //'photo' => '',
-            'class_name' => $this->applicant['class_name'],
-            'first_name' => $this->applicant['first_name'],
-            'middle_name' => $this->applicant['middle_name'],
-            'last_name' => $this->applicant['last_name'],
-            'contact_number' => $this->applicant['contact_number'],
-            'email_address' => $this->applicant['email_address'],
-            'home_address' => $this->applicant['home_address'],
-            'city' => $this->applicant['city'],
-            'province' => $this->applicant['province'],
-            'zip_code' => $this->applicant['zip_code'],
-            'birthdate' => $this->applicant['birthdate'],
-            'status'   => "Encoded",
-        ];
+        
 
-        if ($this->photo) {
-            $app_data['photo'] = $this->photo->store('/public', 'avatars');
-        }
+        // if ($this->photo) {
+        //     $app_data['photo'] = $this->photo->store('/', 'avatars');
+        // }
+        // //$photo = $this->photo['photo']->store('avatars');
+        // //return "$d";
+        // $app_data = [
+        //     'user_id' => auth()->id(),
+        //     'sn_number' => $this->applicant['sn_number'],
+        //     //'photo' => $this->photo['photo'],
+        //     'photo' => $this->photo['photo']->store('avatars', 'public'),
+        //     //'photo' => $this->applicant->file('public', 'avatars')->photo['photo'],
+        //     //'photo' => $photo,
+        //     'class_name' => $this->applicant['class_name'],
+        //     'first_name' => $this->applicant['first_name'],
+        //     'middle_name' => $this->applicant['middle_name'],
+        //     'last_name' => $this->applicant['last_name'],
+        //     'contact_number' => $this->applicant['contact_number'],
+        //     'email_address' => $this->applicant['email_address'],
+        //     'home_address' => $this->applicant['home_address'],
+        //     'city' => $this->applicant['city'],
+        //     'province' => $this->applicant['province'],
+        //     'zip_code' => $this->applicant['zip_code'],
+        //     'birthdate' => $this->applicant['birthdate'],
+        //     'status'   => "Encoded",
+        // ];
 
-        Applicants::create($app_data);
+        // $uploadPhoto = $this->photo->store('avatars');
+        // $upload = new Applicants;
+        // $upload->photo=$uploadPhoto;
+        // $upload->save();
+    
+
+        // $app_data = $this->photo->store('avatars');
+        // $app_data = $app_data['photo'];
+
+        //Applicants::create($app_data);
         $this->app_id = Applicants::where('user_id', auth()->user()->id)->latest()->first('id');
 
         $useractivity = [

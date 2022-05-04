@@ -144,7 +144,7 @@
                                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                             <div class="flex text-center">
                                                 <div class="flex-shrink-0 w-10 h-10">
-                                                    <img class="w-10 h-10 rounded-full" src="https://source.unsplash.com/user/erondu" alt="admin dashboard ui">
+                                                    <img class="w-10 h-10 rounded-full" src="{{asset('storage')}}/{{$applicant->photo}}" alt="profile">
                                                 </div>
                         
                                                 <div class="px-3 py-4 text-center">
@@ -264,14 +264,45 @@
                                 <x-slot name="title" class="text-center">
                                     {{ __('Create Applicant') }}
                                 </x-slot>
-                                
+                                <form enctype="multipart/form-data">
                                 
                                 <x-slot name="content">
                                     <div class="col-span sm:col-span-4 mt-3">
                                         <x-jet-label for="photo" value="{{ __('Applicant Picture')}}" />
+                                        {{-- <x-jet-label for="photo" value="{{ __('Applicant Picture')}}" /> --}}
                                         
-                                        <x-jet-input id="photo" type="file" class="mt-1 block w-full" wire:model="photo"  />
-                                        <x-jet-input-error for="photo" class="mt-2" />
+                                        {{-- <x-jet-input name="photo" type="file" class="mt-1 block w-full" model:model="photo"/>
+                                        <img src="{{ $photo->temporaryUrl() }}" alt="">
+                                        <x-jet-button wire:click="upload" >Upload</x-button>
+                                        <x-jet-input-error for="photo" class="mt-2" /> --}}
+                                        {{-- <form wire:submit.prevent="saveApplicant" class="flex justify-between">
+                                            
+                                         
+                                            <input class=" py-3" type="file" wire:model="applicant.photo">
+                                         
+                                            @error('photo') <span class="error">{{ $message }}</span> @enderror
+                                         
+                                            <button type="submit">Save Photo</button>
+                                            @if ($photo)
+                                                <img src="{{ $photo->temporaryUrl() }}" width="100">
+                                            @endif
+                                            
+                                        </form> --}}
+
+                                            
+                                        <div class="flex justify-between ">
+                                            
+                                               
+                                                <x-jet-input wire:model="photo" id="photo" class="mt-1 block w-full" type="file" />
+                                                <x-jet-input-error for="photo" class="mt-2" />
+                                                <div wire:loading wire:target="photo">
+                                                    <span class="text-green-600">Uploading Image..</span>
+                                                </div>
+                                            
+                                            @if ($photo)
+                                                <img src="{{ $photo->temporaryUrl() }}" width="100" class="mr-4">
+                                            @endif
+                                        </div>
                                     </div>
                                     {{-- <div class="form-group">
                                         <label for="customFile">Profile Photo</label>
@@ -308,16 +339,8 @@
                                         <select  wire:model="applicant.class_name" name="class_name" class="block mt-1 w-full">
                                             <option value="0" >--Select Class--</option>
                                             @foreach ($class as $classes)
-                                                
-                                            
-                                     
                                                     <option value="{{$classes->class_name}}" > {{$classes->class_name}}</option>
-                                        
                                             @endforeach
-                                            
-                                            
-                                        
-                                 
                                         </select>
                                         <x-jet-input-error for="applicant.class_name" class="mt-2" />
                                        
@@ -396,10 +419,11 @@
                                         {{ __('Close') }}
                                     </x-jet-secondary-button>
                         
-                                    <x-jet-button class="ml-3" wire:click="saveApplicant()" wire:loading.attr="disabled">
+                                    <x-jet-button class="ml-3" wire:click.prevent="saveApplicant" wire:loading.attr="disabled">
                                         {{ __('Save') }}
                                     </x-jet-button>
                                 </x-slot>
+                            </form>
                             </x-jet-dialog-modal>
 
                         <x-jet-dialog-modal wire:model="confirmingApplicantDeletion">
