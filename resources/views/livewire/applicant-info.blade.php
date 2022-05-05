@@ -1,19 +1,46 @@
+    
     <div class="flex flex-col">
+      <div class="flex justify-items-between px-3 py-4 sm:px-20 bg-white border-b border-gray-200">
+        <div class="mt-8 text-2xl">
+            Applicant Information
+        </div>
+        <div class="flex text-green-700 mt-4 px-py sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
+          <a href="{{ route('applicants') }}">Go Back </a>
+        </div>
+      </div>
+        
+    
+      
         <div class="flex flex-col mt-4">
             <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-
-              <div class="flex items-stretch bg-white justify-items-center">
+              
+              <div class="flex items-stretch bg-white justify-items-end">
                 
                 <div class="px-6 py-6 ">
                     @if ($app_data->photo != null)
                     <div class="ml-4 pb-3 pt-4">
+                      {{-- <div class="box-content h-30 w-30 p-4 border-4 hover:box-content">
+                        <img class="w-full" style="width:200px;height:200px;"  src="{{asset('storage')}}/{{$app_data->photo}}" alt="IMG">
+                      </div> --}}
+                      
                       <div class="box-content h-30 w-30 p-4 border-4 hover:box-content">
-                        <img class="h-52 w-52"  src="{{asset('storage')}}/{{$app_data->photo}}" alt="IMG">
+                        {{-- <img class="w-20 h-20 rounded" src="{{asset('storage')}}/{{$app_data->photo}}" alt="Large avatar"> --}}
+                        <img style="max-width:200px; max-height:200px;" class="rounded w-36 h-36" src="{{asset('storage')}}/{{$app_data->photo}}" alt="Extra large avatar">
                       </div>
                     </div>
                     @else
                     <div class="relative bg-white rounded-lg overflow-hidden group-hover:opacity-75 lg:aspect-w-2 sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-2">
                       <img src="https://tailwindui.com/img/ecommerce-images/home-page-02-edition-01.jpg" alt="Desk with leather desk pad, walnut desk organizer, wireless keyboard and mouse, and porcelain mug." class="w-full h-full object-center object-cover">
+                      <div class="flex -space-x-4">
+                        <img class="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800" src="/docs/images/people/profile-picture-5.jpg" alt="">
+                        <img class="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800" src="/docs/images/people/profile-picture-2.jpg" alt="">
+                        <img class="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800" src="/docs/images/people/profile-picture-3.jpg" alt="">
+                        <a class="flex items-center justify-center w-10 h-10 text-xs font-medium text-white bg-gray-700 border-2 border-white rounded-full hover:bg-gray-600 dark:border-gray-800" href="#">+99</a>
+                    </div>
+                    
                     </div>
                     @endif
 
@@ -22,23 +49,30 @@
                   
                   <div class="text-center mt-2 item-center">
                               
-                    <x-jet-button wire:loading.attr="disabled" wire:click="saveUserActivity({{ $app_data->id }})">
+                    <x-jet-button wire:loading.attr="disabled" wire:click="editApplicant()">
                       {{ __('Update Profile') }}
                     </x-jet-button>
                   </div>
-                  <div class="text-left mt-2 item-center">
-                              
-                    
+                  
+                  {{-- <div class="text-left mt-2 item-center">
+
+                    <div class="flex mb-5 -space-x-4">
+                      <img class="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800" src="{{asset('storage')}}/{{$app_data->photo}}" alt="">
+                      <img class="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800" src="{{asset('storage')}}/{{$app_data->photo}}" alt="">
+                      <img class="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800" src="{{asset('storage')}}/{{$app_data->photo}}" alt="">
+                      <img class="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800" src="{{asset('storage')}}/{{$app_data->photo}}" alt="">
                   </div>
+                  </div> --}}
                 </div>
                 <div class="px-0 py-5">
+
                   <div class="bg-white overflow-hidden mt-4">
                     {{-- <div class="px-4 py-5 sm:px-6">
                       <h1 class="text-lg leading-6 font-large text-gray-900">SN# {{ $app_data->sn_number}}</h1>
                     </div> --}}
                     <div class="">
                       <dl>
-                        <div class="flex px-py sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <div class="flex flex-nowrap px-py sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                           <dt class="text-2xl text-green-700 font-extrabold uppercase">SN# {{ $app_data->sn_number}}</dt>
                         </div>
                         
@@ -48,7 +82,7 @@
                       
                         <div class="flex bg-white px-py sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                           <dt class="text-sm font-medium text-gray-500 uppercase">Birthdate:</dt>
-                          <dd class="mt-1 ml-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">12/12/1997</dd>
+                          <dd class="mt-1 ml-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ $app_data->birthdate}}</dd>
                         </div>
                         <div class="flex bg-white px-py sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                           <dt class="text-sm font-medium text-gray-500 uppercase">Email address:</dt>
@@ -56,7 +90,7 @@
                         </div>
                         <div class="flex bg-white px-py sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                           <dt class="text-sm font-medium text-gray-500 uppercase">Mobile Number:</dt>
-                          <dd class="mt-1 ml-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">09458418109</dd>
+                          <dd class="mt-1 ml-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ $app_data->contact_number}}</dd>
                         </div>
                         <div class="flex bg-white px-py sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                           <dt class="text-sm font-medium text-gray-500 uppercase">Address:</dt>
@@ -67,114 +101,54 @@
                           <dd class="mt-1 ml-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ $app_data->class_name }}</dd>
                         </div>
                         <div class="flex mt-4 px-py sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                          
                           <dt class="px-3 py-2 text-sm text-white bg-indigo-600 font-medium text-gray-500 border rounded uppercase">{{ $app_data->status}}</dt>
-                      
-                          {{-- @if ($status == null)
-                          <dt class="px-3 py-2 text-sm text-white bg-indigo-600 font-medium text-gray-500 border rounded uppercase">{{ $stat->particular}}</dt>
-                          @else
-                          <dt class="px-3 py-2 text-sm text-white bg-indigo-600 font-medium text-gray-500 border rounded uppercase">{{ $status->particular}}</dt>
-                          @endif --}}
-                         
-                         
                         </div>
                         
                         
-                        {{-- <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                          <dt class="text-sm font-medium text-gray-500">Attachments</dt>
-                          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                            <ul role="list" class="border border-gray-200 rounded-md divide-y divide-gray-200">
-                              <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
-                                <div class="w-0 flex-1 flex items-center">
-                                  <!-- Heroicon name: solid/paper-clip -->
-                                  <svg class="flex-shrink-0 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path fill-rule="evenodd" d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z" clip-rule="evenodd" />
-                                  </svg>
-                                  <span class="ml-2 flex-1 w-0 truncate"> resume_back_end_developer.pdf </span>
-                                </div>
-                                <div class="ml-4 flex-shrink-0">
-                                  <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500"> Download </a>
-                                </div>
-                              </li>
-                            
-                            </ul>
-                          </dd>
-                        </div> --}}
+                        
                       </dl>
                     </div>
                   </div>
                 </div>
                 <div class="px-0 py-5">
                   <div class="px-4 py-5 sm:px-6">
-                    <h1 class="text-2xl leading-6 font-extrabold text-gray-900">Step Process</h1>
+                    <h1 class="text-xl leading-6 font-extrabold text-gray-900">Progress Status</h1>
+                    
+               
                     <div class="text-center mt-2 item-center">
                               
-                     
+                      @foreach ($applicants as $applicant)
+                            
+                        
+                      <div class=" stepper-content ">
+                        <div class="flex flex-nowrap mt-2 block p-6 rounded-lg shadow-lg bg-white max-w-sm">
+                        <span class="mr-3 mt-1">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd" />
+                          </svg>
+                        </span>
+                        
+                        <span class="ml-0">
+                          <h2 class="font-bold text-lg uppercase">{{ $applicant->particular }} </h2>
+                          <span class="flex text-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                            </svg>
+                            <p class="text-xsm">{{ $applicant->remarks }}</p>
+                          </span>
+                        </span> 
+                        
+                        </div>
+                      </div>
+                      @endforeach
                       
-                      <a href="{{ route('applicants') }}">
-                      <button class="text-white px-3 py-2 bg-green-800 border rounded-lg hover:bg-green-700">
-                        Go Back
-                      </button>
-                      </a>
+                      
                     </div>
                   </div>
                 </div>
 
             </div>
-            {{-- <div class="bg-white shadow overflow-hidden mt-4">
-              <div class="px-2 py-5 sm:px-6">
-                <h3 class="text-lg leading-6 font-medium text-gray-900">Applicant Information</h3>
-                <p class="mt-1 max-w-2xl text-sm text-gray-500">Personal details and application.</p>
-              </div>
-              <div class="border-t border-gray-200">
-                <dl>
-                  
-                  
-                  <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500">Fullname</dt>
-                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ $app_data->first_name }} {{ $app_data->middle_name }} {{ $app_data->last_name }}</dd>
-                  </div>
-                
-                  <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500">Application for</dt>
-                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">Nurse</dd>
-                  </div>
-                  <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500">Email address</dt>
-                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ $app_data->email_address }}</dd>
-                  </div>
-                  <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500">Salary expectation</dt>
-                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">$120,000</dd>
-                  </div>
-                  <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500">About</dt>
-                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim incididunt cillum culpa consequat. Excepteur qui ipsum aliquip consequat sint. Sit id mollit nulla mollit nostrud in ea officia proident. Irure nostrud pariatur mollit ad adipisicing reprehenderit deserunt qui eu.</dd>
-                  </div>
-                  <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500">Attachments</dt>
-                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                      <ul role="list" class="border border-gray-200 rounded-md divide-y divide-gray-200">
-                        <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
-                          <div class="w-0 flex-1 flex items-center">
-                            <!-- Heroicon name: solid/paper-clip -->
-                            <svg class="flex-shrink-0 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                              <path fill-rule="evenodd" d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z" clip-rule="evenodd" />
-                            </svg>
-                            <span class="ml-2 flex-1 w-0 truncate"> resume_back_end_developer.pdf </span>
-                          </div>
-                          <div class="ml-4 flex-shrink-0">
-                            <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500"> Download </a>
-                          </div>
-                        </li>
-                      
-                      </ul>
-                    </dd>
-                  </div>
-                </dl>
-              </div>
-            </div> --}}
-
+          
                 <div class="max-w-2xl mx-auto mt-4">
                   
                   <div>
@@ -235,36 +209,7 @@
                             </div>
                           </div>
                     </div>
-                    
-                    {{-- <x-jet-form-section submit="updateProfileInformation">
-                      <x-slot name="title">
-                        {{ __('Applicant Status Update') }}
-                      </x-slot>
-                  
-                      <x-slot name="description">
-                          {{ __('Update the status of this applicant.') }}
-                      </x-slot>
-                      <x-slot name="form">
-                        <div class="col-span-6 sm:col-span-3">
-                          <label for="country" class="block text-sm font-medium text-gray-700">Job Application Status</label>
-                          <select id="country" name="country" autocomplete="country-name" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                            <option>Schedule for Pre</option>
-                            <option>Schedule for Final</option>
-                            <option>Selected</option>
-                          </select>
-                        </div>
-          
-                        <div class="col-span-6">
-                          <label for="street-address" class="block text-sm font-medium text-gray-700">Remarks</label>
-                          <input type="text" name="street-address" id="street-address" autocomplete="street-address" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                        </div>
-                      </x-slot>
-                      <x-slot name="actions">
-                        <x-jet-button wire:loading.attr="disabled" wire:target="photo">
-                          {{ __('Save') }}
-                        </x-jet-button>
-                      </x-slot>
-                    </x-jet-form-section> --}}
+
                     <div class=" mt-4 relative overflow-x-auto shadow-md sm:rounded-lg">
                         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -317,24 +262,7 @@
                                     </td>
                                 </tr>
                                 @endforeach
-                                {{-- @foreach($user_activity as $applicant)
-                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <td class="w-4 p-4">	
-                                    </td>
-                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                                        {{ $applicant->created_at->format('M d, Y') }}
-                                    </th>
-                                    <td class="px-6 py-4">
-                                        {{ $applicant->user_name}}
-                                    </td>
-                                    <td class="px-6 py-4">
-                                      {{ $applicant->remarks}}
-                                    </td>
-                                    <td class="px-6 py-4">
-                                      {{ $applicant->user_name}}
-                                    </td>
-                                </tr>
-                                @endforeach --}}
+                                
                             </tbody>
                             
                             
@@ -350,6 +278,129 @@
                             <p>{{ $applicants->links() }}</p>
                         </div>
                     </div>
+                    <x-jet-dialog-modal wire:model="confirmingeditApplicant">
+                                
+                      <x-slot name="title" class="text-center">
+                          {{ __('Create Applicant') }}
+                      </x-slot>
+                      <form enctype="multipart/form-data">
+                      
+                      <x-slot name="content">
+                          <div class="col-span sm:col-span-4 mt-3">
+                              <x-jet-label for="photo" value="{{ __('Applicant Picture')}}" />
+                                  
+                              <div class="flex justify-between ">
+                                      <x-jet-input wire:model="photo" id="photo" class="mt-1 block w-full" type="file" />
+                                      <x-jet-input-error for="photo" class="mt-2" />
+                                      <div wire:loading wire:target="photo">
+                                          <span class="text-green-600">Uploading Image..</span>
+                                      </div>
+                                  
+                                  @if ($photo)
+                                      <img src="{{ $photo->temporaryUrl() }}" width="100" class="mr-4">
+                                  @else
+                                      <img src="{{ $state['avatar_url'] ?? '' }}" width="100" class="mr-4">
+                                  @endif
+                              </div>
+                          </div>
+
+                          <div class="col-span sm:col-span-4  mt-6">
+                              <x-jet-label for="sn_number" value="{{ __('#SN Number')}}" />
+                              <x-jet-input id="sn_number" type="text" class="mt-1 block w-full" wire:model="applicant.sn_number" placeholder="{{ $app_data->sn_number}}" disabled />
+                              <x-jet-input-error for="applicant.sn_number" class="mt-2" />
+                          </div>
+
+                          <div class="mt-4">
+                              <x-jet-label for="class_name" value="{{ __('Class') }}" />
+                              <select  wire:model="applicant.class_name" name="class_name" class="block mt-1 w-full" disabled>
+                                  <option value="0" >{{ $app_data->class_name}}</option>
+                                  @foreach ($class as $classes)
+                                          <option value="{{$classes->class_name}}" > {{$classes->class_name}}</option>
+                                  @endforeach
+                              </select>
+                              <x-jet-input-error for="applicant.class_name" class="mt-2" />
+                          </div>
+                          
+
+                          <div class="col-span sm:col-span-4 mt-3">
+                              <x-jet-label for="first_name" value="{{ __('First Name')}}" />
+                              <x-jet-input id="first_name" type="text" class="mt-1 block w-full" wire:model="applicant.first_name" placeholder="{{ $app_data->first_name}}"/>
+                              <x-jet-input-error for="applicant.first_name" class="mt-2" />
+                          </div>
+
+                          <div class="col-span sm:col-span-4 mt-3">
+                              <x-jet-label for="middle_name" value="{{ __('Middle Name')}}" />
+                              <x-jet-input id="middle_name" type="text" class="mt-1 block w-full" wire:model="applicant.middle_name" placeholder="{{ $app_data->middle_name}}"/>
+                              <x-jet-input-error for="applicant.middle_name" class="mt-2" />
+                             
+                          </div>
+
+                          <div class="col-span sm:col-span-4 mt-3">
+                              <x-jet-label for="last_name" value="{{ __('Last Name')}}" />
+                              <x-jet-input id="last_name" type="text" class="mt-1 block w-full" wire:model="applicant.last_name" placeholder="{{ $app_data->last_name}}"/>
+                              <x-jet-input-error for="applicant.last_name" class="mt-2" />
+                              
+                          </div>
+
+                          <div class="col-span sm:col-span-4 mt-3">
+                              <x-jet-label for="contact_number" value="{{ __('Contact Number')}}" />
+                              <x-jet-input id="contact_number" type="number" class="mt-1 block w-full" wire:model="applicant.contact_number" placeholder="{{ $app_data->contact_number}}"/>
+                              <x-jet-input-error for="applicant.last_name" class="mt-2" />
+                          </div>
+
+                          <div class="col-span sm:col-span-4 mt-3">
+                              <x-jet-label for="email_address" value="{{ __('Email Address')}}" />
+                              <x-jet-input id="email_address" type="email" class="mt-1 block w-full" wire:model="applicant.email_address" placeholder="{{ $app_data->email_address}}" disabled/>
+                              <x-jet-input-error for="applicant.email_address" class="mt-2" />
+                             
+                          </div>
+
+                          <div class="col-span sm:col-span-4 mt-3">
+                              <x-jet-label for="birthdate" value="{{ __('Birthdate')}}" />
+                              <x-jet-input name="birthdate" type="date" class="mt-1 block w-full" wire:model="applicant.birthdate" value="{{ $app_data->birthdate}}" placeholder="date"/>
+                              <i class="fas fa-calendar datepicker-toggle-icon"></i>   
+                              <x-jet-input-error for="applicant.birthdate" class="mt-2" />
+                          </div>
+
+                          <div class="col-span sm:col-span-4 mt-3">
+                              <x-jet-label for="home_address" value="{{ __('Home Address')}}" />
+                              <x-jet-input id="home_address" type="text" class="mt-1 block w-full" wire:model="applicant.home_address" placeholder="{{ $app_data->home_address}}"/>
+                              <x-jet-input-error for="applicant.home_address" class="mt-2" />
+                          </div>
+
+                          <div class="col-span sm:col-span-4 mt-3">
+                              <x-jet-label for="city" value="{{ __('City')}}" />
+                              <x-jet-input id="city" type="text" class="mt-1 block w-full" wire:model="applicant.city" placeholder="{{ $app_data->city}}"/>
+                              <x-jet-input-error for="applicant.city" class="mt-2" />
+                          </div>
+
+                          <div class="col-span sm:col-span-4 mt-3">
+                              <x-jet-label for="province" value="{{ __('Province')}}" />
+                              <x-jet-input id="province" type="text" class="mt-1 block w-full" wire:model="applicant.province" placeholder="{{ $app_data->province}}" />
+                              <x-jet-input-error for="applicant.province" class="mt-2" />
+                          </div>
+                          
+                          <div class="col-span sm:col-span-4  mt-3">
+                              <x-jet-label for="zip_code" value="{{ __('Zip Code')}}" />
+                              <x-jet-input id="zip_code" type="number" class="mt-1 block w-full" wire:model="applicant.zip_code" placeholder="{{ $app_data->zip_code}}"/>
+                              <x-jet-input-error for="applicant.zip_code" class="mt-2" /> 
+                          </div>
+                           
+                     
+                      </x-slot>
+              
+                      <x-slot name="footer">
+                          <x-jet-secondary-button wire:click="$set('confirmingApplicantAdd', false)" wire:loading.attr="disabled" >
+                              {{ __('Close') }}
+                          </x-jet-secondary-button>
+              
+                          <x-jet-button class="ml-3" wire:click.prevent="saveEditApplicant({{ $app_data->id}})" wire:loading.attr="disabled">
+                              {{ __('Save') }}
+                          </x-jet-button>
+                      </x-slot>
+                  </form>
+                  </x-jet-dialog-modal>
+                    
                     
 
         </div>

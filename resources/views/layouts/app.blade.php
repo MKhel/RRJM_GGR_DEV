@@ -16,6 +16,7 @@
         @livewireStyles
 
         <!-- Scripts -->
+        <script src="./TW-ELEMENTS-PATH/dist/js/index.min.js"></script>
         <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased">

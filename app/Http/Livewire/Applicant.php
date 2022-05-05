@@ -30,7 +30,7 @@ class Applicant extends Component
     public $orderBy = '';
     public $orderAsc = true;
     public $photo;
-    public $searchQuery;
+    public $searchQuery = '';
     public $allApplicants;
     public $LinedUpApp;
     public $InterviewApplicants;
@@ -81,9 +81,14 @@ class Applicant extends Component
     {   
         //$applicants = User::all();
         // $applicants = Applicants::paginate(5);
+        
         $user_id =  User::all();
         $class  = classes::all();
+        if ($this->searchQuery != null)
         $searchQuery = '%'. $this->searchQuery . '%';
+        else
+        $searchQuery = '%'. $this->orderBy . '%';
+        
         $perPage  = $this->perPage;
         $sortBy = $this->orderBy;
         //$app_id = Applicants::where('user_id', auth()->user()->id)->get('id')->dd();
@@ -103,15 +108,20 @@ class Applicant extends Component
             
             'applicants' => Applicants::where('sn_number', 'LIKE', $searchQuery)
                                         ->orwhere('class_name', 'LIKE', $searchQuery)
-                                        ->orwhere('status', 'LIKE', $searchQuery)
+                                        //->orwhere('status', 'LIKE', $searchOrder)
                                         ->orwhere('first_name', 'LIKE', $searchQuery)
                                         ->orwhere('middle_name', 'LIKE', $searchQuery)
                                         ->orwhere('last_name', 'LIKE', $searchQuery)
+                                        ->orwhere('status', 'LIKE', $searchQuery)
                                         //->sortby('status', $sortBy)
                                         ->latest()
+                                        //->orderBy('status')
                                         //->so('status', 'asc', $sortBy)
                                         ->paginate($perPage),
 
+            // 'applicants' => Applicants::when($this->orderBy, function($query, $searchQ){
+            //         return $query->where('status', 'LIKE', "%$searchQ%");
+            //         })->latest()->paginate($this->perPage),
         
             //'applicants' => Applicants::where('sn_number', $this->searchQuery)->paginate(10)
             // 'applicants' => Applicants::query()
@@ -141,15 +151,15 @@ class Applicant extends Component
         
     }
 
-    public function upload()
-    {
-        // $this->validate([
-        //     //'photo' => 'image|max:1024', // 1MB Max
-        //     //'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-        // ]);
-        $app_data['photo'] = $this->photo['photo']->store('avatars', 'public');
-        //$this->photo->store('/public', 'avatars');
-    }
+    // public function upload()
+    // {
+    //     // $this->validate([
+    //     //     //'photo' => 'image|max:1024', // 1MB Max
+    //     //     //'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+    //     // ]);
+    //     $app_data['photo'] = $this->photo['photo']->store('avatars', 'public');
+    //     //$this->photo->store('/public', 'avatars');
+    // }
 
 
     public function saveApplicant()

@@ -58,6 +58,7 @@ class User extends Authenticatable
      */
     protected $appends = [
         'profile_photo_url',
+        // 'avatar_url',
     ];
 
     public function applicant() {

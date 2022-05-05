@@ -4,6 +4,7 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Dashboard') }}
             </h2>
+            
             <div class="shadow-lg rounded-lg overflow-hidden">
                 <div class="mt-4 py-3 px-5 bg-gray-50">Applicant per month</div>
                 <canvas class="p-10" id="chartBar"></canvas>

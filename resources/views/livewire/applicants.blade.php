@@ -1,7 +1,12 @@
 <div>
-    <div class="container my-12 py-12 mx-auto px-4">
+    <div class="flex justify-items-between px-3 py-4 sm:px-20 bg-white border-b border-gray-200">
+        <div class="mt-8 text-2xl">
+            Applicant List
+        </div>
+      </div>
+    <div class="container my-12 py-4 mx-auto px-4">
 
-        <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
+        <div class="bg-white py-2 md:py-7 px-4 md:px-8 xl:px-10">
                 
             <div class="flex flex-col">
                 <div class="flex flex-col mt-4">
@@ -13,7 +18,7 @@
                                 <div class="w-1/4 mb-4 ">
                                   <label for="searchApplicant" class="form-label inline-block mb-2 text-gray-700">Search</label>
                                   <input
-                                    ire:keydown.escape = ''
+                                    wire:keydown.escape = ''
                                     type="search" wire:model="searchQuery"
                                     class="
                                       ml-4
@@ -38,7 +43,8 @@
                                 <div class="relative ml-2 mt-0">
                                 
                                     <select wire:model="orderBy" class="block mt-1 w-full border-green-400 focus:border-green-400 focus:ring-opacity-50 rounded-md shadow-sm">
-                                        <option value="Refused EL">Encoded</option>
+                                        <option value="">All</option>
+                                        <option value="Encoded">Encoded</option>
                                         <option value="Schedule for Pre Interview">Schedule for Pre Interview</option>
                                         <option value="Schedule for final">Schedule for Final</option>
                                         <option value="Selected">Selected</option>
