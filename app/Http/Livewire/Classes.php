@@ -67,6 +67,11 @@ class Classes extends Component
 
 
     }
+    public function deleteClasses(client $Classes)
+    {
+        $Classes->delete();
+        $this->confirmingApplicantDeletion = false;
+    }
 }
 
 

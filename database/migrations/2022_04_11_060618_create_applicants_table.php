@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('middle_name');
             $table->string('last_name');
+            $table->string('suffix');
             $table->integer('contact_number');
             $table->string('email_address');
             $table->date('birthdate');

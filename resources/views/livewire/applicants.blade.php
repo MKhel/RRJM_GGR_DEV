@@ -1,49 +1,37 @@
 <div>
-    <div class="flex justify-items-between px-3 py-4 sm:px-20 bg-white border-b border-gray-200">
-        <div class="mt-8 text-2xl">
+    <div class="flex items-center justify-between mt-3 px-3 py-4 sm:px-20 bg-white border-b border-gray-200">
+        <div class=" text-2xl">
             Applicant List
         </div>
+        <div>
+            <x-jet-button class="block" wire:click="confirmApplicantAdd()">
+                {{ __('Add Applicant') }}
+            </x-jet-button>
+        </div>
       </div>
+        @if (session()->has('message'))
+            <div class="alert alert-success">
+                <x-jet-label> {{ session('message') }}</x-jet-label>
+                <x-jet-banner>{{ session('message') }}</x-jet-banner>
+            </div>
+        @endif
     <div class="container my-12 py-4 mx-auto px-4">
-
-        <div class="bg-white py-2 md:py-7 px-4 md:px-8 xl:px-10">
-                
+        <div class="bg-white py-2 md:py-7 px-4 md:px-8 xl:px-10">    
             <div class="flex flex-col">
                 <div class="flex flex-col mt-4">
-                    <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-                   
-                            <div class="sm:flex items-center justify-between">
-   
-                            <div class="w-full flex justify-left">
-                                <div class="w-1/4 mb-4 ">
-                                  <label for="searchApplicant" class="form-label inline-block mb-2 text-gray-700">Search</label>
-                                  <input
-                                    wire:keydown.escape = ''
-                                    type="search" wire:model="searchQuery"
-                                    class="
-                                      ml-4
-                                      form-control
-                                      px-3
-                                      py-1.5
-                                      text-base
-                                      font-normal
-                                      text-gray-700
-                                      bg-white bg-clip-padding
-                                      
-                                      transition
-                                      ease-in-out
-                                      mt-1
-                                      focus:text-gray-700 focus:bg-white focus:border-green-700 focus:outline-none
-                                    "
-                                
-                                    placeholder="Seach Applicant..."
-                                   {{ $isDisabled }}/>
-                                </div>
+                    <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">                            
+                            <div class="flex mb-4">
+                                <input wire:keydown.escape = '' type="search" wire:model="searchQuery"
+                                       class="w-full form-control rounded-md border-green-400 px-3 py-1.5 text-base font-normal text-green-700 bg-white bg-clip-padding transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-green-700 focus:outline-none"
+                                       placeholder="Seach Applicant..." {{ $isDisabled }}/>
+                            </div>
 
-                                <div class="relative ml-2 mt-0">
+                            <div class="w-full flex justify-end">
+
+                                <div class="relative mt-0">
                                 
-                                    <select wire:model="orderBy" class="block mt-1 w-full border-green-400 focus:border-green-400 focus:ring-opacity-50 rounded-md shadow-sm">
-                                        <option value="">All</option>
+                                    <select wire:model="orderBy" class="block w-full border-green-400 focus:border-green-400 focus:ring-opacity-50 rounded-md shadow-sm" {{ $isDisabled }}>
+                                        <option value="">Search by Status</option>
                                         <option value="Encoded">Encoded</option>
                                         <option value="Schedule for Pre Interview">Schedule for Pre Interview</option>
                                         <option value="Schedule for final">Schedule for Final</option>
@@ -57,9 +45,21 @@
                                         <option value="Deployed">Deployed</option>
                                     </select>
                                 </div>
-                                <div class="relative ml-2 mt-0">
+                                <div class="relative px-2">
                                 
-                                    <select wire:model="perPage" class="block mt-1 w-full">
+
+                                    <select wire:model="className" class="block w-full border-green-400 focus:border-green-400 focus:ring-opacity-50 rounded-md shadow-sm" {{ $isDisabled }}>
+                                        <option value="">Search by Class Name</option>
+                                        @foreach ($class as $classes)
+                                        <option value="{{ $classes->class_name }}">{{ $classes->class_name }}</option>
+                                        @endforeach
+                                    </select>
+                                                                    
+                                
+                                </div>
+                                <div class="relative pl-2">
+                                
+                                    <select wire:model="perPage" class="block border-green-400 rounded-md w-full">
                                         <option value="5">5</option>
                                         <option value="10">10</option>
                                         <option value="20">20</option>
@@ -67,27 +67,29 @@
                                         <option value="50">50</option>
                                     </select>
                                 </div>
-                                    </div>   
-                                    <x-jet-button class="block" wire:click="confirmApplicantAdd()">
-                                        {{ __('Add Applicant') }}
-                                    </x-jet-button>
-                                </div>
-                                @if (session()->has('message'))
-                                    <div class="alert alert-success">
-                                       <x-jet-label> {{ session('message') }}</x-jet-label>
-                                       <x-jet-banner>{{ session('message') }}</x-jet-banner>
-                                    </div>
-                                @endif
-                            
+                            </div>   
+                        </div>
+                     </div>
+                     <div class="items-center">
                             <table class="w-full whitespace-nowrap mt-4" >
-                                <thead>
+                                <thead class="font-bold">
                                     <tr class="" sortable>
-                                        <th
-                                            class="px-6 py-3 text-sm font-medium leading-4  text-gray-900 bg-gray-50">
-                                            DATE</th>
-                                        <th
-                                            class="flex px-6 py-3 text-sm font-medium leading-4  text-gray-900 bg-gray-50">
-                                            <p class="mt-1 ml-2">#SN</p> 
+                                        <th class="px-6 py-3 text-sm text-center font-medium leading-4  text-gray-900 bg-gray-50">
+                                            <div class="flex items-center">
+                                                DATE
+                                                <span class="flex">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 7l4-4m0 0l4 4m-4-4v18" />
+                                                    </svg>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                        </th>
+                                        
+                                        <th class="flex px-6 py-3 text-sm font-medium leading-4  text-gray-900 bg-gray-50 items-center">
+                                            <p class="">#SN</p> 
                                             <span class="flex">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M8 7l4-4m0 0l4 4m-4-4v18" />
@@ -100,7 +102,7 @@
                                         </th>
                                         
                                         <th
-                                            class="px-6 py-3 text-sm font-medium leading-4  text-gray-900 bg-gray-50 text-left">
+                                            class="px-6 py-3 text-sm font-medium leading-4  text-gray-900 bg-gray-50 text-center">
                                             FULLNAME</th>
                                         <th
                                             class="px-6 py-3 text-sm font-medium leading-4  text-gray-900 bg-gray-50 text-center">
@@ -148,12 +150,12 @@
                                             </div>   
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                            <div class="flex text-center">
+                                            <div class="flex items-center">
                                                 <div class="flex-shrink-0 w-10 h-10">
                                                     <img class="w-10 h-10 rounded-full" src="{{asset('storage')}}/{{$applicant->photo}}" alt="profile">
                                                 </div>
                         
-                                                <div class="px-3 py-4 text-center">
+                                                <div class="px-3 py-4 text-left">
                                                     <div class="text-sm font-medium leading-5 text-gray-900">
                                                         {{ $applicant->first_name }}, {{ $applicant->last_name }}
                                                     </div>
@@ -261,9 +263,11 @@
                                    
                                 </tbody>
                             </table>
+                     
                             <div class="mt-4">
                                 <p>{{ $applicants->links() }}</p>
                             </div>
+
                            
                             <x-jet-dialog-modal wire:model="confirmingApplicantAdd">
                                 
@@ -372,6 +376,12 @@
                                         <x-jet-input-error for="applicant.last_name" class="mt-2" />
                                         
                                     </div>
+                                    <div class="col-span sm:col-span-4 mt-3">
+                                        <x-jet-label for="suffix" value="{{ __('Suffix')}}" />
+                                        <x-jet-input id="suffix" type="text" class="mt-1 block w-full" wire:model="applicant.suffix" />
+                                        <x-jet-input-error for="applicant.suffix" class="mt-2" />
+                                        
+                                    </div>
 
                                     <div class="col-span sm:col-span-4 mt-3">
                                         <x-jet-label for="contact_number" value="{{ __('Contact Number')}}" />
@@ -424,7 +434,10 @@
                                     <x-jet-secondary-button wire:click="$set('confirmingApplicantAdd', false)" wire:loading.attr="disabled">
                                         {{ __('Close') }}
                                     </x-jet-secondary-button>
-                        
+                                    {{-- <x-jet-secondary-button wire:click="$set('closeForm', false)" wire:loading.attr="disabled">
+                                        {{ __('Close') }}
+                                    </x-jet-secondary-button>
+                         --}}
                                     <x-jet-button class="ml-3" wire:click.prevent="saveApplicant" wire:loading.attr="disabled">
                                         {{ __('Save') }}
                                     </x-jet-button>
@@ -443,15 +456,15 @@
                                 <x-jet-secondary-button wire:click="$set('confirmingApplicantDeletion', 'false')" wire:loading.attr="disabled">
                                     {{ __('Close') }}
                                 </x-jet-secondary-button>
-                    
+
                                 <x-jet-danger-button class="ml-3" wire:click="DeleteApplicant( {{ $confirmingApplicantDeletion }} )" wire:loading.attr="disabled">
                                     {{ __('Delete') }}
                                 </x-jet-danger-button>
                             </x-slot>
                         </x-jet-dialog-modal>
-                    
-                        </div>
+                     </div>
                     </div>
+                </div>
             </div>
         </div>
     </div>

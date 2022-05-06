@@ -1,34 +1,42 @@
     
     <div class="flex flex-col">
-      <div class="flex justify-items-between px-3 py-4 sm:px-20 bg-white border-b border-gray-200">
-        <div class="mt-8 text-2xl">
-            Applicant Information
+      
+      <div class="sm:flex py-2 -my-2 lg:items-center bg-white border-b border-gray-200 sm:px-20 px-3 py-6 lg:justify-between">
+        <div class="flex-1 min-w-0">
+          <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">Applicant Information</h2>
         </div>
-        <div class="flex text-green-700 mt-4 px-py sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-          </svg>
-          <a href="{{ route('applicants') }}">Go Back </a>
-        </div>
+        <span class="hidden sm:block mr-2">
+          <div class="flex text-green-700 px-py ">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+            <a href="{{ route('applicants') }}">Go Back </a>
+          </div>
+        </span>
+        
       </div>
+
+
+
         
     
       
         <div class="flex flex-col mt-4">
             <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
               
-              <div class="flex items-stretch bg-white justify-items-end">
+              <div class="flex bg-white justify-center">
                 
-                <div class="px-6 py-6 ">
+                <div class="px-0 py-6 ">
                     @if ($app_data->photo != null)
-                    <div class="ml-4 pb-3 pt-4">
+                    <div class=" pb-3 pt-4">
                       {{-- <div class="box-content h-30 w-30 p-4 border-4 hover:box-content">
                         <img class="w-full" style="width:200px;height:200px;"  src="{{asset('storage')}}/{{$app_data->photo}}" alt="IMG">
                       </div> --}}
                       
-                      <div class="box-content h-30 w-30 p-4 border-4 hover:box-content">
+                      <div class="box-content h-30 w-30 p-4 overflow-hidden border border-gray-200 hover:box-content">
                         {{-- <img class="w-20 h-20 rounded" src="{{asset('storage')}}/{{$app_data->photo}}" alt="Large avatar"> --}}
-                        <img style="max-width:200px; max-height:200px;" class="rounded w-36 h-36" src="{{asset('storage')}}/{{$app_data->photo}}" alt="Extra large avatar">
+                        <img style="max-width:auto; max-height:200px;" class="w-full object-cover" src="{{asset('storage')}}/{{$app_data->photo}}" alt="Extra large avatar">
+                      
                       </div>
                     </div>
                     @else
@@ -93,7 +101,7 @@
                           <dd class="mt-1 ml-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ $app_data->contact_number}}</dd>
                         </div>
                         <div class="flex bg-white px-py sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                          <dt class="text-sm font-medium text-gray-500 uppercase">Address:</dt>
+                          <dt class="text-sm font-medium text-gray-500 uppercase">Home Address:</dt>
                           <dd class="mt-1 ml-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 truncate">{{ $app_data->home_address}}, {{ $app_data->city }}, {{ $app_data->province }}</dd>
                         </div>
                         <div class="flex bg-white px-py sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -121,23 +129,20 @@
                             
                         
                       <div class=" stepper-content ">
-                        <div class="flex flex-nowrap mt-2 block p-6 rounded-lg shadow-lg bg-white max-w-sm">
-                        <span class="mr-3 mt-1">
-                          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd" />
-                          </svg>
-                        </span>
-                        
-                        <span class="ml-0">
-                          <h2 class="font-bold text-lg uppercase">{{ $applicant->particular }} </h2>
-                          <span class="flex text-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <div class=" mt-2 block px-3 py-4 rounded-lg shadow-lg bg-white max-w-sm">
+                          <div class="flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd" />
+                            </svg>
+                            <h2 class="font-bold text-sm uppercase">{{ $applicant->particular }} </h2>
+                          </div>
+
+                          <div class="flex text-sm items-center ml-3 truncate">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                               <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                             </svg>
-                            <p class="text-xsm">{{ $applicant->remarks }}</p>
-                          </span>
-                        </span> 
-                        
+                            <p class="text-xsm ">{{ $applicant->remarks }}. <span >By:{{ $applicant->user_name }}</span> </p>
+                          </div>
                         </div>
                       </div>
                       @endforeach

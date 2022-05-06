@@ -25,18 +25,25 @@ class Applicant extends Component
     public $confirmingApplicantDeletion = false;
     public $confirmingApplicantAdd = false;
 
-    public $perPage = '';
+    
     public $search = '';
-    public $orderBy = '';
+    
     public $orderAsc = true;
     public $photo;
-    public $searchQuery = '';
+    
     public $allApplicants;
     public $LinedUpApp;
     public $InterviewApplicants;
     public $class_name;
     public $classses;
     public $store;
+    public $closeForm;
+
+    //For  by Search
+    public $className = '';
+    public $orderBy = '';
+    public $perPage = '';
+    public $searchQuery = '';
 
 
     public $user;
@@ -46,6 +53,7 @@ class Applicant extends Component
     public $searchQ;
 
     public $isDisabled = '';
+    //public $notDisabled = '';
 
     
     
@@ -58,6 +66,7 @@ class Applicant extends Component
         'applicant.first_name' => 'required|unique:Applicants,first_name',
         'applicant.middle_name' => 'required|unique:Applicants,middle_name',
         'applicant.last_name' => 'required|unique:Applicants,last_name',
+        'applicant.suffix' => '',
         'applicant.contact_number' => 'required|unique:Applicants,contact_number',
         'applicant.email_address' => 'required|unique:Applicants,email_address',
         'applicant.home_address' => ['required'],
@@ -84,10 +93,13 @@ class Applicant extends Component
         
         $user_id =  User::all();
         $class  = classes::all();
+        
         if ($this->searchQuery != null)
         $searchQuery = '%'. $this->searchQuery . '%';
-        else
+        elseif ($this->searchQuery != null)
         $searchQuery = '%'. $this->orderBy . '%';
+        else
+        $searchQuery = '%'. $this->className . '%';
         
         $perPage  = $this->perPage;
         $sortBy = $this->orderBy;
@@ -138,18 +150,26 @@ class Applicant extends Component
 
     public function confirmApplicantAdd()
     {   
-        //$this->reset(['applicant']);
-        //$this->reset(['photo']);
+        $this->reset(['applicant']);
+        // //$this->reset(['photo']);
         $this->isDisabled = 'disabled';
         $this->confirmingApplicantAdd = true;
-        // if ($this->confirmApplicantAdd = true) {
-        //     $this->isDisabled = 'disabled';
-        // } else {
-        //     $this->confirmApplicantAdd = false;
-        //     $this->isDisabled = '';
-        // }
+        if ($this->confirmingApplicantAdd = true) {
+            $this->isDisabled = 'disabled';
+        } else {
+            $this->confirmingApplicantAdd = false;
+            $this->isDisabled = '';
+        }
+        $this->confirmingApplicantAdd = true;
+        
+       
         
     }
+    // public function closeForm()
+    // {
+    //     $this->isDisabled = '';
+    //     $this->closeForm = true;
+    // }
 
     // public function upload()
     // {
@@ -175,6 +195,7 @@ class Applicant extends Component
         $upload->first_name = $this->applicant['first_name'];
         $upload->middle_name = $this->applicant['middle_name'];
         $upload->last_name = $this->applicant['last_name'];
+        $upload->last_name = $this->applicant['suffix'];
         $upload->contact_number = $this->applicant['contact_number'];
         $upload->email_address = $this->applicant['email_address'];
         $upload->home_address = $this->applicant['home_address'];
@@ -205,44 +226,6 @@ class Applicant extends Component
         // ];
         $upload->save();
 
-        
-
-        // if ($this->photo) {
-        //     $app_data['photo'] = $this->photo->store('/', 'avatars');
-        // }
-        // //$photo = $this->photo['photo']->store('avatars');
-        // //return "$d";
-        // $app_data = [
-        //     'user_id' => auth()->id(),
-        //     'sn_number' => $this->applicant['sn_number'],
-        //     //'photo' => $this->photo['photo'],
-        //     'photo' => $this->photo['photo']->store('avatars', 'public'),
-        //     //'photo' => $this->applicant->file('public', 'avatars')->photo['photo'],
-        //     //'photo' => $photo,
-        //     'class_name' => $this->applicant['class_name'],
-        //     'first_name' => $this->applicant['first_name'],
-        //     'middle_name' => $this->applicant['middle_name'],
-        //     'last_name' => $this->applicant['last_name'],
-        //     'contact_number' => $this->applicant['contact_number'],
-        //     'email_address' => $this->applicant['email_address'],
-        //     'home_address' => $this->applicant['home_address'],
-        //     'city' => $this->applicant['city'],
-        //     'province' => $this->applicant['province'],
-        //     'zip_code' => $this->applicant['zip_code'],
-        //     'birthdate' => $this->applicant['birthdate'],
-        //     'status'   => "Encoded",
-        // ];
-
-        // $uploadPhoto = $this->photo->store('avatars');
-        // $upload = new Applicants;
-        // $upload->photo=$uploadPhoto;
-        // $upload->save();
-    
-
-        // $app_data = $this->photo->store('avatars');
-        // $app_data = $app_data['photo'];
-
-        //Applicants::create($app_data);
         $this->app_id = Applicants::where('user_id', auth()->user()->id)->latest()->first('id');
 
         $useractivity = [
@@ -259,7 +242,7 @@ class Applicant extends Component
         session()->flash('message', 'New applicant successfully created.');
         $this->confirmingApplicantAdd = false;
         $this->isDisabled = '';
-        // return $this->saveUseActiviy();
+        $this->reset(['applicant']);
 
     }
 
