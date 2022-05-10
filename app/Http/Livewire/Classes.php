@@ -15,6 +15,7 @@ class Classes extends Component
 
     public $Classes;
     public $class_name;
+    public $confirmClassDelete;
 
     public $confirmingClassDeletion = false;
     public $confirmingClassAdd = false;
@@ -67,10 +68,16 @@ class Classes extends Component
 
 
     }
-    public function deleteClasses(client $Classes)
-    {
-        $Classes->delete();
-        $this->confirmingApplicantDeletion = false;
+    
+    public function confirmClassDelete($id)
+    {  
+        $this->confirmingClassDeletion = $id;
+    }
+
+    public function DeleteClass( client $client)
+    {   
+        $client->delete();
+        $this->confirmingClassDeletion = false;
     }
 }
 

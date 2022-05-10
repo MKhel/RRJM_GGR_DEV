@@ -110,7 +110,7 @@
                         </span>
                     
                         <span class="sm:ml-3">
-                          <button type="button" wire:click="confirmApplicantDelete( {{ $class->id }} )" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray bg-white-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                          <button type="button" wire:click="confirmClassDelete( {{ $class->id }} )" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray bg-white-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white-400" fill="none"
                               viewBox="0 0 24 24" stroke="currentColor">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -197,6 +197,23 @@
                 </x-jet-button>
             </x-slot>
         </x-jet-dialog-modal>
+        <x-jet-dialog-modal wire:model="confirmingClassDeletion">
+          <x-slot name="title">
+             Delete
+          </x-slot>
+          <x-slot name="content">
+              Are you sure, you want to delete this applicant?
+           </x-slot>
+          <x-slot name="footer">
+              <x-jet-secondary-button wire:click="$set('confirmingApplicantDeletion', 'false')" wire:loading.attr="disabled">
+                  {{ __('Close') }}
+              </x-jet-secondary-button>
+
+              <x-jet-danger-button class="ml-3" wire:click="DeleteClass( {{ $confirmingClassDeletion }} )" wire:loading.attr="disabled">
+                  {{ __('Delete') }}
+              </x-jet-danger-button>
+          </x-slot>
+      </x-jet-dialog-modal>
     </div>   
 </div>
 </div>

@@ -9,12 +9,15 @@
             </x-jet-button>
         </div>
       </div>
-        @if (session()->has('message'))
+        
+        <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800" role="alert">
+            @if (session()->has('message'))
             <div class="alert alert-success">
                 <x-jet-label> {{ session('message') }}</x-jet-label>
                 <x-jet-banner>{{ session('message') }}</x-jet-banner>
             </div>
         @endif
+          </div>
     <div class="container my-12 py-4 mx-auto px-4">
         <div class="bg-white py-2 md:py-7 px-4 md:px-8 xl:px-10">    
             <div class="flex flex-col">
@@ -75,16 +78,19 @@
                                 <thead class="font-bold">
                                     <tr class="" sortable>
                                         <th class="px-6 py-3 text-sm text-center font-medium leading-4  text-gray-900 bg-gray-50">
-                                            <div class="flex items-center">
-                                                DATE
-                                                <span class="flex">
+                                            <div class="flex items-center justify-center">
+                                                <div class="ml-2">
+                                                   <p> DATE</p>  
+                                                </div>
+                                               
+                                                <div class="flex">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M8 7l4-4m0 0l4 4m-4-4v18" />
                                                     </svg>
                                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                                                         <path strokeLinecap="round" strokeLinejoin="round" d="M16 17l-4 4m0 0l-4-4m4 4V3" />
                                                     </svg>
-                                                </span>
+                                                </div>
                                             </div>
                                         </th>
                                         
@@ -134,7 +140,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
+                                    
                              @foreach($applicants as $applicant)
                                         
                                    
@@ -157,7 +163,7 @@
                         
                                                 <div class="px-3 py-4 text-left">
                                                     <div class="text-sm font-medium leading-5 text-gray-900">
-                                                        {{ $applicant->first_name }}, {{ $applicant->last_name }}
+                                                        {{ $applicant->first_name }}, {{ $applicant->last_name }},{{ $applicant->suffix }}
                                                     </div>
                                                 </div>
                                             </div>
@@ -218,7 +224,7 @@
                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                            </svg>
+                                                </svg>
                                             
                                             </x-jet-button>
                                         </td>

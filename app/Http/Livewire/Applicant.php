@@ -44,6 +44,7 @@ class Applicant extends Component
     public $orderBy = '';
     public $perPage = '';
     public $searchQuery = '';
+    public $searchClass = '';
 
 
     public $user;
@@ -93,42 +94,29 @@ class Applicant extends Component
         
         $user_id =  User::all();
         $class  = classes::all();
-        
-        if ($this->searchQuery != null)
+
+        $searchClass = $this->className;
+        $searchOrderby = $this->orderBy;
         $searchQuery = '%'. $this->searchQuery . '%';
-        elseif ($this->searchQuery != null)
-        $searchQuery = '%'. $this->orderBy . '%';
-        else
-        $searchQuery = '%'. $this->className . '%';
+        
+        if ($this->searchQuery == null)
+        $searchQuery = '%'. $searchOrderby . '%';
+        elseif ($this->searchQuery == null)
+        $searchQuery = '%'. $searchClass. '%';
         
         $perPage  = $this->perPage;
-        $sortBy = $this->orderBy;
-        //$app_id = Applicants::where('user_id', auth()->user()->id)->get('id')->dd();
-        
-        //$app_id = Applicants::where(auth()->user()->id, 'user_id' )->where('applicant_id')->dd();
-        //$status = Applicants::with('useractivities')->get()->dd();
-        //$app_id = User::with('applicant')->get()->dd();
-                  
+
         return view('livewire.applicants', [
-            //'applicants' => $applicants,
             'user_id' => $user_id,
             'class' => $class,
-            // 'applicants' => Applicants::when($this->searchQuery, function($query, $searchQuery){
-            //     return $query->where('sn_number', 'LIKE', "%$searchQuery%")
-            //                  ->orWhere('class_name', 'LIKE', "%$searchQuery%");
-            //     })->latest()->orderBy('status', "desc", $this->orderBy)->paginate($this->perPage),
-            
+
             'applicants' => Applicants::where('sn_number', 'LIKE', $searchQuery)
                                         ->orwhere('class_name', 'LIKE', $searchQuery)
-                                        //->orwhere('status', 'LIKE', $searchOrder)
                                         ->orwhere('first_name', 'LIKE', $searchQuery)
                                         ->orwhere('middle_name', 'LIKE', $searchQuery)
                                         ->orwhere('last_name', 'LIKE', $searchQuery)
                                         ->orwhere('status', 'LIKE', $searchQuery)
-                                        //->sortby('status', $sortBy)
                                         ->latest()
-                                        //->orderBy('status')
-                                        //->so('status', 'asc', $sortBy)
                                         ->paginate($perPage),
 
             // 'applicants' => Applicants::when($this->orderBy, function($query, $searchQ){
@@ -195,7 +183,7 @@ class Applicant extends Component
         $upload->first_name = $this->applicant['first_name'];
         $upload->middle_name = $this->applicant['middle_name'];
         $upload->last_name = $this->applicant['last_name'];
-        $upload->last_name = $this->applicant['suffix'];
+        $upload->suffix = $this->applicant['suffix'];
         $upload->contact_number = $this->applicant['contact_number'];
         $upload->email_address = $this->applicant['email_address'];
         $upload->home_address = $this->applicant['home_address'];

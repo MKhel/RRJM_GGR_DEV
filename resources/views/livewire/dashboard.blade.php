@@ -4,7 +4,43 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Dashboard') }}
             </h2>
-            
+            <div class="px-3 py-3 ">
+              <div class="flex items-center justify-center">
+                {{-- <div class="px-3 py-3 bg-white"> --}}
+                  <div class="border-4 border-gray-600">
+                    <div class="flex">
+                      <div class="flex p-6 sm:px-20">
+                        
+                        <div class="p-3">
+                        <div class="text-2xl">
+                            Applicants
+                        </div>
+                        <div class="flex">
+                          <div class="mt-6 text-gray-500">
+                             selected
+                          </div>
+                          
+                        </div>
+                        </div>
+                        </div>
+                        <div class="px-3 py-3">
+                          <a href="/">
+                          <img width="50" src="http://127.0.0.1:8000/images/rrjmlogo.svg" alt="RRJM"> </a>
+                          <div class="mt-6 text-gray-500">
+                            100%
+                         </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    
+                </div>
+
+                
+              </div>
+                
+            </div>
+        
             <div class="shadow-lg rounded-lg overflow-hidden">
                 <div class="mt-4 py-3 px-5 bg-gray-50">Applicant per month</div>
                 <canvas class="p-10" id="chartBar"></canvas>

@@ -18,9 +18,9 @@ use App\Http\Livewire\Dashboard;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('dashboard');
+// });
 
 Route::middleware([
     'auth:sanctum',
@@ -28,6 +28,9 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/dashboard', Dashboard::class, function () {
+        return view('livewire.dashboard');
+    })->name('dashboard');
+    Route::get('/', Dashboard::class, function () {
         return view('livewire.dashboard');
     })->name('dashboard');
 });
