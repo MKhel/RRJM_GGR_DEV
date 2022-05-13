@@ -415,6 +415,31 @@
                                         <x-jet-input-error for="applicant.birthdate" class="mt-2" />
                                     </div>
 
+                                    
+                                    {{-- <div class="col-span sm:col-span-4 mt-3">
+                                        <x-jet-label for="country" value="{{ __('Country')}}" />
+                                       
+                                        <select wire:model="selectedCountry" class="block mt-1 w-full">
+                                            <option value="" selected>--Select Country--</option>
+                                            @foreach ($countries as $countries)
+                                            <option value="{{$countries->id}}" > {{$countries->name}}</option>
+                                            @endforeach
+                                        </select>
+                                        <x-jet-input-error for="applicant.country" class="mt-2" />
+                                    </div> --}}
+                                    <div class="col-span sm:col-span-4 mt-3">
+                                        <x-jet-label for="country" value="{{ __('Country')}}" />
+                                       
+                                        <select wire:model="selectedCountry" name="country" class="block mt-1 w-full">
+                                            <option value="" selected>--Select Country--</option>
+                                            
+                                            <option value="PH" >Philippines</option>
+                                            <option value="abroad" >Abroad</option>
+                                           
+                                        </select>
+                                        <x-jet-input-error for="applicant.country" class="mt-2" />
+                                    </div>
+                                    @if ($selectedCountry == 'PH')
                                     <div class="col-span sm:col-span-4 mt-3">
                                         <x-jet-label for="home_address" value="{{ __('Home Address')}}" />
                                         <x-jet-input id="home_address" type="text" class="mt-1 block w-full" wire:model="applicant.home_address" />
@@ -432,52 +457,22 @@
                                         <x-jet-input id="province" type="text" class="mt-1 block w-full" wire:model="applicant.province" />
                                         <x-jet-input-error for="applicant.province" class="mt-2" />
                                     </div>
-                                    <div class="col-span sm:col-span-4 mt-3">
-                                        <x-jet-label for="country" value="{{ __('Country')}}" />
-                                       
-                                        <select wire:model="selectedCountry" class="block mt-1 w-full">
-                                            <option value="" selected>--Select Country--</option>
-                                            @foreach ($countries as $countries)
-                                            <option value="{{$countries->id}}" > {{$countries->name}}</option>
-                                            @endforeach
-                                        </select>
-                                        <x-jet-input-error for="applicant.country" class="mt-2" />
-                                    </div>
-                                    <div class="col-span sm:col-span-4 mt-3">
-                                        <x-jet-label for="country" value="{{ __('Country')}}" />
-                                       
-                                        <select wire:model="selectedCountry" class="block mt-1 w-full">
-                                            <option value="" selected>--Select Country--</option>
-                                            
-                                            <option value="PH" >Philippines</option>
-                                            <option value="abroad" >Abroad</option>
-                                           
-                                        </select>
-                                        <x-jet-input-error for="applicant.country" class="mt-2" />
-                                    </div>
-                                    @if ($selectedCountry == 'PH')
-                                    <div class="col-span sm:col-span-4 mt-3">
-                                        <x-jet-label for="state" value="{{ __('State')}}" />
-                                       
-                                        <select wire:model="" name="state" id="state" class="block mt-1 w-full">
-                                            <option value="" selected>--PH--</option>
-                                            @foreach ($states as $state)
-                                            <option value="{{$state->id}}" > {{$state->name}}</option>
-                                            @endforeach
-                                        </select>
-                                        <x-jet-input-error for="applicant.country" class="mt-2" />
+                                    <div class="col-span sm:col-span-4  mt-3">
+                                        <x-jet-label for="zip_code" value="{{ __('Zip Code')}}" />
+                                        <x-jet-input id="zip_code" type="number" class="mt-1 block w-full" wire:model="applicant.zip_code" />
+                                        <x-jet-input-error for="applicant.zip_code" class="mt-2" /> 
                                     </div>
                                     @endif
                                     @if ($selectedCountry == 'abroad')
                                     <div class="col-span sm:col-span-4 mt-3">
-                                        <x-jet-label for="Abroad_address" value="{{ __('Abroad Address')}}" />
-                                        <x-jet-input id="home_address" type="text" class="mt-1 block w-full" wire:model="applicant.home_address" />
-                                        <x-jet-input-error for="applicant.home_address" class="mt-2" />
+                                        <x-jet-label for="abroad_address" value="{{ __('Home Address')}}" />
+                                        <x-jet-input id="abroad_address" type="text" class="mt-1 block w-full" wire:model="applicant.abroad_address" />
+                                        <x-jet-input-error for="applicant.abroad_address" class="mt-2" />
                                     </div>
 
                                     @endif
 
-                                    <table>
+                                    {{-- <table>
                                         <tr>
                                             <td>Region</td>
                                             <td><select id="region"></select></td>
@@ -494,7 +489,7 @@
                                             <td>Barangay</td>
                                             <td><select id="barangay"></select></td>
                                         </tr>
-                                    </table>
+                                    </table> --}}
                                    
                                     {{-- @if (!is_null($selectedCountry))
                                     <div class="col-span sm:col-span-4 mt-3">
@@ -510,11 +505,7 @@
                                     </div>
                                     @endif --}}
                                     
-                                    <div class="col-span sm:col-span-4  mt-3">
-                                        <x-jet-label for="zip_code" value="{{ __('Zip Code')}}" />
-                                        <x-jet-input id="zip_code" type="number" class="mt-1 block w-full" wire:model="applicant.zip_code" />
-                                        <x-jet-input-error for="applicant.zip_code" class="mt-2" /> 
-                                    </div>
+                                   
                                      
                                
                                 </x-slot>

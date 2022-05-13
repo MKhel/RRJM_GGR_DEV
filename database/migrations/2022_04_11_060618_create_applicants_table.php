@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('city');
             $table->string('province');
             $table->string('country');
+            $table->string('abroad_address');
             $table->integer('zip_code');
             $table->string('status');
             $table->timestamps();

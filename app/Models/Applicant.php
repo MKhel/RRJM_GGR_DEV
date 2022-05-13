@@ -27,6 +27,7 @@ class Applicant extends Model
         'country',
         'zip_code',
         'status',
+        'abroad_address',
       ];
 
 

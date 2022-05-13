@@ -83,12 +83,12 @@ class Applicant extends Component
         'applicant.last_name' => 'required|unique:Applicants,last_name',
         'applicant.suffix' => '',
         'applicant.contact_number' => 'required|unique:Applicants,contact_number',
-        'applicant.email_address' => 'required|unique:Applicants,email_address',
-        'applicant.home_address' => ['required'],
-        'applicant.city' => ['required'],
-        'applicant.province' => ['required'],
-        'applicant.country' => ['required'],
-        'applicant.zip_code' => ['required'],
+        'applicant.email_address' => '',
+        'applicant.home_address' => '',
+        'applicant.city' => '',
+        'applicant.province' => '',
+        'applicant.country' => '',
+        'applicant.zip_code' => '',
         
     ];
     // protected $rules = [
@@ -222,9 +222,10 @@ class Applicant extends Component
         $upload->home_address = $this->applicant['home_address'];
         $upload->city = $this->applicant['city'];
         $upload->province = $this->applicant['province'];
-        $upload->country = $this->applicant['country'];
+        $upload->country = "Philippines";
         $upload->zip_code = $this->applicant['zip_code'];
         $upload->birthdate = $this->applicant['birthdate'];
+        $upload->abroad_address = $this->applicant['abroad_address'];
         $upload->status = "Encoded";
         // $upload->upload = [
         //     'user_id' => auth()->id(),
