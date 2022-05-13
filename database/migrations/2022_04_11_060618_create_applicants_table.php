@@ -22,13 +22,14 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('middle_name');
             $table->string('last_name');
-            $table->string('suffix');
+            $table->string('suffix')->nullable;
             $table->integer('contact_number');
             $table->string('email_address');
             $table->date('birthdate');
             $table->string('home_address');
             $table->string('city');
             $table->string('province');
+            $table->string('country');
             $table->integer('zip_code');
             $table->string('status');
             $table->timestamps();

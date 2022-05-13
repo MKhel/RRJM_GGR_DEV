@@ -5,7 +5,7 @@
 </svg> --}}
 <a href="/">
 
-  <img width="80" src="{{ asset('images/rrjmlogo.svg') }}" alt="RRJM">
+  <img class="w-20" src="{{ asset('images/rrjmlogo.svg') }}" alt="RRJM">
 
 </a>
 {{-- 

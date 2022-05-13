@@ -101,7 +101,7 @@
                         </span>
                     
                         <span class="hidden sm:block ml-3">
-                          <button type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                          <button wire:loading.attr="disabled" value="{{$class->id}}" wire:model="{{$class_id}}" wire:click="confirmClassUpdate({{$class->id}})" type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                             <svg class="-ml-1 mr-2 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                               <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                             </svg>
@@ -110,7 +110,7 @@
                         </span>
                     
                         <span class="sm:ml-3">
-                          <button type="button" wire:click="confirmClassDelete( {{ $class->id }} )" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray bg-white-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                          <button type="button" wire:click="confirmClassDelete({{$class->id}})" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray bg-white-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white-400" fill="none"
                               viewBox="0 0 24 24" stroke="currentColor">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -188,7 +188,7 @@
             </x-slot>
     
             <x-slot name="footer">
-                <x-jet-secondary-button wire:click="$set('confirmingClassAdd', false)" wire:loading.attr="disabled">
+                <x-jet-secondary-button wire:click="$set('confirmingClassAdd', true)" wire:loading.attr="disabled">
                     {{ __('Close') }}
                 </x-jet-secondary-button>
     
@@ -202,10 +202,10 @@
              Delete
           </x-slot>
           <x-slot name="content">
-              Are you sure, you want to delete this applicant?
+              Are you sure, you want to delete this class?
            </x-slot>
           <x-slot name="footer">
-              <x-jet-secondary-button wire:click="$set('confirmingApplicantDeletion', 'false')" wire:loading.attr="disabled">
+              <x-jet-secondary-button wire:click="$set('confirmingClassDeletion', 'false')" wire:loading.attr="disabled">
                   {{ __('Close') }}
               </x-jet-secondary-button>
 
@@ -214,6 +214,52 @@
               </x-jet-danger-button>
           </x-slot>
       </x-jet-dialog-modal>
+
+            <x-jet-dialog-modal wire:model="confirmingClassUpdate">
+                                      
+              <x-slot name="title" class="text-center">
+                  {{ __('Update Applicant') }}
+              </x-slot>
+              
+              
+              <x-slot name="content">
+              
+                  
+              <form class="w-full max-w-lg">
+                  <div class="mb-6">
+                    
+                    <div class="mt-3">
+                      <x-jet-label for="class_name" value="{{ __('Class Name')}}" />
+                      {{-- @foreach ($class_data as $class)
+                          
+                      
+                      <x-jet-input id="class_name" placeholder="{{ $class->class_name}}" type="text" class="appearance-none mt-1 block w-full" wire:model.def="Classes.class_name" />
+                        @endforeach --}}
+                        <x-jet-input-error for="Classes.class_name" class="mt-2" />
+                    </div>
+
+                    <div class="mt-3">
+                      <x-jet-label for="Target Number" value="{{ __('Target Number')}}" />
+                      <x-jet-input name="target_number" id="Target Number" type="number" class="appearance-none mt-1 block w-full" wire:model.def="Classes.target_number" />
+                      <x-jet-input-error for="Classes.target_number" class="mt-2" />
+                    </div>
+
+                  </div>
+                  
+                </form>
+              </x-slot>
+
+              <x-slot name="footer">
+                  <x-jet-secondary-button wire:click="$set('confirmingClassUpdate', false)" wire:loading.attr="disabled">
+                      {{ __('Close') }}
+                  </x-jet-secondary-button>
+
+                  <x-jet-button class="ml-3" wire:click="UpdateClass()" wire:loading.attr="disabled">
+                      {{ __('Update') }}
+                  </x-jet-button>
+              </x-slot>
+              </x-jet-dialog-modal>
+             
     </div>   
 </div>
 </div>

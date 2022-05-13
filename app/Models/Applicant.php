@@ -24,6 +24,7 @@ class Applicant extends Model
         'home_address',
         'city',
         'province',
+        'country',
         'zip_code',
         'status',
       ];

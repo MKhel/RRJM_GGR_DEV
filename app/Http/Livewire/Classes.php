@@ -7,6 +7,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\classes as client;
 use App\Models\Applicant;
+use App\Models\classes as ModelsClasses;
 use Illuminate\Console\Application;
 
 class Classes extends Component
@@ -19,18 +20,25 @@ class Classes extends Component
 
     public $confirmingClassDeletion = false;
     public $confirmingClassAdd = false;
+    public $confirmingClassUpdate = false;
 
     public $searchQuery;
+
+    public $class_id;
 
     protected $rules = [
         'Classes.class_name' => 'required|unique:classes,class_name',
         'Classes.target_number' => ['required'],
     ];
 
+    // public function mount($id)
+    // {
+    //     $this->class_data = client::find($id);
+    // }
     public function render()
     {   
         
-
+        
         //$applicant_count =  Applicant::where('status', "LIKE","Encoded")->withcount('a');
        // $applicant_count = client::withcount('applicant')->get();
         //return "$applicant_count";
@@ -72,12 +80,28 @@ class Classes extends Component
     public function confirmClassDelete($id)
     {  
         $this->confirmingClassDeletion = $id;
+        $this->confirmingClassDeletion = true;
     }
 
     public function DeleteClass( client $client)
     {   
         $client->delete();
         $this->confirmingClassDeletion = false;
+    }
+    public function confirmClassUpdate($id)
+    {  
+        $this->confirmingClassUpdate = true;
+        $this->class_data = client::where('id',$id)->get();
+    }
+
+    public function UpdateClass($id)
+    {   
+        $class_data = [
+            'class_name' => $this->Classes['class_name'],
+            'target_number' => $this->Classes['target_number']
+            
+        ];
+        Applicant::find($id)->update($class_data);
     }
 }
 

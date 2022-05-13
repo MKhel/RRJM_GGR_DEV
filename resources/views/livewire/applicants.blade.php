@@ -10,14 +10,14 @@
         </div>
       </div>
         
-        <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800" role="alert">
+        
             @if (session()->has('message'))
-            <div class="alert alert-success">
+    
                 <x-jet-label> {{ session('message') }}</x-jet-label>
                 <x-jet-banner>{{ session('message') }}</x-jet-banner>
-            </div>
+        
         @endif
-          </div>
+
     <div class="container my-12 py-4 mx-auto px-4">
         <div class="bg-white py-2 md:py-7 px-4 md:px-8 xl:px-10">    
             <div class="flex flex-col">
@@ -26,7 +26,13 @@
                             <div class="flex mb-4">
                                 <input wire:keydown.escape = '' type="search" wire:model="searchQuery"
                                        class="w-full form-control rounded-md border-green-400 px-3 py-1.5 text-base font-normal text-green-700 bg-white bg-clip-padding transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-green-700 focus:outline-none"
-                                       placeholder="Seach Applicant..." {{ $isDisabled }}/>
+                                       placeholder="Seach Applicant..." 
+                                       @if (!is_null($searchQuery))
+                                         
+                                       @endif
+                                       @if ($searchQuery)
+                                        Disabled
+                                       @endif />
                             </div>
 
                             <div class="w-full flex justify-end">
@@ -426,6 +432,83 @@
                                         <x-jet-input id="province" type="text" class="mt-1 block w-full" wire:model="applicant.province" />
                                         <x-jet-input-error for="applicant.province" class="mt-2" />
                                     </div>
+                                    <div class="col-span sm:col-span-4 mt-3">
+                                        <x-jet-label for="country" value="{{ __('Country')}}" />
+                                       
+                                        <select wire:model="selectedCountry" class="block mt-1 w-full">
+                                            <option value="" selected>--Select Country--</option>
+                                            @foreach ($countries as $countries)
+                                            <option value="{{$countries->id}}" > {{$countries->name}}</option>
+                                            @endforeach
+                                        </select>
+                                        <x-jet-input-error for="applicant.country" class="mt-2" />
+                                    </div>
+                                    <div class="col-span sm:col-span-4 mt-3">
+                                        <x-jet-label for="country" value="{{ __('Country')}}" />
+                                       
+                                        <select wire:model="selectedCountry" class="block mt-1 w-full">
+                                            <option value="" selected>--Select Country--</option>
+                                            
+                                            <option value="PH" >Philippines</option>
+                                            <option value="abroad" >Abroad</option>
+                                           
+                                        </select>
+                                        <x-jet-input-error for="applicant.country" class="mt-2" />
+                                    </div>
+                                    @if ($selectedCountry == 'PH')
+                                    <div class="col-span sm:col-span-4 mt-3">
+                                        <x-jet-label for="state" value="{{ __('State')}}" />
+                                       
+                                        <select wire:model="" name="state" id="state" class="block mt-1 w-full">
+                                            <option value="" selected>--PH--</option>
+                                            @foreach ($states as $state)
+                                            <option value="{{$state->id}}" > {{$state->name}}</option>
+                                            @endforeach
+                                        </select>
+                                        <x-jet-input-error for="applicant.country" class="mt-2" />
+                                    </div>
+                                    @endif
+                                    @if ($selectedCountry == 'abroad')
+                                    <div class="col-span sm:col-span-4 mt-3">
+                                        <x-jet-label for="Abroad_address" value="{{ __('Abroad Address')}}" />
+                                        <x-jet-input id="home_address" type="text" class="mt-1 block w-full" wire:model="applicant.home_address" />
+                                        <x-jet-input-error for="applicant.home_address" class="mt-2" />
+                                    </div>
+
+                                    @endif
+
+                                    <table>
+                                        <tr>
+                                            <td>Region</td>
+                                            <td><select id="region"></select></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Province</td>
+                                            <td><select id="province"></select></td>
+                                        </tr>
+                                        <tr>
+                                            <td>City</td>
+                                            <td><select id="city"></select></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Barangay</td>
+                                            <td><select id="barangay"></select></td>
+                                        </tr>
+                                    </table>
+                                   
+                                    {{-- @if (!is_null($selectedCountry))
+                                    <div class="col-span sm:col-span-4 mt-3">
+                                        <x-jet-label for="state" value="{{ __('State')}}" />
+                                       
+                                        <select wire:model="selectedState" name="state" id="state" class="block mt-1 w-full">
+                                            <option value="0" >--Select state--</option>
+                                            @foreach ($states as $state)
+                                            <option value="{{$state->id}}" > {{$state->name}}</option>
+                                            @endforeach
+                                        </select>
+                                        <x-jet-input-error for="applicant.country" class="mt-2" />
+                                    </div>
+                                    @endif --}}
                                     
                                     <div class="col-span sm:col-span-4  mt-3">
                                         <x-jet-label for="zip_code" value="{{ __('Zip Code')}}" />
@@ -467,6 +550,44 @@
                                     {{ __('Delete') }}
                                 </x-jet-danger-button>
                             </x-slot>
+                            <script type="text/javascript">
+            
+                                var my_handlers = {
+                            
+                                    fill_provinces:  function(){
+                            
+                                        var region_code = $(this).val();
+                                        $('#province').ph_locations('fetch_list', [{"region_code": region_code}]);
+                                        
+                                    },
+                            
+                                    fill_cities: function(){
+                            
+                                        var province_code = $(this).val();
+                                        $('#city').ph_locations( 'fetch_list', [{"province_code": province_code}]);
+                                    },
+                            
+                            
+                                    fill_barangays: function(){
+                            
+                                        var city_code = $(this).val();
+                                        $('#barangay').ph_locations('fetch_list', [{"city_code": city_code}]);
+                                    }
+                                };
+                            
+                                $(function(){
+                                    $('#region').on('change', my_handlers.fill_provinces);
+                                    $('#province').on('change', my_handlers.fill_cities);
+                                    $('#city').on('change', my_handlers.fill_barangays);
+                            
+                                    $('#region').ph_locations({'location_type': 'regions'});
+                                    $('#province').ph_locations({'location_type': 'provinces'});
+                                    $('#city').ph_locations({'location_type': 'cities'});
+                                    $('#barangay').ph_locations({'location_type': 'barangays'});
+                            
+                                    $('#region').ph_locations('fetch_list');
+                                });
+                                </script>
                         </x-jet-dialog-modal>
                      </div>
                     </div>
@@ -475,8 +596,22 @@
         </div>
     </div>
     
-    
-   
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        $(document).ready(function(){
+            $("#country").change(function(){
+                let country_id = true.value;
+                $.get('/get_states?country='+country_id, function(data){
+                    $("$state").html(data);
+                })
+            })
+        })
+    </script> --}}
+         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"></script>
+         <!-- script type="text/javascript" src="../../jquery.ph-locations.js"></script -->
+         <script type="text/javascript" src="https://f001.backblazeb2.com/file/buonzz-assets/jquery.ph-locations.js"></script>
+
+  
 
     
   

@@ -93,6 +93,7 @@ class ApplicantInfo extends Component
         Applicant::find($id)->update($app_stat);       
         session()->flash('message', 'Status update successfully.');
     }
+    
     public function editApplicant()
     {
         $this->isDisabled = 'disabled';

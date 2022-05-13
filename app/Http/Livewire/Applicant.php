@@ -12,6 +12,11 @@ use Livewire\WithFileUploads;
 use App\Models\UserActivities;
 use App\Providers\AuthServiceProvider;
 use Illuminate\Support\Facades\Storage;
+use phpDocumentor\Reflection\Types\This;
+use WisdomDiala\Countrypkg\Models\Country;
+use WisdomDiala\Countrypkg\Models\State;
+
+
 
 
 class Applicant extends Component
@@ -47,6 +52,15 @@ class Applicant extends Component
     public $searchClass = '';
 
 
+
+    public $countries;
+    public $states;
+    public $cities;
+
+    public $selectedCountry = Null;
+    public $selectedState = Null;
+
+
     public $user;
     public $user_data;
     public $app_id;
@@ -73,6 +87,7 @@ class Applicant extends Component
         'applicant.home_address' => ['required'],
         'applicant.city' => ['required'],
         'applicant.province' => ['required'],
+        'applicant.country' => ['required'],
         'applicant.zip_code' => ['required'],
         
     ];
@@ -86,6 +101,12 @@ class Applicant extends Component
     //     $this->app_id = User::with('applicant')->get()->dd();
     //     //$this->app_id = Applicants::with('useractivities')->get()->dd();
     // }
+    public function mount()
+    {
+        $this->countries = Country::all();
+        $this->states = collect();
+        //$this->cities - collect();
+    }
     
     public function render()
     {   
@@ -99,16 +120,23 @@ class Applicant extends Component
         $searchOrderby = $this->orderBy;
         $searchQuery = '%'. $this->searchQuery . '%';
         
+       // $country_id = $this->country;
+
+        
         if ($this->searchQuery == null)
         $searchQuery = '%'. $searchOrderby . '%';
         elseif ($this->searchQuery == null)
         $searchQuery = '%'. $searchClass. '%';
         
         $perPage  = $this->perPage;
+        //$countries = Country::all();
+        //$states = State::where('country_id', $country_id)->get()->dd(); 
 
         return view('livewire.applicants', [
             'user_id' => $user_id,
             'class' => $class,
+            // 'countries' => $countries,
+            // 'states'   => $states,
 
             'applicants' => Applicants::where('sn_number', 'LIKE', $searchQuery)
                                         ->orwhere('class_name', 'LIKE', $searchQuery)
@@ -133,22 +161,27 @@ class Applicant extends Component
     
             
       
+    }   
+    public function updatedselectedCountry($country)
+    {
+        //$state = State::where('country_id', $country)->get()->dd();
+        $this->states = State::where('country_id', $country)->get();
+        $this->selectedState = Null;
     }
+    // public function updatedSelectedState($state)
+    // {
+    //     if (!is_null($state)) {
+    //         $this->cities = City::where('state_id'. $state)->get();
+    //     }
+    // }
     
 
     public function confirmApplicantAdd()
     {   
         $this->reset(['applicant']);
         // //$this->reset(['photo']);
-        $this->isDisabled = 'disabled';
         $this->confirmingApplicantAdd = true;
-        if ($this->confirmingApplicantAdd = true) {
-            $this->isDisabled = 'disabled';
-        } else {
-            $this->confirmingApplicantAdd = false;
-            $this->isDisabled = '';
-        }
-        $this->confirmingApplicantAdd = true;
+        
         
        
         
@@ -189,6 +222,7 @@ class Applicant extends Component
         $upload->home_address = $this->applicant['home_address'];
         $upload->city = $this->applicant['city'];
         $upload->province = $this->applicant['province'];
+        $upload->country = $this->applicant['country'];
         $upload->zip_code = $this->applicant['zip_code'];
         $upload->birthdate = $this->applicant['birthdate'];
         $upload->status = "Encoded";
@@ -243,6 +277,6 @@ class Applicant extends Component
     public function DeleteApplicant( Applicants $applicant)
     {   
         $applicant->delete();
-        $this->confirmingApplicantDeletion = false;
+        $this->confirmingApplicantDeletion = true;
     }
 }

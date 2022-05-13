@@ -1,12 +1,12 @@
 <div>
-
+{{-- 
         <x-slot name="header">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Dashboard') }}
             </h2>
             <div class="px-3 py-3 ">
               <div class="flex items-center justify-center">
-                {{-- <div class="px-3 py-3 bg-white"> --}}
+                <div class="px-3 py-3 bg-white">
                   <div class="border-4 border-gray-600">
                     <div class="flex">
                       <div class="flex p-6 sm:px-20">
@@ -46,10 +46,9 @@
                 <canvas class="p-10" id="chartBar"></canvas>
               </div>
               
-              <!-- Required chart.js -->
+             
               <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
               
-              <!-- Chart bar -->
               <script>
                 const labelsBarChart = [
                   "January",
@@ -83,16 +82,17 @@
                 );
               </script>
         </x-slot>
-        
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <x-jet-welcome />
-                
-                </div>
-                
-            </div>
-        </div>
+       
 
-     
+      --}}
+       
+      <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <x-jet-welcome />
+            
+            </div>
+            
+        </div>
+    </div>
 </div>
