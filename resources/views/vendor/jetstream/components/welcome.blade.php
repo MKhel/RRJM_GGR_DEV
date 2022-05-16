@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div class="p-6 items-center">
-                <span class="text-6xl text-bold">200</span>
+                {{ $content1}}
             </div>
         </div>  
     </div>
@@ -57,7 +57,7 @@
                 </div>
             </div>
             <div class="p-6 items-center">
-                <span class="text-6xl text-bold">26</span>
+                {{ $content2}}
             </div>
         </div>  
     </div>
@@ -79,7 +79,7 @@
                 </div>
             </div>
             <div class="p-6 items-center">
-                <span class="text-6xl text-bold">10</span>
+                {{ $content3}}
             </div>
         </div>  
     </div>
@@ -102,7 +102,7 @@
                 </div>
             </div>
             <div class="p-6 items-center">
-                <span class="text-6xl text-bold">100</span>
+                {{ $content4}}
             </div>
         </div>  
     </div>

@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('middle_name');
             $table->string('last_name');
             $table->string('suffix')->nullable;
-            $table->integer('contact_number');
+            $table->bigInteger('contact_number');
             $table->string('email_address');
             $table->date('birthdate');
             $table->string('home_address');

@@ -81,7 +81,7 @@
                   
                   <div class="text-center mt-2 item-center">
                               
-                    <x-jet-button wire:loading.attr="disabled" wire:click="editApplicant()">
+                    <x-jet-button wire:loading.attr="disabled" wire:click="editApplicant({{$app_data->id}})">
                       {{ __('Update Profile') }}
                     </x-jet-button>
                   </div>
@@ -114,7 +114,7 @@
                       
                         <div class="flex bg-white px-py sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                           <dt class="text-sm font-medium text-gray-500 uppercase">Birthdate:</dt>
-                          <dd class="mt-1 ml-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ $app_data->birthdate}}</dd>
+                          <dd class="mt-1 ml-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"> {!! date('F-d-Y', strtotime($app_data->birthdate)) !!}</dd>
                         </div>
                         <div class="flex bg-white px-py sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                           <dt class="text-sm font-medium text-gray-500 uppercase">Email address:</dt>
@@ -175,9 +175,18 @@
                     </div>
                   </div>
                 </div>
-
+               
             </div>
-          
+            @if (session()->has('update-success'))
+            <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md my-3"
+                role="alert">
+                <div class="flex">
+                    <div>
+                        <p class="text-sm">{{ session('update-success') }}</p>
+                    </div>
+                </div>
+            </div>
+            @endif
                 <div class="max-w-2xl mx-auto mt-4">
                   
                   <div>
@@ -204,6 +213,7 @@
                                     <option value="Assigned to class">Assigned to class</option>
                                     <option value="Endorsed to processing">Endorsed to processing</option>
                                     <option value="Deployed">Deployed</option>
+                                    <option value="For Recall">For Recall</option>
                                   </select>
                   
                                 @error('particular') <span class="error">{{ $message }}</span> @enderror
@@ -216,7 +226,7 @@
                                   <x-jet-label for="remarks" value="{{ __('Remarks')}}" />
                                   <x-jet-input id="remarks" type="text" class="mt-1 block w-full" wire:model="app_data.remarks" />
                                   
-                                  <x-jet-input-error for="app_data.remarks" class="mt-2" />
+                                  <x-jet-input-error for="remarks" class="mt-2" />
                                 </div>
                                 @error('remarks') <span class="error">{{ $message }}</span> @enderror
                   
@@ -224,17 +234,23 @@
                               </div>
                               
                             </div>
-                            @if (session()->has('message'))
-                                    <div class="px-6 py-3  alert alert-success">
-                                       <x-jet-label> {{ session('message') }}</x-jet-label>
-                                      
-                                    </div>
-                                @endif
-                            <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                           
+                            <div class=" px-4 py-3 bg-gray-50 text-right sm:px-6">
+                             
+                              <div class=" py-4 alert alert-success">
+                                
+                                 
+                                 <div class="flex justify-between">
+                                  @if (session()->has('message'))
+                                    <x-jet-label> {{ session('message') }}</x-jet-label>
+                                  @endif
+                                 </div>
+                                 <x-jet-button wire:loading.attr="disabled" wire:click="saveUserActivity({{ $app_data->id }})">
+                                  {{ __('Save') }}
+                                  </x-jet-button>
+                              </div>
+                             
                               
-                              <x-jet-button wire:loading.attr="disabled" wire:click="saveUserActivity({{ $app_data->id }})">
-                                {{ __('Save') }}
-                              </x-jet-button>
                             </div>
                           </div>
                     </div>
@@ -335,84 +351,84 @@
 
                           <div class="col-span sm:col-span-4  mt-6">
                               <x-jet-label for="sn_number" value="{{ __('#SN Number')}}" />
-                              <x-jet-input id="sn_number" type="text" class="mt-1 block w-full" wire:model="applicant.sn_number" placeholder="{{ $app_data->sn_number}}" disabled />
-                              <x-jet-input-error for="applicant.sn_number" class="mt-2" />
+                              <x-jet-input id="sn_number" type="text" class="mt-1 block w-full" wire:model="sn_number" disabled />
+                              <x-jet-input-error for="sn_number" class="mt-2" />
                           </div>
 
                           <div class="mt-4">
                               <x-jet-label for="class_name" value="{{ __('Class') }}" />
-                              <select  wire:model="applicant.class_name" name="class_name" class="block mt-1 w-full" disabled>
+                              <select  wire:model="class_name" name="class_name" class="block mt-1 w-full">
                                   <option value="0" >{{ $app_data->class_name}}</option>
                                   @foreach ($class as $classes)
                                           <option value="{{$classes->class_name}}" > {{$classes->class_name}}</option>
                                   @endforeach
                               </select>
-                              <x-jet-input-error for="applicant.class_name" class="mt-2" />
+                              <x-jet-input-error for="class_name" class="mt-2" />
                           </div>
                           
 
                           <div class="col-span sm:col-span-4 mt-3">
                               <x-jet-label for="first_name" value="{{ __('First Name')}}" />
-                              <x-jet-input id="first_name" type="text" class="mt-1 block w-full" wire:model="applicant.first_name" placeholder="{{ $app_data->first_name}}"/>
-                              <x-jet-input-error for="applicant.first_name" class="mt-2" />
+                              <x-jet-input id="first_name" name="first_name" type="text" class="mt-1 block w-full" wire:model="first_name"/>
+                              <x-jet-input-error for="first_name" class="mt-2" />
                           </div>
 
                           <div class="col-span sm:col-span-4 mt-3">
                               <x-jet-label for="middle_name" value="{{ __('Middle Name')}}" />
-                              <x-jet-input id="middle_name" type="text" class="mt-1 block w-full" wire:model="applicant.middle_name" placeholder="{{ $app_data->middle_name}}"/>
-                              <x-jet-input-error for="applicant.middle_name" class="mt-2" />
+                              <x-jet-input id="middle_name" type="text" class="mt-1 block w-full" wire:model="middle_name"/>
+                              <x-jet-input-error for="middle_name" class="mt-2" />
                              
                           </div>
 
                           <div class="col-span sm:col-span-4 mt-3">
                               <x-jet-label for="last_name" value="{{ __('Last Name')}}" />
-                              <x-jet-input id="last_name" type="text" class="mt-1 block w-full" wire:model="applicant.last_name" placeholder="{{ $app_data->last_name}}"/>
-                              <x-jet-input-error for="applicant.last_name" class="mt-2" />
+                              <x-jet-input id="last_name" type="text" class="mt-1 block w-full" wire:model="last_name"/>
+                              <x-jet-input-error for="last_name" class="mt-2" />
                               
                           </div>
 
                           <div class="col-span sm:col-span-4 mt-3">
                               <x-jet-label for="contact_number" value="{{ __('Contact Number')}}" />
-                              <x-jet-input id="contact_number" type="number" class="mt-1 block w-full" wire:model="applicant.contact_number" placeholder="{{ $app_data->contact_number}}"/>
-                              <x-jet-input-error for="applicant.last_name" class="mt-2" />
+                              <x-jet-input id="contact_number" type="number" class="mt-1 block w-full" wire:model="contact_number" placeholder="{{ $app_data->contact_number}}"/>
+                              <x-jet-input-error for="contact_number" class="mt-2" />
                           </div>
 
                           <div class="col-span sm:col-span-4 mt-3">
                               <x-jet-label for="email_address" value="{{ __('Email Address')}}" />
-                              <x-jet-input id="email_address" type="email" class="mt-1 block w-full" wire:model="applicant.email_address" placeholder="{{ $app_data->email_address}}" disabled/>
-                              <x-jet-input-error for="applicant.email_address" class="mt-2" />
+                              <x-jet-input id="email_address" type="email" class="mt-1 block w-full" wire:model="email_address" placeholder="{{ $app_data->email_address}}" disabled/>
+                              <x-jet-input-error for="email_address" class="mt-2" />
                              
                           </div>
 
                           <div class="col-span sm:col-span-4 mt-3">
                               <x-jet-label for="birthdate" value="{{ __('Birthdate')}}" />
-                              <x-jet-input name="birthdate" type="date" class="mt-1 block w-full" wire:model="applicant.birthdate" value="{{ $app_data->birthdate}}" placeholder="date"/>
+                              <x-jet-input name="birthdate" type="date" class="mt-1 block w-full" wire:model="birthdate" value="{{ $app_data->birthdate}}" placeholder="date"/>
                               <i class="fas fa-calendar datepicker-toggle-icon"></i>   
-                              <x-jet-input-error for="applicant.birthdate" class="mt-2" />
+                              <x-jet-input-error for="birthdate" class="mt-2" />
                           </div>
 
                           <div class="col-span sm:col-span-4 mt-3">
                               <x-jet-label for="home_address" value="{{ __('Home Address')}}" />
-                              <x-jet-input id="home_address" type="text" class="mt-1 block w-full" wire:model="applicant.home_address" placeholder="{{ $app_data->home_address}}"/>
-                              <x-jet-input-error for="applicant.home_address" class="mt-2" />
+                              <x-jet-input id="home_address" type="text" class="mt-1 block w-full" wire:model="home_address" placeholder="{{ $app_data->home_address}}"/>
+                              <x-jet-input-error for="home_address" class="mt-2" />
                           </div>
 
                           <div class="col-span sm:col-span-4 mt-3">
                               <x-jet-label for="city" value="{{ __('City')}}" />
-                              <x-jet-input id="city" type="text" class="mt-1 block w-full" wire:model="applicant.city" placeholder="{{ $app_data->city}}"/>
-                              <x-jet-input-error for="applicant.city" class="mt-2" />
+                              <x-jet-input id="city" type="text" class="mt-1 block w-full" wire:model="city" placeholder="{{ $app_data->city}}"/>
+                              <x-jet-input-error for="city" class="mt-2" />
                           </div>
 
                           <div class="col-span sm:col-span-4 mt-3">
                               <x-jet-label for="province" value="{{ __('Province')}}" />
-                              <x-jet-input id="province" type="text" class="mt-1 block w-full" wire:model="applicant.province" placeholder="{{ $app_data->province}}" />
-                              <x-jet-input-error for="applicant.province" class="mt-2" />
+                              <x-jet-input id="province" type="text" class="mt-1 block w-full" wire:model="province" placeholder="{{ $app_data->province}}" />
+                              <x-jet-input-error for="province" class="mt-2" />
                           </div>
                           
                           <div class="col-span sm:col-span-4  mt-3">
                               <x-jet-label for="zip_code" value="{{ __('Zip Code')}}" />
-                              <x-jet-input id="zip_code" type="number" class="mt-1 block w-full" wire:model="applicant.zip_code" placeholder="{{ $app_data->zip_code}}"/>
-                              <x-jet-input-error for="applicant.zip_code" class="mt-2" /> 
+                              <x-jet-input id="zip_code" type="number" class="mt-1 block w-full" wire:model="zip_code" placeholder="{{ $app_data->zip_code}}"/>
+                              <x-jet-input-error for="zip_code" class="mt-2" /> 
                           </div>
                            
                      

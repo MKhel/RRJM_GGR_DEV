@@ -89,8 +89,22 @@
       <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <x-jet-welcome />
-            
+                <x-jet-welcome>
+                
+                
+                <x-slot name="content1" class="text-center">
+                  <span class="text-6xl text-bold">{{$app_count->count()}}</span>
+                </x-slot>
+                <x-slot name="content2" class="text-center">
+                  <span class="text-6xl text-bold">{{$class_count->count()}}</span>
+                </x-slot>
+                <x-slot name="content3" class="text-center">
+                  <span class="text-6xl text-bold">{{$user_count->count()}}</span>
+                </x-slot>
+                <x-slot name="content4" class="text-center">
+                  <span class="text-6xl text-bold">{{$deployed_count->count()}}</span>
+                </x-slot>
+              </x-jet-welcome>
             </div>
             
         </div>

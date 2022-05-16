@@ -8,31 +8,19 @@
                 {{ __('Add Applicant') }}
             </x-jet-button>
         </div>
-      </div>
-        
-        
-            @if (session()->has('message'))
-    
-                <x-jet-label> {{ session('message') }}</x-jet-label>
-                <x-jet-banner>{{ session('message') }}</x-jet-banner>
-        
-        @endif
+      </div>  
 
     <div class="container my-12 py-4 mx-auto px-4">
-        <div class="bg-white py-2 md:py-7 px-4 md:px-8 xl:px-10">    
+        <div class="bg-white py-2 sm:py-7 sm:px-0 px-4 sm:px-8 xl:px-10">    
             <div class="flex flex-col">
                 <div class="flex flex-col mt-4">
                     <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">                            
                             <div class="flex mb-4">
                                 <input wire:keydown.escape = '' type="search" wire:model="searchQuery"
                                        class="w-full form-control rounded-md border-green-400 px-3 py-1.5 text-base font-normal text-green-700 bg-white bg-clip-padding transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-green-700 focus:outline-none"
-                                       placeholder="Seach Applicant..." 
-                                       @if (!is_null($searchQuery))
-                                         
-                                       @endif
-                                       @if ($searchQuery)
-                                        Disabled
-                                       @endif />
+                                       placeholder="Seach Applicant..."
+                                       {{$isDisabled}} 
+                                     />
                             </div>
 
                             <div class="w-full flex justify-end">
@@ -66,6 +54,7 @@
                                                                     
                                 
                                 </div>
+                               
                                 <div class="relative pl-2">
                                 
                                     <select wire:model="perPage" class="block border-green-400 rounded-md w-full">
@@ -76,11 +65,16 @@
                                         <option value="50">50</option>
                                     </select>
                                 </div>
-                            </div>   
+                            </div> 
+                            @if (session()->has('message'))
+                            <div class="flex justify-end px-4 mt-3">
+                                    <x-jet-label class="text-green-400"> {{ session('message') }}</x-jet-label>
+                            </div>
+                            @endif  
                         </div>
                      </div>
                      <div class="items-center">
-                            <table class="w-full whitespace-nowrap mt-4" >
+                            <table class="w-full md:table-fixed mt-4" >
                                 <thead class="font-bold">
                                     <tr class="" sortable>
                                         <th class="px-6 py-3 text-sm text-center font-medium leading-4  text-gray-900 bg-gray-50">
@@ -147,7 +141,7 @@
                                 </thead>
                                 <tbody>
                                     
-                             @foreach($applicants as $applicant)
+                             @forelse($applicants as $applicant)
                                         
                                    
                                     <tr tabindex="0" class="focus:outline-none h-16 border border-gray-100 rounded">
@@ -164,8 +158,20 @@
                                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                             <div class="flex items-center">
                                                 <div class="flex-shrink-0 w-10 h-10">
-                                                    <img class="w-10 h-10 rounded-full" src="{{asset('storage')}}/{{$applicant->photo}}" alt="profile">
+                                                    @if($applicant->photo == null)
+
+                                                    <div class="flex items-center">
+                                                        <div class="w-full h-full bg-gray-100 rounded-full items-center">
+                                                            <p class="px-3 py-2 text-black text-center">{{ substr($applicant->first_name, 0, 1) }}</p>    
+                                                        </div>
+                                                    </div>
+                                                    @else
+                                                    
+                                                    <img class=" rounded-full" src="{{asset('storage')}}/{{$applicant->photo}}" alt="profile">
+                                                    
+                                                    @endif
                                                 </div>
+                                               
                         
                                                 <div class="px-3 py-4 text-left">
                                                     <div class="text-sm font-medium leading-5 text-gray-900">
@@ -225,7 +231,7 @@
                                         </td>
                                         <td class="text-center leading-5 text-red-500 whitespace-no-wrap border-b border-gray-200">
                                         
-                                            <x-jet-button wire:click="confirmApplicantDelete( {{ $applicant->id }} )" wire:loading.attr="disabled">
+                                            <x-jet-button wire:click="editApplicant({{$applicant->id}})" wire:loading.attr="disabled">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-400" fill="none"
                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -269,7 +275,15 @@
                                         
                                         
                                     </tr>
-                                @endforeach
+                                @empty
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                        <div class="text-center">
+                                            <p class="text-sm leading-none text-gray-600">Record not Found</p>  
+                                        </div>   
+                                    </td>
+                                </tr>
+                                @endforelse
                                     
                                 
                                    

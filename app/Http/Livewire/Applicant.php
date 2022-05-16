@@ -74,16 +74,16 @@ class Applicant extends Component
     
 
     protected $rules = [
-        'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
-        'applicant.sn_number' => 'required|unique:Applicants,sn_number',
-        'applicant.class_name' => ['required'],
-        'applicant.birthdate' => 'required|unique:Applicants,birthdate',
-        'applicant.first_name' => 'required|unique:Applicants,first_name',
-        'applicant.middle_name' => 'required|unique:Applicants,middle_name',
-        'applicant.last_name' => 'required|unique:Applicants,last_name',
+        'applicant.photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
+        'applicant.sn_number' => 'required',
+        'applicant.class_name' => 'required',
+        'applicant.birthdate' => 'required',
+        'applicant.first_name' => 'required',
+        'applicant.middle_name' => 'required',
+        'applicant.last_name' => 'required',
         'applicant.suffix' => '',
-        'applicant.contact_number' => 'required|unique:Applicants,contact_number',
-        'applicant.email_address' => '',
+        'applicant.contact_number' => 'required',
+        'applicant.email_address' => 'required|unique:Applicants,email_address',
         'applicant.home_address' => '',
         'applicant.city' => '',
         'applicant.province' => '',
@@ -106,6 +106,8 @@ class Applicant extends Component
         $this->countries = Country::all();
         $this->states = collect();
         //$this->cities - collect();
+        
+        
     }
     
     public function render()
@@ -179,13 +181,12 @@ class Applicant extends Component
     public function confirmApplicantAdd()
     {   
         $this->reset(['applicant']);
+        $this->isDisabled = 'Disabled';
         // //$this->reset(['photo']);
         $this->confirmingApplicantAdd = true;
-        
-        
-       
-        
+         
     }
+    
     // public function closeForm()
     // {
     //     $this->isDisabled = '';
@@ -201,7 +202,15 @@ class Applicant extends Component
     //     $app_data['photo'] = $this->photo['photo']->store('avatars', 'public');
     //     //$this->photo->store('/public', 'avatars');
     // }
-
+    public function editApplicant($id)
+    {   
+       
+        $applicant = Applicants::FindOrFail($id);
+        $this->applicant_id = $id;
+        $this->first_name = $applicant->first_name;
+        $this->confirmingeditApplicant = true;
+       
+    }
 
     public function saveApplicant()
     {   
@@ -216,7 +225,7 @@ class Applicant extends Component
         $upload->first_name = $this->applicant['first_name'];
         $upload->middle_name = $this->applicant['middle_name'];
         $upload->last_name = $this->applicant['last_name'];
-        $upload->suffix = $this->applicant['suffix'];
+        $upload->suffix = $this->applicant['suffix'] ?? "None";
         $upload->contact_number = $this->applicant['contact_number'];
         $upload->email_address = $this->applicant['email_address'];
         $upload->home_address = $this->applicant['home_address'];
@@ -225,7 +234,7 @@ class Applicant extends Component
         $upload->country = "Philippines";
         $upload->zip_code = $this->applicant['zip_code'];
         $upload->birthdate = $this->applicant['birthdate'];
-        $upload->abroad_address = $this->applicant['abroad_address'];
+        $upload->abroad_address = $this->applicant['abroad_address'] ?? "None";
         $upload->status = "Encoded";
         // $upload->upload = [
         //     'user_id' => auth()->id(),
@@ -258,7 +267,6 @@ class Applicant extends Component
             'applicant_id' => $this->app_id->id,
             'remarks' => 'New Applicant',
             'particular' => 'Encoded'
-
 
         ];
         UserActivities::create($useractivity);

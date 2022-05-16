@@ -233,8 +233,10 @@
                       {{-- @foreach ($class_data as $class)
                           
                       
-                      <x-jet-input id="class_name" placeholder="{{ $class->class_name}}" type="text" class="appearance-none mt-1 block w-full" wire:model.def="Classes.class_name" />
+                     
                         @endforeach --}}
+                        <x-jet-input id="class_name" placeholder="{{ $class->class_name}}" type="text" class="appearance-none mt-1 block w-full" wire:model.def="Classes.class_name" />
+                        <input class="form-control" type="text" name="">
                         <x-jet-input-error for="Classes.class_name" class="mt-2" />
                     </div>
 
@@ -254,7 +256,7 @@
                       {{ __('Close') }}
                   </x-jet-secondary-button>
 
-                  <x-jet-button class="ml-3" wire:click="UpdateClass()" wire:loading.attr="disabled">
+                  <x-jet-button class="ml-3" wire:click="UpdateClass({{$class->id}})" wire:loading.attr="disabled">
                       {{ __('Update') }}
                   </x-jet-button>
               </x-slot>
