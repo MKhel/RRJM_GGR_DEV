@@ -26,7 +26,7 @@ class Classes extends Component
 
     public $class_id;
 
-
+    public $client_id;
     public $classes_name, $target_number;
 
     public $showEditModal = false;
@@ -34,6 +34,7 @@ class Classes extends Component
     protected $rules = [
         'Classes.class_name' => 'required|unique:classes,class_name',
         'Classes.target_number' => ['required'],
+        'Classes.start_class' => ['required'],
     ];
 
     // public function mount($id)
@@ -70,7 +71,8 @@ class Classes extends Component
 
         $app_data = [
             'class_name' => $this->Classes['class_name'],
-            'target_number' => $this->Classes['target_number']
+            'target_number' => $this->Classes['target_number'],
+            'start_class' => $this->Classes['start_class']
             
         ];
     
@@ -95,10 +97,14 @@ class Classes extends Component
     }
     public function confirmClassUpdate($id)
     {  
+        
         $this->client = client::findOrFail($id);
+        $this->client_id = $this->client->id;
         $this->class_name = $this->client->class_name;
+        $this->start_class = $this->client->start_class;
         $this->target_number = $this->client->target_number;
-        $this->showEditModal = true;
+        $this->confirmingClassUpdate = $id;
+        $this->confirmingClassUpdate = true;
     }
     public function UpdateClass($id)
     {   

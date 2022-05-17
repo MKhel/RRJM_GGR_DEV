@@ -10,7 +10,8 @@ class classes extends Model
     use HasFactory;
     protected $fillable = [
         'class_name',
-        'target_number'
+        'target_number',
+        'start_class'
       ];
     public function applicant() {
         return $this->hasMany(Applicant::class, 'class_name', 'class_name' );

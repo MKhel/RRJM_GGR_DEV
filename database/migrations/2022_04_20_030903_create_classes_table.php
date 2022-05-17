@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('class_name');
             $table->integer('target_number');
+            $table->date('start_class');
             $table->timestamps();
         });
     }

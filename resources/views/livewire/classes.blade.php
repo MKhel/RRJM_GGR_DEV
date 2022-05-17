@@ -73,6 +73,9 @@
                     <x-slot name="content2" class="text-center">
                         <p> {{ $class->target_number - $class->applicant_count }} </p>
                     </x-slot>
+                    <x-slot name="startClass" class="text-center">
+                      <p> {{ $class->start_class}} </p>
+                    </x-slot>
                     <x-slot name="content3" class="text-center">
                         <p>{{ $class->created_at->format('d M Y') }} </p>
                     </x-slot>
@@ -101,14 +104,12 @@
                         </span>
                     
                         <span class="hidden sm:block ml-3">
-                          <button wire:loading.attr="disabled" wire:click="showEditModal({{$class->id}})" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                          <button type="button" wire:click="confirmClassUpdate({{$class->id}})" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                             <svg class="-ml-1 mr-2 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                               <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                             </svg>
                             Edit
                           </button>
-
-                          
                         </span>
                     
                         <span class="sm:ml-3">
@@ -133,16 +134,7 @@
                             </svg>
                           </button>
                     
-                          <!--
-                            Dropdown menu, show/hide based on menu state.
-                    
-                            Entering: "transition ease-out duration-200"
-                              From: "transform opacity-0 scale-95"
-                              To: "transform opacity-100 scale-100"
-                            Leaving: "transition ease-in duration-75"
-                              From: "transform opacity-100 scale-100"
-                              To: "transform opacity-0 scale-95"
-                          -->
+                          
                           <div class="origin-top-right absolute right-0 mt-2 -mr-1 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="mobile-menu-button" tabindex="-1">
                             <!-- Active: "bg-gray-100", Not Active: "" -->
                             <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="mobile-menu-item-0">Edit</a>
@@ -177,11 +169,19 @@
                     <x-jet-input id="class_name" type="text" class="appearance-none mt-1 block w-full" wire:model.def="Classes.class_name" />
                     <x-jet-input-error for="Classes.class_name" class="mt-2" />
                   </div>
+                  
 
                   <div class="mt-3">
                     <x-jet-label for="Target Number" value="{{ __('Target Number')}}" />
                     <x-jet-input name="target_number" id="Target Number" type="number" class="appearance-none mt-1 block w-full" wire:model.def="Classes.target_number" />
                     <x-jet-input-error for="Classes.target_number" class="mt-2" />
+                  </div>
+
+                  <div class="col-span sm:col-span-4 mt-3">
+                    <x-jet-label for="start_class" value="{{ __('Date Start')}}" />
+                    <x-jet-input name="start_class" type="date" class="mt-1 block w-full" wire:model="Classes.start_class" />
+                    <i class="fas fa-calendar datepicker-toggle-icon"></i>   
+                    <x-jet-input-error for="applicant.start_class" class="mt-2" />
                   </div>
 
                 </div>
@@ -207,7 +207,7 @@
               Are you sure, you want to delete this class?
            </x-slot>
           <x-slot name="footer">
-              <x-jet-secondary-button wire:click="$set('confirmingClassDeletion', 'false')" wire:loading.attr="disabled">
+              <x-jet-secondary-button wire:click="$set('confirmingClassDeletion', false)" wire:loading.attr="disabled">
                   {{ __('Close') }}
               </x-jet-secondary-button>
 
@@ -215,7 +215,8 @@
                   {{ __('Delete') }}
               </x-jet-danger-button>
           </x-slot>
-          </x-jet-dialog-modal wire:model="showModal">                      
+          </x-jet-dialog-modal>
+          <x-jet-dialog-modal wire:model="confirmingClassUpdate">                      
               <x-slot name="title" class="text-center">
                   {{ __('Update Applicant') }}
               </x-slot>
@@ -229,14 +230,21 @@
                     
                     <div class="mt-3">
                       <x-jet-label for="class_name" value="{{ __('Class Name')}}" />
-                        <x-jet-input id="class_name" type="text" class="appearance-none mt-1 block w-full" wire:model.def="class_name" />
+                        <x-jet-input id="class_name" type="text" class="appearance-none mt-1 block w-full" wire:model="class_name" />
                         <x-jet-input-error for="Classes.class_name" class="mt-2" />
                     </div>
                    
                     <div class="mt-3">
                       <x-jet-label for="Target Number" value="{{ __('Target Number')}}" />
-                      <x-jet-input name="target_number" id="Target Number" type="number" class="appearance-none mt-1 block w-full" wire:model.def="Classes.target_number" />
+                      <x-jet-input name="target_number" id="Target Number" type="number" class="appearance-none mt-1 block w-full" wire:model="target_number" />
                       <x-jet-input-error for="Classes.target_number" class="mt-2" />
+                    </div>
+
+                    <div class="col-span sm:col-span-4 mt-3">
+                      <x-jet-label for="start_class" value="{{ __('Date Start')}}" />
+                      <x-jet-input name="start_class" type="date" class="mt-1 block w-full" wire:model="start_class" />
+                      <i class="fas fa-calendar datepicker-toggle-icon"></i>   
+                      <x-jet-input-error for="start_class" class="mt-2" />
                     </div>
 
                   </div>
@@ -249,7 +257,7 @@
                       {{ __('Close') }}
                   </x-jet-secondary-button>
 
-                  <x-jet-button class="ml-3" wire:click="UpdateClass({{$class->id}})" wire:loading.attr="disabled">
+                  <x-jet-button class="ml-3" wire:click="UpdateClass({{$client_id}})" wire:loading.attr="disabled">
                       {{ __('Update') }}
                   </x-jet-button>
               </x-slot>
