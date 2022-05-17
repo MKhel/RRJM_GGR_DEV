@@ -26,6 +26,11 @@ class Classes extends Component
 
     public $class_id;
 
+
+    public $classes_name, $target_number;
+
+    public $showEditModal = false;
+
     protected $rules = [
         'Classes.class_name' => 'required|unique:classes,class_name',
         'Classes.target_number' => ['required'],
@@ -44,7 +49,7 @@ class Classes extends Component
         //return "$applicant_count";
         return view('livewire.classes', [
                 
-                'client' => client::when($this->searchQuery, function($query, $searchQuery){
+                'clients' => client::when($this->searchQuery, function($query, $searchQuery){
                     return $query->where('class_name', 'LIKE', "%$searchQuery%" );
                     })->latest()->withcount('applicant')->paginate(5),
                // 'app_count' => $applicant_count
@@ -90,10 +95,11 @@ class Classes extends Component
     }
     public function confirmClassUpdate($id)
     {  
-        $this->confirmingClassUpdate = true;
-        $this->class_data = client::where('id',$id)->get();
+        $this->client = client::findOrFail($id);
+        $this->class_name = $this->client->class_name;
+        $this->target_number = $this->client->target_number;
+        $this->showEditModal = true;
     }
-
     public function UpdateClass($id)
     {   
         $class_data = [

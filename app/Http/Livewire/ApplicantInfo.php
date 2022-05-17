@@ -22,15 +22,25 @@ class ApplicantInfo extends Component
     public $user_activity;
     public $stat;
     public $status;
-    public $photo;
+   
     public $applicant;
     Public $update;
+    
+    //For Applicant Profiles
+    public $new_photo;
+    public $old_photo;
 
 
-    public $first_name, $middle_name, $last_name;
+    public $app_edit;
+
+
+    public $first_name, $middle_name, $last_name, $abroad_address;
     public $remarks;
 
     public $confirmingeditApplicant = false;
+
+
+    public $selectedCountry = Null;
 
     protected $rules = [
         'app_data.remarks' => 'required|unique:users,id',
@@ -55,15 +65,6 @@ class ApplicantInfo extends Component
         $this->app_data = Applicant::find($id);
         $this->user_activity = UserActivities::find($id);
         $this->stats = UserActivities::where('applicant_id', $id)->latest()->first('particular');
-        // Applicant::find(['id' => $id], [
-        //     'first_name' => $this->first_name,
-        // ]);
-        // Applicant::where($id, [
-        //     'first_name' => $this->first_name,
-        //     'middle_name' => $this->middle_name,
-        //     'last_name' => $this->last_name,
-        // ]);
-        //$this->user_activity = UserActivities::where('applicant_id', $id)->paginate(5);  
     }
     public function render()
     {   
@@ -112,81 +113,54 @@ class ApplicantInfo extends Component
     public function editApplicant($id)
     {
 
-        $app_data = Applicant::findOrFail($id);
-        $this->sn_number = $app_data->sn_number;
-        $this->class_name = $app_data->class_name;
-        $this->first_name = $app_data->first_name;
-        $this->middle_name = $app_data->middle_name;
-        $this->last_name = $app_data->last_name;
-        $this->birthdate = $app_data->birthdate;
-        $this->contact_number = $app_data->contact_number;
-        $this->home_address = $app_data->home_address;
-        $this->city = $app_data->city;
-        $this->province = $app_data->province;
-        $this->zip_code = $app_data->zip_code;
+        $this->app_edit = Applicant::findOrFail($id);
+        $this->old_photo = $this->app_edit->photo;
+        $this->sn_number = $this->app_edit->sn_number;
+        $this->class_name = $this->app_edit->class_name;
+        $this->first_name = $this->app_edit->first_name;
+        $this->middle_name = $this->app_edit->middle_name;
+        $this->last_name = $this->app_edit->last_name;
+        $this->birthdate = $this->app_edit->birthdate;
+        $this->contact_number = $this->app_edit->contact_number;
+        $this->home_address = $this->app_edit->home_address;
+        $this->city = $this->app_edit->city;
+        $this->province = $this->app_edit->province;
+        $this->zip_code = $this->app_edit->zip_code;
         $this->confirmingeditApplicant = true;
     }
     public function saveEditApplicant($id)
     {   
 
-       
-       // 
-        // $upload = $this->validate();
+
+        $photo = Applicant::findOrFail($id);
+        $photo_data = "";
+        $destination=public_path('storage\\'.$photo->photo);
+        if ($this->new_photo) {
+            Storage::disk('avatars')->delete($photo);
+            $photo_data = $this->new_photo->store('avatars', 'public');
+        } else {
+            $photo_data = $this->old_photo;
+        }
+
+        $photo->photo = $photo_data;
+        $photo->save();
 
         Applicant::updateOrCreate(['id' => $id], [
+            'class_name' => $this->class_name,
             'first_name' => $this->first_name,
             'middle_name' => $this->middle_name,
             'last_name' => $this->last_name,
+            'home_address' => $this->home_address,
+            'city' => $this->city,
+            'province' => $this->province,
+            'zip_code' => $this->zip_code,
+            //'abroad_address' => $this->abroad_address,
         ]);
+        
+        
         $this->confirmingeditApplicant = false;
         session()->flash('update-success', 'Update Applicant successfully.');
-        // $upload->sn_number = $this->applicant['sn_number'];
-        // $upload->class_name = $this->applicant['class_name'];
-        // $upload->first_name = $this->applicant['first_name'];
-        // $upload->middle_name = $this->applicant['middle_name'];
-        // $upload->last_name = $this->applicant['last_name'];
-        // $upload->contact_number = $this->applicant['contact_number'];
-        // $upload->email_address = $this->applicant['email_address'];
-        // $upload->home_address = $this->applicant['home_address'];
-        // $upload->city = $this->applicant['city'];
-        // $upload->province = $this->applicant['province'];
-        // $upload->zip_code = $this->applicant['zip_code'];
-        // $upload->birthdate = $this->applicant['birthdate'];
-        // $upload->status = "Encoded";
-        // $upload->update();
-        
-        // $update = $this->validate();
-        // $uploadPhoto = $this->photo->store('avatars');
-        // $update = new Applicant;
-        // $update->photo=$uploadPhoto;
-        // Storage::disk('avatars')->delete($this->photo->avatars);
-        //$this->applicant->update($update);
-        // if ($this->photo)
-        //     {
-        //         Storage::disk('avatars')->delete($this->photo);
-        //         $app_data['photo'] = $this->photo->store('avatars');
-        //     }
-        // $app_data = [
-
-        //     //'class_name' => $this->applicant['class_name'],
-        //     'first_name' => $this->applicant['first_name'],
-        //     'middle_name' => $this->applicant['middle_name'],
-        //     'last_name' => $this->applicant['last_name'],
-        //     'contact_number' => $this->applicant['contact_number'],
-        //     //'email_address' => $this->applicant['email_address'],
-        //     'home_address' => $this->applicant['home_address'],
-        //     'city' => $this->applicant['city'],
-        //     'province' => $this->applicant['province'],
-        //     'zip_code' => $this->applicant['zip_code'],
-        //     //'birthdate' => $this->applicant['birthdate'],
-        //     'status'   => "Encoded",
-        // ];
-
-        // Applicant::find($id)->update($app_data);
-        // $this->confirmingeditApplicant = false;
-
-
-        // Applicant::find($id)->update($app_data);       
+          
         session()->flash('message', 'Status update successfully.');
         // $useractivity = [
         //     'user_id' => auth()->user()->id,
@@ -203,4 +177,5 @@ class ApplicantInfo extends Component
         // $this->confirmingApplicantAdd = false;
         // $this->isDisabled = '';
     }
+    
 }

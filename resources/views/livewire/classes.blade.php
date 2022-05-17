@@ -54,7 +54,7 @@
                             @endif
                             
                         </div>
-        @foreach ($client as $class)
+        @foreach ($clients as $class)
             
         
         <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
@@ -101,12 +101,14 @@
                         </span>
                     
                         <span class="hidden sm:block ml-3">
-                          <button wire:loading.attr="disabled" value="{{$class->id}}" wire:model="{{$class_id}}" wire:click="confirmClassUpdate({{$class->id}})" type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                          <button wire:loading.attr="disabled" wire:click="showEditModal({{$class->id}})" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                             <svg class="-ml-1 mr-2 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                               <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                             </svg>
                             Edit
                           </button>
+
+                          
                         </span>
                     
                         <span class="sm:ml-3">
@@ -213,10 +215,7 @@
                   {{ __('Delete') }}
               </x-jet-danger-button>
           </x-slot>
-      </x-jet-dialog-modal>
-
-            <x-jet-dialog-modal wire:model="confirmingClassUpdate">
-                                      
+          </x-jet-dialog-modal wire:model="showModal">                      
               <x-slot name="title" class="text-center">
                   {{ __('Update Applicant') }}
               </x-slot>
@@ -230,16 +229,10 @@
                     
                     <div class="mt-3">
                       <x-jet-label for="class_name" value="{{ __('Class Name')}}" />
-                      {{-- @foreach ($class_data as $class)
-                          
-                      
-                     
-                        @endforeach --}}
-                        <x-jet-input id="class_name" placeholder="{{ $class->class_name}}" type="text" class="appearance-none mt-1 block w-full" wire:model.def="Classes.class_name" />
-                        <input class="form-control" type="text" name="">
+                        <x-jet-input id="class_name" type="text" class="appearance-none mt-1 block w-full" wire:model.def="class_name" />
                         <x-jet-input-error for="Classes.class_name" class="mt-2" />
                     </div>
-
+                   
                     <div class="mt-3">
                       <x-jet-label for="Target Number" value="{{ __('Target Number')}}" />
                       <x-jet-input name="target_number" id="Target Number" type="number" class="appearance-none mt-1 block w-full" wire:model.def="Classes.target_number" />

@@ -216,7 +216,7 @@ class Applicant extends Component
     {   
         $upload = $this->validate();
 
-        $uploadPhoto = $this->photo->store('avatars');
+        $uploadPhoto = $this->photo->storeAs('avatars', $this->applicant['last_name'],['first_name']);
         $upload = new Applicants;
         $upload->photo=$uploadPhoto;
         $upload->user_id = auth()->id();
@@ -286,6 +286,6 @@ class Applicant extends Component
     public function DeleteApplicant( Applicants $applicant)
     {   
         $applicant->delete();
-        $this->confirmingApplicantDeletion = true;
+        $this->confirmingApplicantDeletion = false;
     }
 }

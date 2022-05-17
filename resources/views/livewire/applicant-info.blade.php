@@ -48,7 +48,7 @@
         <div class="flex flex-col mt-4">
             <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
               
-              <div class="flex bg-white justify-center">
+              <div class="flex bg-white justify-center px-6">
                 
                 <div class="px-0 py-6 ">
                     @if ($app_data->photo != null)
@@ -328,23 +328,25 @@
                       <x-slot name="title" class="text-center">
                           {{ __('Create Applicant') }}
                       </x-slot>
-                      <form enctype="multipart/form-data">
+                      
                       
                       <x-slot name="content">
                           <div class="col-span sm:col-span-4 mt-3">
                               <x-jet-label for="photo" value="{{ __('Applicant Picture')}}" />
                                   
                               <div class="flex justify-between ">
-                                      <x-jet-input wire:model="photo" id="photo" class="mt-1 block w-full" type="file" />
-                                      <x-jet-input-error for="photo" class="mt-2" />
-                                      <div wire:loading wire:target="photo">
+                                
+                                      <x-jet-input wire:model="new_photo" name="new_photo" id="old_photo" class="mt-1 block w-full" type="file" />
+                                     
+                                      <x-jet-input-error for="new_photo" class="mt-2" />
+                                      <div wire:loading wire:target="new_photo">
                                           <span class="text-green-600">Uploading Image..</span>
                                       </div>
                                   
-                                  @if ($photo)
-                                      <img src="{{ $photo->temporaryUrl() }}" width="100" class="mr-4">
+                                  @if ($new_photo)
+                                      <img src="{{ $new_photo->temporaryUrl() }}" width="100" class="mr-4">
                                   @else
-                                      <img src="{{ $state['avatar_url'] ?? '' }}" width="100" class="mr-4">
+                                      <img src="{{asset('storage')}}/{{$old_photo}}" width="100" class="mr-4">
                                   @endif
                               </div>
                           </div>
@@ -407,30 +409,53 @@
                               <x-jet-input-error for="birthdate" class="mt-2" />
                           </div>
 
-                          <div class="col-span sm:col-span-4 mt-3">
-                              <x-jet-label for="home_address" value="{{ __('Home Address')}}" />
-                              <x-jet-input id="home_address" type="text" class="mt-1 block w-full" wire:model="home_address" placeholder="{{ $app_data->home_address}}"/>
-                              <x-jet-input-error for="home_address" class="mt-2" />
-                          </div>
-
-                          <div class="col-span sm:col-span-4 mt-3">
-                              <x-jet-label for="city" value="{{ __('City')}}" />
-                              <x-jet-input id="city" type="text" class="mt-1 block w-full" wire:model="city" placeholder="{{ $app_data->city}}"/>
-                              <x-jet-input-error for="city" class="mt-2" />
-                          </div>
-
-                          <div class="col-span sm:col-span-4 mt-3">
-                              <x-jet-label for="province" value="{{ __('Province')}}" />
-                              <x-jet-input id="province" type="text" class="mt-1 block w-full" wire:model="province" placeholder="{{ $app_data->province}}" />
-                              <x-jet-input-error for="province" class="mt-2" />
-                          </div>
                           
-                          <div class="col-span sm:col-span-4  mt-3">
-                              <x-jet-label for="zip_code" value="{{ __('Zip Code')}}" />
-                              <x-jet-input id="zip_code" type="number" class="mt-1 block w-full" wire:model="zip_code" placeholder="{{ $app_data->zip_code}}"/>
-                              <x-jet-input-error for="zip_code" class="mt-2" /> 
-                          </div>
+                          <div class="col-span sm:col-span-4 mt-3">
+                            <x-jet-label for="country" value="{{ __('Country')}}" />
                            
+                            <select wire:model="selectedCountry" name="country" class="block mt-1 w-full">
+                                <option value="" selected>--Select Country--</option>
+                                
+                                <option value="PH" >Philippines</option>
+                                <option value="abroad" >Abroad</option>
+                               
+                            </select>
+                            <x-jet-input-error for="applicant.country" class="mt-2" />
+                        </div>
+
+                        @if ($selectedCountry == 'PH')
+                        <div class="col-span sm:col-span-4 mt-3">
+                            <x-jet-label for="home_address" value="{{ __('Home Address')}}" />
+                            <x-jet-input id="home_address" type="text" class="mt-1 block w-full" wire:model="home_address" placeholder="{{ $app_data->home_address}}"/>
+                            <x-jet-input-error for="home_address" class="mt-2" />
+                        </div>
+
+                        <div class="col-span sm:col-span-4 mt-3">
+                            <x-jet-label for="city" value="{{ __('City')}}" />
+                            <x-jet-input id="city" type="text" class="mt-1 block w-full" wire:model="city" placeholder="{{ $app_data->city}}"/>
+                            <x-jet-input-error for="city" class="mt-2" />
+                        </div>
+
+                        <div class="col-span sm:col-span-4 mt-3">
+                            <x-jet-label for="province" value="{{ __('Province')}}" />
+                            <x-jet-input id="province" type="text" class="mt-1 block w-full" wire:model="province" placeholder="{{ $app_data->province}}" />
+                            <x-jet-input-error for="province" class="mt-2" />
+                        </div>
+                        
+                        <div class="col-span sm:col-span-4  mt-3">
+                            <x-jet-label for="zip_code" value="{{ __('Zip Code')}}" />
+                            <x-jet-input id="zip_code" type="number" class="mt-1 block w-full" wire:model="zip_code" placeholder="{{ $app_data->zip_code}}"/>
+                            <x-jet-input-error for="zip_code" class="mt-2" /> 
+                        </div>
+                        @endif
+                        @if ($selectedCountry == 'abroad')
+                        <div class="col-span sm:col-span-4 mt-3">
+                            <x-jet-label for="abroad_address" value="{{ __('Abroad Address')}}" />
+                            <x-jet-input id="abroad_address" type="text" class="mt-1 block w-full" wire:model="abroad_address" />
+                            <x-jet-input-error for="abroad_address" class="mt-2" />
+                        </div>
+
+                        @endif
                      
                       </x-slot>
               
@@ -442,11 +467,10 @@
                           <x-jet-button class="ml-3" wire:click.prevent="saveEditApplicant({{ $app_data->id}})" wire:loading.attr="disabled">
                               {{ __('Save') }}
                           </x-jet-button>
+                          
                       </x-slot>
-                  </form>
+
                   </x-jet-dialog-modal>
-                    
-                    
 
         </div>
     </div>
