@@ -99,7 +99,7 @@ class Classes extends Component
     {  
         
         $this->client = client::findOrFail($id);
-        $this->client_id = $this->client->id;
+        $this->client_id = $id;
         $this->class_name = $this->client->class_name;
         $this->start_class = $this->client->start_class;
         $this->target_number = $this->client->target_number;
@@ -108,12 +108,20 @@ class Classes extends Component
     }
     public function UpdateClass($id)
     {   
-        $class_data = [
-            'class_name' => $this->Classes['class_name'],
-            'target_number' => $this->Classes['target_number']
+        // $class_data = [
+        //     'class_name'  => $this->class_name,
+        //     'target_number' => $this->target_number,
+        //     'start_class' => $this->start_class
+        // ];
+        // Applicant::find($id)->update($class_data);
+
+        Client::updateOrCreate(['id' => $id], [
+            'class_name'  => $this->class_name,
+            'target_number' => $this->target_number,
+            'start_class' => $this->start_class
             
-        ];
-        Applicant::find($id)->update($class_data);
+        ]); 
+        $this->confirmingClassUpdate = false;
     }
 }
 
