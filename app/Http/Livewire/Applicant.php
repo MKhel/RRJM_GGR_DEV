@@ -216,7 +216,7 @@ class Applicant extends Component
     {   
         $upload = $this->validate();
 
-        $uploadPhoto = $this->photo->storeAs('avatars', $this->applicant['last_name'],['first_name']);
+        $uploadPhoto = $this->photo->storeAs('avatars', $this->applicant['last_name']);
         $upload = new Applicants;
         $upload->photo=$uploadPhoto;
         $upload->user_id = auth()->id();

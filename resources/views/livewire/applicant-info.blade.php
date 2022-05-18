@@ -460,7 +460,7 @@
                       </x-slot>
               
                       <x-slot name="footer">
-                          <x-jet-secondary-button wire:click="$set('confirmingApplicantAdd', false)" wire:loading.attr="disabled" >
+                          <x-jet-secondary-button wire:click="$set('confirmingeditApplicant', false)" wire:loading.attr="disabled" >
                               {{ __('Close') }}
                           </x-jet-secondary-button>
               
