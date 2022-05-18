@@ -222,6 +222,9 @@
                                     <option value="Endorsed to processing">Endorsed to processing</option>
                                     <option value="Deployed">Deployed</option>
                                     <option value="For Recall">For Recall</option>
+                                    <option value="For Manpower Pooling">For Manpower Pooling</option>
+                                    <option value="GLT Ongoing">GLT Ongoing</option>
+                                    <option value="ICU Training Ongoing">ICU Training Ongoing</option>
                                   </select>
                   
                                 @error('particular') <span class="error">{{ $message }}</span> @enderror

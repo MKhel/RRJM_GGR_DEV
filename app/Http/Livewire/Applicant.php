@@ -31,6 +31,9 @@ class Applicant extends Component
     public $confirmingApplicantAdd = false;
     public $confirmingeditApplicant = false;
 
+    public $confirmClosesave;
+    public $confirmCloseupdate;
+
 
 
 
@@ -59,7 +62,7 @@ class Applicant extends Component
     public $old_photo;
 
 
-
+    public $abroad_address;
     public $countries;
     public $states;
     public $cities;
@@ -192,6 +195,24 @@ class Applicant extends Component
         $this->isDisabled = 'Disabled';
         // //$this->reset(['photo']);
         $this->confirmingApplicantAdd = true;
+         
+    }
+    public function confirmClosesave()
+    {   
+        $this->isDisabled = '';
+        $this->confirmingApplicantAdd = false;
+         
+    }
+    public function confirmCloseupdate()
+    {   
+        $this->isDisabled = '';
+        $this->confirmingeditApplicant= false;
+         
+    }
+    public function confirmClosedelete()
+    {   
+        $this->isDisabled = '';
+        $this->confirmingApplicantDeletion= false;
          
     }
 
