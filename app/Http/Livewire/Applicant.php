@@ -188,7 +188,7 @@ class Applicant extends Component
 
     public function confirmApplicantAdd()
     {   
-        $this->reset(['applicant']);
+        //$this->reset(['applicant']);
         $this->isDisabled = 'Disabled';
         // //$this->reset(['photo']);
         $this->confirmingApplicantAdd = true;
@@ -206,6 +206,7 @@ class Applicant extends Component
         $this->first_name = $this->app_edit->first_name;
         $this->middle_name = $this->app_edit->middle_name;
         $this->last_name = $this->app_edit->last_name;
+        $this->suffix = $this->app_edit->suffix;
         $this->birthdate = $this->app_edit->birthdate;
         $this->email_address = $this->app_edit->email_address;
         $this->contact_number = $this->app_edit->contact_number;
@@ -238,6 +239,7 @@ class Applicant extends Component
             'first_name' => $this->first_name,
             'middle_name' => $this->middle_name,
             'last_name' => $this->last_name,
+            'suffix' => $this->suffix,
             'contact_number' => $this->contact_number,
             'home_address' => $this->home_address,
             'city' => $this->city,

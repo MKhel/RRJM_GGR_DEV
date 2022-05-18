@@ -180,7 +180,13 @@
                         
                                                 <div class="px-3 py-4 text-left">
                                                     <div class="text-sm font-medium leading-5 text-gray-900">
-                                                        {{ $applicant->first_name }}, {{ $applicant->last_name }},{{ $applicant->suffix }}
+                                                        {{ $applicant->first_name }}, {{ $applicant->last_name }},
+                                                        @if ($applicant->suffix == Null)
+                                                            
+                                                        @else
+                                                        
+                                                            {{ $applicant->suffix }}
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -608,6 +614,12 @@
                                         <x-jet-label for="last_name" value="{{ __('Last Name')}}" />
                                         <x-jet-input id="last_name" type="text" class="mt-1 block w-full" wire:model="last_name"/>
                                         <x-jet-input-error for="last_name" class="mt-2" />
+                                        
+                                    </div>
+                                    <div class="col-span sm:col-span-4 mt-3">
+                                        <x-jet-label for="suffix" value="{{ __('Suffix')}}" />
+                                        <x-jet-input id="suffix" type="text" class="mt-1 block w-full" wire:model="suffix" />
+                                        <x-jet-input-error for="suffix" class="mt-2" />
                                         
                                     </div>
           

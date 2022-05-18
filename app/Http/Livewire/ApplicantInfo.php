@@ -150,6 +150,7 @@ class ApplicantInfo extends Component
             'first_name' => $this->first_name,
             'middle_name' => $this->middle_name,
             'last_name' => $this->last_name,
+            'suffix' => $this->suffix,
             'contact_number' => $this->contact_number,
             'home_address' => $this->home_address,
             'city' => $this->city,
