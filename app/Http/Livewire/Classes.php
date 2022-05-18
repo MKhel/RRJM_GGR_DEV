@@ -87,12 +87,14 @@ class Classes extends Component
     public function confirmClassDelete($id)
     {  
         $this->confirmingClassDeletion = $id;
+        $this->client_id = $id;
         $this->confirmingClassDeletion = true;
     }
 
-    public function DeleteClass( client $client)
+    public function DeleteClass()
     {   
-        $client->delete();
+        Client::find($this->client_id)->delete();
+        //$client->delete();
         $this->confirmingClassDeletion = false;
     }
     public function confirmClassUpdate($id)

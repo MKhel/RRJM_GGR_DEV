@@ -211,7 +211,7 @@
                   {{ __('Close') }}
               </x-jet-secondary-button>
 
-              <x-jet-danger-button class="ml-3" wire:click="DeleteClass( {{ $confirmingClassDeletion }} )" wire:loading.attr="disabled">
+              <x-jet-danger-button class="ml-3" wire:click="DeleteClass()" wire:loading.attr="disabled">
                   {{ __('Delete') }}
               </x-jet-danger-button>
           </x-slot>
