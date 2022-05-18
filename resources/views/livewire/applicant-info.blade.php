@@ -157,7 +157,7 @@
                
                     <div class="text-center mt-2 item-center">
                               
-                      @foreach ($applicants as $applicant)
+                      @foreach ($progress as $applicant)
                             
                         
                       <div class=" stepper-content ">

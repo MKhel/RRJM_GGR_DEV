@@ -70,10 +70,12 @@ class ApplicantInfo extends Component
     {   
         $class  = classes::all();
         $applicant = UserActivities::where('applicant_id', $this->app_data->id)->latest()->paginate(5);
+        $progress = UserActivities::where('applicant_id', $this->app_data->id)->latest()->take(3)->get();
         //$stat = UserActivities::where('applicant_id', $this->app_data->id)->latest()->first('particular');
         //$status = UserActivities::where('applicant_id', $this->user_activity->id)->latest()->get('particular');
     
         return view('livewire.applicant-info', [
+            'progress' => $progress,
             'applicants' => $applicant,
             'class' => $class,
             
