@@ -74,6 +74,7 @@ class Applicant extends Component
 
     public $searchQ;
 
+
     public $isDisabled = '';
     //public $notDisabled = '';
 
@@ -209,6 +210,7 @@ class Applicant extends Component
         $this->email_address = $this->app_edit->email_address;
         $this->contact_number = $this->app_edit->contact_number;
         $this->home_address = $this->app_edit->home_address;
+        $this->abroad_address = $this->app_edit->abroad_address;
         $this->city = $this->app_edit->city;
         $this->province = $this->app_edit->province;
         $this->zip_code = $this->app_edit->zip_code;
@@ -236,10 +238,12 @@ class Applicant extends Component
             'first_name' => $this->first_name,
             'middle_name' => $this->middle_name,
             'last_name' => $this->last_name,
+            'contact_number' => $this->contact_number,
             'home_address' => $this->home_address,
             'city' => $this->city,
             'province' => $this->province,
             'zip_code' => $this->zip_code,
+            'abroad_address' => $this->abroad_address ?? "NONE",
             //'abroad_address' => $this->abroad_address,
         ]);
         

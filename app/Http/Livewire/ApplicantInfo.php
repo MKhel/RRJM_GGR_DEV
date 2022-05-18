@@ -123,6 +123,7 @@ class ApplicantInfo extends Component
         $this->birthdate = $this->app_edit->birthdate;
         $this->contact_number = $this->app_edit->contact_number;
         $this->home_address = $this->app_edit->home_address;
+        $this->abroad_address = $this->app_edit->abroad_address;
         $this->city = $this->app_edit->city;
         $this->province = $this->app_edit->province;
         $this->zip_code = $this->app_edit->zip_code;
@@ -142,21 +143,22 @@ class ApplicantInfo extends Component
             $photo_data = $this->old_photo;
         }
 
-        $photo->photo = $photo_data;
-        $photo->save();
+        
 
         Applicant::updateOrCreate(['id' => $id], [
             'class_name' => $this->class_name,
             'first_name' => $this->first_name,
             'middle_name' => $this->middle_name,
             'last_name' => $this->last_name,
+            'contact_number' => $this->contact_number,
             'home_address' => $this->home_address,
             'city' => $this->city,
             'province' => $this->province,
             'zip_code' => $this->zip_code,
-            //'abroad_address' => $this->abroad_address,
+            'abroad_address' => $this->abroad_address ?? "NONE",
         ]);
-        
+        $photo->photo = $photo_data;
+        $photo->save();
         
         $this->confirmingeditApplicant = false;
         session()->flash('message', 'Update Applicant successfully.');
