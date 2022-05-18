@@ -78,6 +78,7 @@ class Classes extends Component
     
 
         client::create($app_data);
+        session()->flash('message', 'New class successfully created.');
         $this->confirmingClassAdd = false;
 
 
@@ -95,6 +96,7 @@ class Classes extends Component
     {   
         Client::find($this->client_id)->delete();
         //$client->delete();
+        session()->flash('delete', 'Class deleted successfully.');
         $this->confirmingClassDeletion = false;
     }
     public function confirmClassUpdate($id)
@@ -123,6 +125,7 @@ class Classes extends Component
             'start_class' => $this->start_class
             
         ]); 
+        session()->flash('message', 'Updated class successfully.');
         $this->confirmingClassUpdate = false;
     }
 }

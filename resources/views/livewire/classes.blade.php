@@ -54,6 +54,16 @@
                             @endif
                             
                         </div>
+                        @if (session()->has('message'))
+                        <div class="flex justify-end px-4 mt-3">
+                                <x-jet-label class="text-green-400"> {{ session('message') }}</x-jet-label>
+                        </div>
+                        @endif  
+                        @if (session()->has('delete'))
+                        <div class="flex justify-end px-4 mt-3">
+                                <x-jet-label class="text-red-600"> {{ session('delete') }}</x-jet-label>
+                        </div>
+                        @endif 
         @foreach ($clients as $class)
             
         

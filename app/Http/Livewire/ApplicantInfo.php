@@ -159,9 +159,9 @@ class ApplicantInfo extends Component
         
         
         $this->confirmingeditApplicant = false;
-        session()->flash('update-success', 'Update Applicant successfully.');
+        session()->flash('message', 'Update Applicant successfully.');
           
-        session()->flash('message', 'Status update successfully.');
+        //session()->flash('message', 'Status update successfully.');
         // $useractivity = [
         //     'user_id' => auth()->user()->id,
         //     'role_id' => auth()->user()->role_id,

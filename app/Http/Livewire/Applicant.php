@@ -245,9 +245,9 @@ class Applicant extends Component
         
         
         $this->confirmingeditApplicant = false;
-        session()->flash('update-success', 'Update Applicant successfully.');
+        session()->flash('message', 'Applicant updated successfully.');
           
-        session()->flash('message', 'Status update successfully.');
+        //session()->flash('message', 'Status update successfully.');
         // $useractivity = [
         //     'user_id' => auth()->user()->id,
         //     'role_id' => auth()->user()->role_id,
@@ -339,5 +339,6 @@ class Applicant extends Component
     {   
         $applicant->delete();
         $this->confirmingApplicantDeletion = false;
+        session()->flash('delete', 'Delete Applicant successfully.');
     }
 }
