@@ -63,6 +63,7 @@
                                 <div class="relative pl-2">
                                 
                                     <select wire:model="perPage" class="block border-green-400 rounded-md w-full">
+                                        <option value="">Per Page</option>
                                         <option value="5">5</option>
                                         <option value="10">10</option>
                                         <option value="20">20</option>
@@ -186,7 +187,7 @@
                         
                                                 <div class="px-3 py-4 text-left">
                                                     <div class="text-sm font-medium leading-5 text-gray-900">
-                                                        {{ $applicant->first_name }}, {{ $applicant->last_name }},
+                                                        {{ $applicant->last_name }}, {{ $applicant->first_name }}
                                                         @if ($applicant->suffix == "None")
                                                             
                                                         @else
