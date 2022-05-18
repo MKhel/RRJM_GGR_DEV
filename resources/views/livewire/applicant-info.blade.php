@@ -109,7 +109,13 @@
                         </div>
                         
                         <div class="flex px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                          <dt class="text-2xl font-extrabold uppercase">{{ $app_data->first_name }} {{ $app_data->middle_name }} {{ $app_data->last_name }}</dt>
+                          <dt class="text-2xl font-extrabold uppercase">{{ $app_data->first_name }} {{ $app_data->middle_name }} {{ $app_data->last_name }} 
+                            @if ($app_data->suffix == Null)
+                                {{ $app_data->suffix }}                 
+                            @else
+                            
+                                
+                            @endif</dt>
                         </div>
                       
                         <div class="flex bg-white px-py sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -387,6 +393,12 @@
                               <x-jet-input id="last_name" type="text" class="mt-1 block w-full" wire:model="last_name"/>
                               <x-jet-input-error for="last_name" class="mt-2" />
                               
+                          </div>
+                          <div class="col-span sm:col-span-4 mt-3">
+                            <x-jet-label for="suffix" value="{{ __('Suffix')}}" />
+                            <x-jet-input id="suffix" type="text" class="mt-1 block w-full" wire:model="suffix" />
+                            <x-jet-input-error for="suffix" class="mt-2" />
+                            
                           </div>
 
                           <div class="col-span sm:col-span-4 mt-3">

@@ -239,13 +239,14 @@ class Applicant extends Component
             'first_name' => $this->first_name,
             'middle_name' => $this->middle_name,
             'last_name' => $this->last_name,
-            'suffix' => $this->suffix,
+            'suffix' => $this->suffix ?? "None",
             'contact_number' => $this->contact_number,
+            'birthdate' => $this->birthdate,
             'home_address' => $this->home_address,
             'city' => $this->city,
             'province' => $this->province,
             'zip_code' => $this->zip_code,
-            'abroad_address' => $this->abroad_address ?? "NONE",
+            'abroad_address' => $this->abroad_address ?? "None",
             //'abroad_address' => $this->abroad_address,
         ]);
         

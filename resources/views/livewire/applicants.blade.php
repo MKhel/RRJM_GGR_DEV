@@ -182,10 +182,10 @@
                                                     <div class="text-sm font-medium leading-5 text-gray-900">
                                                         {{ $applicant->first_name }}, {{ $applicant->last_name }},
                                                         @if ($applicant->suffix == Null)
-                                                            
+                                                            {{ $applicant->suffix }}
                                                         @else
                                                         
-                                                            {{ $applicant->suffix }}
+                                                           
                                                         @endif
                                                     </div>
                                                 </div>
