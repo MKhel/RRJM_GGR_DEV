@@ -110,12 +110,14 @@
                         
                         <div class="flex px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                           <dt class="text-2xl font-extrabold uppercase">{{ $app_data->first_name }} {{ $app_data->middle_name }} {{ $app_data->last_name }} 
-                            @if ($app_data->suffix == Null)
-                                {{ $app_data->suffix }}                 
+                            @if ($app_data->suffix == "None")
+                                               
                             @else
                             
-                                
-                            @endif</dt>
+                              {{ $app_data->suffix }}  
+                            @endif
+                          
+                          </dt>
                         </div>
                       
                         <div class="flex bg-white px-py sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
