@@ -29,6 +29,10 @@ class Applicant extends Component
 
     public $confirmingApplicantDeletion = false;
     public $confirmingApplicantAdd = false;
+    public $confirmingeditApplicant = false;
+
+
+
 
     
     public $search = '';
@@ -50,6 +54,9 @@ class Applicant extends Component
     public $perPage = '';
     public $searchQuery = '';
     public $searchClass = '';
+
+    public $new_photo;
+    public $old_photo;
 
 
 
@@ -186,30 +193,75 @@ class Applicant extends Component
         $this->confirmingApplicantAdd = true;
          
     }
-    
-    // public function closeForm()
-    // {
-    //     $this->isDisabled = '';
-    //     $this->closeForm = true;
-    // }
 
-    // public function upload()
-    // {
-    //     // $this->validate([
-    //     //     //'photo' => 'image|max:1024', // 1MB Max
-    //     //     //'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-    //     // ]);
-    //     $app_data['photo'] = $this->photo['photo']->store('avatars', 'public');
-    //     //$this->photo->store('/public', 'avatars');
-    // }
     public function editApplicant($id)
-    {   
-       
-        $applicant = Applicants::FindOrFail($id);
-        $this->applicant_id = $id;
-        $this->first_name = $applicant->first_name;
+    {
+
+        $this->app_edit = Applicants::findOrFail($id);
+        $this->app_id = $id;
+        $this->old_photo = $this->app_edit->photo;
+        $this->sn_number = $this->app_edit->sn_number;
+        $this->class_name = $this->app_edit->class_name;
+        $this->first_name = $this->app_edit->first_name;
+        $this->middle_name = $this->app_edit->middle_name;
+        $this->last_name = $this->app_edit->last_name;
+        $this->birthdate = $this->app_edit->birthdate;
+        $this->email_address = $this->app_edit->email_address;
+        $this->contact_number = $this->app_edit->contact_number;
+        $this->home_address = $this->app_edit->home_address;
+        $this->city = $this->app_edit->city;
+        $this->province = $this->app_edit->province;
+        $this->zip_code = $this->app_edit->zip_code;
         $this->confirmingeditApplicant = true;
-       
+    }
+    public function saveEditApplicant($id)
+    {   
+
+
+        $photo = Applicants::findOrFail($id);
+        $photo_data = "";
+        $destination=public_path('storage\\'.$photo->photo);
+        if ($this->new_photo) {
+            Storage::disk('avatars')->delete($photo);
+            $photo_data = $this->new_photo->store('avatars', 'public');
+        } else {
+            $photo_data = $this->old_photo;
+        }
+
+        $photo->photo = $photo_data;
+        $photo->save();
+
+        Applicants::updateOrCreate(['id' => $id], [
+            'class_name' => $this->class_name,
+            'first_name' => $this->first_name,
+            'middle_name' => $this->middle_name,
+            'last_name' => $this->last_name,
+            'home_address' => $this->home_address,
+            'city' => $this->city,
+            'province' => $this->province,
+            'zip_code' => $this->zip_code,
+            //'abroad_address' => $this->abroad_address,
+        ]);
+        
+        
+        $this->confirmingeditApplicant = false;
+        session()->flash('update-success', 'Update Applicant successfully.');
+          
+        session()->flash('message', 'Status update successfully.');
+        // $useractivity = [
+        //     'user_id' => auth()->user()->id,
+        //     'role_id' => auth()->user()->role_id,
+        //     'user_name' => auth()->user()->name,
+        //     'applicant_id' => $id,
+        //     'remarks' => 'Update the status of this applicant.',
+        //     'particular' => 'Update Applicant'
+
+
+        // ];
+        // UserActivities::create($useractivity);
+        // session()->flash('message', 'New applicant successfully created.');
+        // $this->confirmingApplicantAdd = false;
+        // $this->isDisabled = '';
     }
 
     public function saveApplicant()

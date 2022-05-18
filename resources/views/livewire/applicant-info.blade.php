@@ -326,7 +326,7 @@
                     <x-jet-dialog-modal wire:model="confirmingeditApplicant">
                                 
                       <x-slot name="title" class="text-center">
-                          {{ __('Create Applicant') }}
+                          {{ __('Update Applicant') }}
                       </x-slot>
                       
                       
