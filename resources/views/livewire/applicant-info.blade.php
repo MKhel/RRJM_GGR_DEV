@@ -2,10 +2,10 @@
     <div class="flex flex-col">
       
       <div class="sm:flex py-2 -my-2 lg:items-center bg-white border-b border-gray-200 sm:px-20 px-3 py-6 lg:justify-between">
-        <div class="flex-1 min-w-0">
+        <div class="flex-1 min-w-0 mt-8">
           <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">Applicant Information</h2>
         </div>
-        <span class="hidden sm:block mr-2">
+        <span class="hidden sm:block mr-2 mt-8">
           <div class="flex text-green-700 px-py ">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />

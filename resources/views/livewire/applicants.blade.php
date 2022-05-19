@@ -1,9 +1,9 @@
 <div>
-    <div class="flex items-center justify-between mt-3 px-3 py-4 sm:px-20 bg-white border-b border-gray-200">
-        <div class=" text-2xl">
+    <div class="flex items-center justify-between px-4 py-4 sm:px-20 bg-white border-b border-gray-200">
+        <div class=" text-2xl mt-8">
             Applicant List
         </div>
-        <div>
+        <div class="mt-8">
             <x-jet-button class="block" wire:click="confirmApplicantAdd()">
                 {{ __('Add Applicant') }}
             </x-jet-button>

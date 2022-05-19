@@ -85,13 +85,20 @@
        
 
       --}}
+      
+      <div class="flex items-center justify-between px-4 py-4 sm:px-20 bg-white border-b border-gray-200">
+        <div class=" text-2xl mt-8">
+            Dashboard
+        </div>
+        <div class="mt-8">
+            
+        </div>
+      </div>  
        
-      <div class="py-12">
+      <div class="py-4">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+            <div class="bg-white overflow-hidden ">
                 <x-jet-welcome>
-                
-                
                 <x-slot name="content1" class="text-center">
                   <span class="text-6xl text-bold">{{$app_count->count()}}</span>
                 </x-slot>
@@ -105,6 +112,24 @@
                   <span class="text-6xl text-bold">{{$deployed_count->count()}}</span>
                 </x-slot>
               </x-jet-welcome>
+              <div class="relative bg-white px-6 py-6 pt-10 pb-8 shadow-sm ">
+                <h3 class="text-2xl leading-6 font-medium text-gray-900">Announcements</h3>
+              </div>
+              @foreach ($posts as $post)
+                    <div class="px-4 py-1 sm:px-6 bg-white">
+                        <div class="mt-3 px-4 py-4 bg-gray-100 rounded-md">
+                            <div class="text-sm text-gray-500">
+                                Date Created: {{ $post->created_at}}
+                            </div>
+                            <div class="mt-6 font-bold">
+                                {{ $post->announcement_post }}
+                            </div>
+                            <div class="mt-6 text-gray-500 text-right">
+                                Posted By: {{ $post->posted_by }}
+                            </div>
+                        </div>
+                    </div>                        
+              @endforeach
             </div>
             
         </div>
