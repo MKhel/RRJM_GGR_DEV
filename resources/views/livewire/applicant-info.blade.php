@@ -2,10 +2,10 @@
     <div class="flex flex-col">
       
       <div class="sm:flex py-2 -my-2 lg:items-center bg-white border-b border-gray-200 sm:px-20 px-3 py-6 lg:justify-between">
-        <div class="flex-1 min-w-0">
+        <div class="flex-1 min-w-0 mt-8">
           <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">Applicant Information</h2>
         </div>
-        <span class="hidden sm:block mr-2">
+        <span class="hidden sm:block mr-2 mt-8">
           <div class="flex text-green-700 px-py ">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
@@ -109,7 +109,15 @@
                         </div>
                         
                         <div class="flex px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                          <dt class="text-2xl font-extrabold uppercase">{{ $app_data->first_name }} {{ $app_data->middle_name }} {{ $app_data->last_name }}</dt>
+                          <dt class="text-2xl font-extrabold uppercase">{{ $app_data->first_name }} {{ $app_data->middle_name }} {{ $app_data->last_name }} 
+                            @if ($app_data->suffix == "None")
+                                               
+                            @else
+                            
+                              {{ $app_data->suffix }}  
+                            @endif
+                          
+                          </dt>
                         </div>
                       
                         <div class="flex bg-white px-py sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -149,7 +157,7 @@
                
                     <div class="text-center mt-2 item-center">
                               
-                      @foreach ($applicants as $applicant)
+                      @foreach ($progress as $applicant)
                             
                         
                       <div class=" stepper-content ">
@@ -391,6 +399,12 @@
                               <x-jet-input id="last_name" type="text" class="mt-1 block w-full" wire:model="last_name"/>
                               <x-jet-input-error for="last_name" class="mt-2" />
                               
+                          </div>
+                          <div class="col-span sm:col-span-4 mt-3">
+                            <x-jet-label for="suffix" value="{{ __('Suffix')}}" />
+                            <x-jet-input id="suffix" type="text" class="mt-1 block w-full" wire:model="suffix" />
+                            <x-jet-input-error for="suffix" class="mt-2" />
+                            
                           </div>
 
                           <div class="col-span sm:col-span-4 mt-3">

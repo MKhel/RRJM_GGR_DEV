@@ -1,9 +1,9 @@
 <div>
-    <div class="flex items-center justify-between mt-3 px-3 py-4 sm:px-20 bg-white border-b border-gray-200">
-        <div class=" text-2xl">
+    <div class="flex items-center justify-between px-4 py-4 sm:px-20 bg-white border-b border-gray-200">
+        <div class=" text-2xl mt-8">
             Applicant List
         </div>
-        <div>
+        <div class="mt-8">
             <x-jet-button class="block" wire:click="confirmApplicantAdd()">
                 {{ __('Add Applicant') }}
             </x-jet-button>
@@ -40,10 +40,12 @@
                                         <option value="Assigned to class">Assigned to class</option>
                                         <option value="Endorsed to processing">Endorsed to processing</option>
                                         <option value="Deployed">Deployed</option>
+                                        <option value="For Recall">For Recall</option>
                                         <option value="For Manpower Pooling">For Manpower Pooling</option>
                                         <option value="GLT Ongoing">GLT Ongoing</option>
                                         <option value="ICU Training Ongoing">ICU Training Ongoing</option>
                                         <option value="Not Qualified">Not Qualified</option>
+                                        
                                     </select>
                                 </div>
                                 <div class="relative px-2">
@@ -62,6 +64,7 @@
                                 <div class="relative pl-2">
                                 
                                     <select wire:model="perPage" class="block border-green-400 rounded-md w-full">
+                                        <option value="">Per Page</option>
                                         <option value="5">5</option>
                                         <option value="10">10</option>
                                         <option value="20">20</option>
@@ -82,7 +85,8 @@
                             @endif  
                         </div>
                      </div>
-                     <div class="items-center">
+       
+                     <div class="items-center px-4">
                             <table class="w-full md:table-fixed mt-4" style="width:100%">
                                 <thead class="font-bold">
                                     <tr class="" sortable>
@@ -184,7 +188,13 @@
                         
                                                 <div class="px-3 py-4 text-left">
                                                     <div class="text-sm font-medium leading-5 text-gray-900">
-                                                        {{ $applicant->first_name }}, {{ $applicant->last_name }},{{ $applicant->suffix }}
+                                                        {{ $applicant->last_name }}, {{ $applicant->first_name }}
+                                                        @if ($applicant->suffix == "None")
+                                                            
+                                                        @else
+                                                        
+                                                            {{ $applicant->suffix }}
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -313,28 +323,7 @@
                                 
                                 <x-slot name="content">
                                     <div class="col-span sm:col-span-4 mt-3">
-                                        <x-jet-label for="photo" value="{{ __('Applicant Picture')}}" />
-                                        {{-- <x-jet-label for="photo" value="{{ __('Applicant Picture')}}" /> --}}
-                                        
-                                        {{-- <x-jet-input name="photo" type="file" class="mt-1 block w-full" model:model="photo"/>
-                                        <img src="{{ $photo->temporaryUrl() }}" alt="">
-                                        <x-jet-button wire:click="upload" >Upload</x-button>
-                                        <x-jet-input-error for="photo" class="mt-2" /> --}}
-                                        {{-- <form wire:submit.prevent="saveApplicant" class="flex justify-between">
-                                            
-                                         
-                                            <input class=" py-3" type="file" wire:model="applicant.photo">
-                                         
-                                            @error('photo') <span class="error">{{ $message }}</span> @enderror
-                                         
-                                            <button type="submit">Save Photo</button>
-                                            @if ($photo)
-                                                <img src="{{ $photo->temporaryUrl() }}" width="100">
-                                            @endif
-                                            
-                                        </form> --}}
-
-                                            
+                                        <x-jet-label for="photo" value="{{ __('Applicant Picture')}}" />    
                                         <div class="flex justify-between ">
                                             
                                                
@@ -349,31 +338,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                    {{-- <div class="form-group">
-                                        <label for="customFile">Profile Photo</label>
-                                        <div class="custom-file">
-                                            <div x-data="{ isUploading: false, progress: 5 }" x-on:livewire-upload-start="isUploading = true" x-on:livewire-upload-finish="isUploading = false; progress = 5" x-on:livewire-upload-error="isUploading = false" x-on:livewire-upload-progress="progress = $event.detail.progress">
-                                                <input wire:model="photo" type="file" class="custom-file-input" id="customFile">
-                                                <div x-show.transition="isUploading" class="progress progress-sm mt-2 rounded">
-                                                    <div class="progress-bar bg-primary progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" x-bind:style="`width: ${progress}%`">
-                                                        <span class="sr-only">40% Complete (success)</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <label class="custom-file-label" for="customFile">
-                                                @if ($photo)
-                                                {{ $photo->getClientOriginalName() }}
-                                                @else
-                                                Choose Image
-                                                @endif
-                                            </label>
-                                        </div> --}}
-                                    {{-- <div class="col-span sm:col-span-4  mt-6">
-                                        <x-jet-label for="user_id" value="{{ __('User ID ')}}" />
-                                        <x-jet-input id="user_id" type="number" class="mt-1 block w-full" wire:model="applicant.user_id" required />
-                                        @error('photo')<x-jet-input-error for="applicant.user_id" class="mt-2" />@enderror
-                                        
-                                    </div> --}}
+                               
                                     <div class="col-span sm:col-span-4  mt-6">
                                         <x-jet-label for="sn_number" value="{{ __('#SN Number')}}" />
                                         <x-jet-input id="sn_number" type="text" class="mt-1 block w-full" wire:model="applicant.sn_number" required />
@@ -438,18 +403,6 @@
                                         <x-jet-input-error for="applicant.birthdate" class="mt-2" />
                                     </div>
 
-                                    
-                                    {{-- <div class="col-span sm:col-span-4 mt-3">
-                                        <x-jet-label for="country" value="{{ __('Country')}}" />
-                                       
-                                        <select wire:model="selectedCountry" class="block mt-1 w-full">
-                                            <option value="" selected>--Select Country--</option>
-                                            @foreach ($countries as $countries)
-                                            <option value="{{$countries->id}}" > {{$countries->name}}</option>
-                                            @endforeach
-                                        </select>
-                                        <x-jet-input-error for="applicant.country" class="mt-2" />
-                                    </div> --}}
                                     <div class="col-span sm:col-span-4 mt-3">
                                         <x-jet-label for="country" value="{{ __('Country')}}" />
                                        
@@ -494,53 +447,14 @@
                                     </div>
 
                                     @endif
-
-                                    {{-- <table>
-                                        <tr>
-                                            <td>Region</td>
-                                            <td><select id="region"></select></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Province</td>
-                                            <td><select id="province"></select></td>
-                                        </tr>
-                                        <tr>
-                                            <td>City</td>
-                                            <td><select id="city"></select></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Barangay</td>
-                                            <td><select id="barangay"></select></td>
-                                        </tr>
-                                    </table> --}}
-                                   
-                                    {{-- @if (!is_null($selectedCountry))
-                                    <div class="col-span sm:col-span-4 mt-3">
-                                        <x-jet-label for="state" value="{{ __('State')}}" />
-                                       
-                                        <select wire:model="selectedState" name="state" id="state" class="block mt-1 w-full">
-                                            <option value="0" >--Select state--</option>
-                                            @foreach ($states as $state)
-                                            <option value="{{$state->id}}" > {{$state->name}}</option>
-                                            @endforeach
-                                        </select>
-                                        <x-jet-input-error for="applicant.country" class="mt-2" />
-                                    </div>
-                                    @endif --}}
-                                    
-                                   
-                                     
                                
                                 </x-slot>
                         
                                 <x-slot name="footer">
-                                    <x-jet-secondary-button wire:click="$set('confirmingApplicantAdd', false)" wire:loading.attr="disabled">
+                                    <x-jet-secondary-button wire:click="confirmClosesave" wire:loading.attr="disabled">
                                         {{ __('Close') }}
                                     </x-jet-secondary-button>
-                                    {{-- <x-jet-secondary-button wire:click="$set('closeForm', false)" wire:loading.attr="disabled">
-                                        {{ __('Close') }}
-                                    </x-jet-secondary-button>
-                         --}}
+
                                     <x-jet-button class="ml-3" wire:click.prevent="saveApplicant" wire:loading.attr="disabled">
                                         {{ __('Save') }}
                                     </x-jet-button>
@@ -552,7 +466,7 @@
                             <x-jet-dialog-modal wire:model="confirmingeditApplicant">
                                 
                                 <x-slot name="title" class="text-center">
-                                    {{ __('Create Applicant') }}
+                                    {{ __('Update Applicant') }}
                                 </x-slot>
                                 
                                 
@@ -614,6 +528,12 @@
                                         <x-jet-input-error for="last_name" class="mt-2" />
                                         
                                     </div>
+                                    <div class="col-span sm:col-span-4 mt-3">
+                                        <x-jet-label for="suffix" value="{{ __('Suffix')}}" />
+                                        <x-jet-input id="suffix" type="text" class="mt-1 block w-full" wire:model="suffix" />
+                                        <x-jet-input-error for="suffix" class="mt-2" />
+                                        
+                                    </div>
           
                                     <div class="col-span sm:col-span-4 mt-3">
                                         <x-jet-label for="contact_number" value="{{ __('Contact Number')}}" />
@@ -635,63 +555,49 @@
                                         <x-jet-input-error for="birthdate" class="mt-2" />
                                     </div>
           
-                                    
-                                    <div class="col-span sm:col-span-4 mt-3">
-                                      <x-jet-label for="country" value="{{ __('Country')}}" />
-                                     
-                                      <select wire:model="selectedCountry" name="country" class="block mt-1 w-full">
-                                          <option value="" selected>--Select Country--</option>
-                                          
-                                          <option value="PH" >Philippines</option>
-                                          <option value="abroad" >Abroad</option>
-                                         
-                                      </select>
-                                      <x-jet-input-error for="applicant.country" class="mt-2" />
-                                  </div>
-          
-                                  @if ($selectedCountry == 'PH')
-                                  <div class="col-span sm:col-span-4 mt-3">
-                                      <x-jet-label for="home_address" value="{{ __('Home Address')}}" />
-                                      <x-jet-input id="home_address" type="text" class="mt-1 block w-full" wire:model="home_address" />
-                                      <x-jet-input-error for="home_address" class="mt-2" />
-                                  </div>
-          
-                                  <div class="col-span sm:col-span-4 mt-3">
-                                      <x-jet-label for="city" value="{{ __('City')}}" />
-                                      <x-jet-input id="city" type="text" class="mt-1 block w-full" wire:model="city" />
-                                      <x-jet-input-error for="city" class="mt-2" />
-                                  </div>
-          
-                                  <div class="col-span sm:col-span-4 mt-3">
-                                      <x-jet-label for="province" value="{{ __('Province')}}" />
-                                      <x-jet-input id="province" type="text" class="mt-1 block w-full" wire:model="province" />
-                                      <x-jet-input-error for="province" class="mt-2" />
-                                  </div>
-                                  
-                                  <div class="col-span sm:col-span-4  mt-3">
-                                      <x-jet-label for="zip_code" value="{{ __('Zip Code')}}" />
-                                      <x-jet-input id="zip_code" type="number" class="mt-1 block w-full" wire:model="zip_code"/>
-                                      <x-jet-input-error for="zip_code" class="mt-2" /> 
-                                  </div>
-                                  @endif
-                                  @if ($selectedCountry == 'abroad')
-                                  <div class="col-span sm:col-span-4 mt-3">
-                                      <x-jet-label for="abroad_address" value="{{ __('Abroad Address')}}" />
-                                      <x-jet-input id="abroad_address" type="text" class="mt-1 block w-full" wire:model="abroad_address" />
-                                      <x-jet-input-error for="abroad_address" class="mt-2" />
-                                  </div>
-          
-                                  @endif
+                        
+            
+                                    @if ($abroad_address == 'None')
+                                        <div class="col-span sm:col-span-4 mt-3">
+                                            <x-jet-label for="home_address" value="{{ __('Home Address')}}" />
+                                            <x-jet-input id="home_address" type="text" class="mt-1 block w-full" wire:model="home_address"/>
+                                            <x-jet-input-error for="home_address" class="mt-2" />
+                                        </div>
+                
+                                        <div class="col-span sm:col-span-4 mt-3">
+                                            <x-jet-label for="city" value="{{ __('City')}}" />
+                                            <x-jet-input id="city" type="text" class="mt-1 block w-full" wire:model="city"/>
+                                            <x-jet-input-error for="city" class="mt-2" />
+                                        </div>
+                
+                                        <div class="col-span sm:col-span-4 mt-3">
+                                            <x-jet-label for="province" value="{{ __('Province')}}" />
+                                            <x-jet-input id="province" type="text" class="mt-1 block w-full" wire:model="province" />
+                                            <x-jet-input-error for="province" class="mt-2" />
+                                        </div>
+                                        
+                                        <div class="col-span sm:col-span-4  mt-3">
+                                            <x-jet-label for="zip_code" value="{{ __('Zip Code')}}" />
+                                            <x-jet-input id="zip_code" type="number" class="mt-1 block w-full" wire:model="zip_code" />
+                                            <x-jet-input-error for="zip_code" class="mt-2" /> 
+                                        </div>
+                                    @else
+                                        <div class="col-span sm:col-span-4 mt-3">
+                                            <x-jet-label for="abroad_address" value="{{ __('Abroad Address')}}" />
+                                            <x-jet-input id="abroad_address" type="text" class="mt-1 block w-full" wire:model="abroad_address" />
+                                            <x-jet-input-error for="abroad_address" class="mt-2" />
+                                        </div>
+                                    @endif
                                
                                 </x-slot>
                         
                                 <x-slot name="footer">
-                                    <x-jet-secondary-button wire:click="$set('confirmingeditApplicant', false)" wire:loading.attr="disabled" >
+                                    <x-jet-secondary-button wire:click="confirmCloseupdate" wire:loading.attr="disabled" >
                                         {{ __('Close') }}
                                     </x-jet-secondary-button>
                         
                                     <x-jet-button class="ml-3" wire:click.prevent="saveEditApplicant({{$app_id}})" wire:loading.attr="disabled">
-                                        {{ __('Save') }}
+                                        {{ __('Update') }}
                                     </x-jet-button>
                                     
                                 </x-slot>
@@ -706,7 +612,7 @@
                                 Are you sure, you want to delete this applicant?
                              </x-slot>
                             <x-slot name="footer">
-                                <x-jet-secondary-button wire:click="$set('confirmingApplicantDeletion', 'false')" wire:loading.attr="disabled">
+                                <x-jet-secondary-button wire:click="confirmClosedelete" wire:loading.attr="disabled">
                                     {{ __('Close') }}
                                 </x-jet-secondary-button>
 

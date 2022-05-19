@@ -1,25 +1,7 @@
-<div class="p-6 sm:px-20 bg-white border-b border-gray-200">
-    
 
-    <div class="mt-8 text-2xl">
-       Announcements:
-    </div>
-    <div class="mt-3 px-4 py-4 bg-gray-100 rounded-md">
-        <div class=" text-gray-500">
-           Date: January 13, 2022
-        </div>
-        <div class="mt-6 font-bold">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pharetra, enim vel molestie semper, neque sapien vehicula felis, malesuada fringilla quam urna id dolor. Nunc venenatis elementum sem, quis pulvinar leo malesuada vel. 
-        </div>
-        <div class="mt-6 text-gray-500 text-right">
-            Posted By: Jenny Apepe
-        </div>
-    </div>
-</div>
-
-<div class="bg-gray-200 bg-opacity-25 grid grid-cols-1 md:grid-cols-2">
-    <div class="p-6 border bg-white border-gray-200">
-        <div class="flex justify-between">
+<div class="bg-gray-100 grid grid-cols-1 md:grid-cols-2">
+    <div class="p-6 border-gray-100">
+        <div class="flex justify-between px-3 py-4 bg-white">
             <div class="p-6">
                 <div class="flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 " viewBox="0 0 20 20" fill="currentColor">
@@ -40,8 +22,8 @@
         </div>  
     </div>
 
-    <div class="p-6 bg-white border border-gray-200">
-        <div class="flex justify-between">
+    <div class="p-6 border-gray-100 ">
+        <div class="flex px-3 py-4 bg-white justify-between">
             <div class="p-6">
                 <div class="flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
@@ -62,8 +44,8 @@
         </div>  
     </div>
 
-    <div class="p-6 bg-white border border-gray-200">
-        <div class="flex justify-between">
+    <div class="p-6 border-gray-100">
+        <div class="flex px-3 py-4 bg-white justify-between">
             <div class="p-6">
                 <div class="flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
@@ -84,8 +66,8 @@
         </div>  
     </div>
 
-    <div class="p-6 bg-white border border-gray-200">
-        <div class="flex justify-between">
+    <div class="p-6 border-gray-100">
+        <div class="flex px-3 py-4 bg-white justify-between">
             <div class="p-6">
                 <div class="flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
@@ -107,3 +89,5 @@
         </div>  
     </div>
 </div>
+
+

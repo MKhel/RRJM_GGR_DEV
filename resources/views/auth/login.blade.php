@@ -49,13 +49,12 @@
             </a>
             @endif
             </div>
-            <div class="flex pt-8 text-center justify-center text-sm font-semibold leading-2">
-                
+            {{-- <div class="flex pt-8 text-center justify-center text-sm font-semibold leading-2">
                 <p>
                   <p class="text-gray-90 text-xs mr-2">Not register yet?</p>
                   <a href="{{ route('register') }}" class="text-xs text-green-600 hover:text-sky-600">Register &rarr;</a>
                 </p>
-              </div>
+            </div> --}}
         </form>
     </x-jet-authentication-card>
     

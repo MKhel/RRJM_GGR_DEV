@@ -13,14 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('classes', function (Blueprint $table) {
+        Schema::create('announcements', function (Blueprint $table) {
             $table->id();
-            $table->string('class_name');
-            $table->integer('target_number');
-            $table->date('start_class');
+            $table->string('announcement_post');
+            $table->string('posted_by');
             $table->timestamps();
         });
-        
     }
 
     /**
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('classes');
+        Schema::dropIfExists('announcements');
     }
 };

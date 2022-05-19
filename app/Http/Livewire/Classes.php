@@ -61,7 +61,7 @@ class Classes extends Component
     }
     public function confirmClassAdd()
     {   
-        $this->reset(['Classes']);
+        //$this->reset(['Classes']);
         $this->confirmingClassAdd = true;
     }
     public function saveClass()
@@ -78,6 +78,7 @@ class Classes extends Component
     
 
         client::create($app_data);
+        $this->reset(['Classes']);
         session()->flash('message', 'New class successfully created.');
         $this->confirmingClassAdd = false;
 

@@ -31,6 +31,9 @@ class Applicant extends Component
     public $confirmingApplicantAdd = false;
     public $confirmingeditApplicant = false;
 
+    public $confirmClosesave;
+    public $confirmCloseupdate;
+
 
 
 
@@ -59,7 +62,7 @@ class Applicant extends Component
     public $old_photo;
 
 
-
+    public $abroad_address;
     public $countries;
     public $states;
     public $cities;
@@ -157,6 +160,24 @@ class Applicant extends Component
                                         ->latest()
                                         ->paginate($perPage),
 
+            // 'applicants' => Applicants::where('sn_number', 'LIKE', $searchQuery)
+            //                             ->orwhere('first_name', 'LIKE', $searchQuery)
+            //                             ->orwhere('middle_name', 'LIKE', $searchQuery)
+            //                             ->orwhere('last_name', 'LIKE', $searchQuery)
+            //                             ->orwhere('status', 'LIKE', '%'.$searchOrderby.'%')
+            //                             ->orwhere('class_name', 'LIKE', '%'.$searchClass.'%')
+            //                             ->latest()
+            //                             ->paginate($perPage),
+
+            // 'applicants' => Applicants::where('sn_number', 'LIKE', $searchQuery)
+            //                             ->orWhere(function($searchQuery)
+            //                             {
+            //                                 $searchQuery->where('status', 'LIKE', $searchQuery)
+            //                                     ->orwhere('class_name', 'LIKE', $searchQuery);
+            //                             })
+            //                             ->latest()
+            //                             ->paginate($this->perPage)
+
             // 'applicants' => Applicants::when($this->orderBy, function($query, $searchQ){
             //         return $query->where('status', 'LIKE', "%$searchQ%");
             //         })->latest()->paginate($this->perPage),
@@ -188,10 +209,28 @@ class Applicant extends Component
 
     public function confirmApplicantAdd()
     {   
-        $this->reset(['applicant']);
+        //$this->reset(['applicant']);
         $this->isDisabled = 'Disabled';
         // //$this->reset(['photo']);
         $this->confirmingApplicantAdd = true;
+         
+    }
+    public function confirmClosesave()
+    {   
+        $this->isDisabled = '';
+        $this->confirmingApplicantAdd = false;
+         
+    }
+    public function confirmCloseupdate()
+    {   
+        $this->isDisabled = '';
+        $this->confirmingeditApplicant= false;
+         
+    }
+    public function confirmClosedelete()
+    {   
+        $this->isDisabled = '';
+        $this->confirmingApplicantDeletion= false;
          
     }
 
@@ -206,6 +245,7 @@ class Applicant extends Component
         $this->first_name = $this->app_edit->first_name;
         $this->middle_name = $this->app_edit->middle_name;
         $this->last_name = $this->app_edit->last_name;
+        $this->suffix = $this->app_edit->suffix;
         $this->birthdate = $this->app_edit->birthdate;
         $this->email_address = $this->app_edit->email_address;
         $this->contact_number = $this->app_edit->contact_number;
@@ -238,12 +278,14 @@ class Applicant extends Component
             'first_name' => $this->first_name,
             'middle_name' => $this->middle_name,
             'last_name' => $this->last_name,
+            'suffix' => $this->suffix ?? "None",
             'contact_number' => $this->contact_number,
+            'birthdate' => $this->birthdate,
             'home_address' => $this->home_address,
             'city' => $this->city,
             'province' => $this->province,
             'zip_code' => $this->zip_code,
-            'abroad_address' => $this->abroad_address ?? "NONE",
+            'abroad_address' => $this->abroad_address ?? "None",
             //'abroad_address' => $this->abroad_address,
         ]);
         

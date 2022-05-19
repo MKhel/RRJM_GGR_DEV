@@ -34,7 +34,7 @@ class ApplicantInfo extends Component
     public $app_edit;
 
 
-    public $first_name, $middle_name, $last_name, $abroad_address;
+    public $first_name, $middle_name, $last_name, $abroad_address, $suffix;
     public $remarks;
 
     public $confirmingeditApplicant = false;
@@ -70,10 +70,12 @@ class ApplicantInfo extends Component
     {   
         $class  = classes::all();
         $applicant = UserActivities::where('applicant_id', $this->app_data->id)->latest()->paginate(5);
+        $progress = UserActivities::where('applicant_id', $this->app_data->id)->latest()->take(3)->get();
         //$stat = UserActivities::where('applicant_id', $this->app_data->id)->latest()->first('particular');
         //$status = UserActivities::where('applicant_id', $this->user_activity->id)->latest()->get('particular');
     
         return view('livewire.applicant-info', [
+            'progress' => $progress,
             'applicants' => $applicant,
             'class' => $class,
             
@@ -120,6 +122,7 @@ class ApplicantInfo extends Component
         $this->first_name = $this->app_edit->first_name;
         $this->middle_name = $this->app_edit->middle_name;
         $this->last_name = $this->app_edit->last_name;
+        $this->suffix = $this->app_edit->suffix;
         $this->birthdate = $this->app_edit->birthdate;
         $this->contact_number = $this->app_edit->contact_number;
         $this->home_address = $this->app_edit->home_address;
@@ -150,12 +153,14 @@ class ApplicantInfo extends Component
             'first_name' => $this->first_name,
             'middle_name' => $this->middle_name,
             'last_name' => $this->last_name,
+            'suffix' => $this->suffix ?? "None",
             'contact_number' => $this->contact_number,
+            'birthdate' => $this->birthdate,
             'home_address' => $this->home_address,
             'city' => $this->city,
             'province' => $this->province,
             'zip_code' => $this->zip_code,
-            'abroad_address' => $this->abroad_address ?? "NONE",
+            'abroad_address' => $this->abroad_address ?? "None",
         ]);
         $photo->photo = $photo_data;
         $photo->save();

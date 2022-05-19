@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Announcement;
 use Livewire\Component;
 use App\Models\Applicant;
 Use App\Models\classes;
@@ -20,12 +21,14 @@ class Dashboard extends Component
         $class = classes::all();
         $Deployed = Applicant::where('status', 'like', "Deployed");
         $user = User::All();
+        $post = Announcement::latest()->get();
         
         return view('livewire.dashboard', [
             'app_count' => $applicant,
             'class_count' => $class,
             'deployed_count' => $Deployed,
-            'user_count' => $user
+            'user_count' => $user,
+            'posts' => $post,
         ]);
     }
 }
