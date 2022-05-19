@@ -43,6 +43,18 @@
                                 <x-jet-label class="text-red-600"> {{ session('delete') }}</x-jet-label>
                         </div>
                     @endif 
+                    @if(Session::has('success'))
+                    <script type="text/javascript">
+                        swal({
+                            title:'Success!',
+                            text:"{{Session::get('success')}}",
+                            timer:5000,
+                            type:'success'
+                        }).then((value) => {
+                        //location.reload();
+                        }).catch(swal.noop);
+                    </script>
+                    @endif
                 @foreach ($posts as $post)
                     <div class="px-4 py-5 sm:px-6 mt-2 bg-white">
                         <div class="mt-3 px-4 py-4 bg-gray-100 rounded-md">

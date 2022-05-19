@@ -57,6 +57,7 @@ class Applicant extends Component
     public $perPage = '';
     public $searchQuery = '';
     public $searchClass = '';
+    public $Desc = 'DESC';
 
     public $new_photo;
     public $old_photo;
@@ -135,12 +136,12 @@ class Applicant extends Component
         
        // $country_id = $this->country;
 
-        
-        if ($this->searchQuery == null)
+        $Desc = $this->Desc;
+        if ($this->searchQuery == null){
         $searchQuery = '%'. $searchOrderby . '%';
-        elseif ($this->searchQuery == null)
+        }elseif ($this->searchQuery == null){
         $searchQuery = '%'. $searchClass. '%';
-        
+        }
         $perPage  = $this->perPage;
         //$countries = Country::all();
         //$states = State::where('country_id', $country_id)->get()->dd(); 
@@ -157,6 +158,7 @@ class Applicant extends Component
                                         ->orwhere('middle_name', 'LIKE', $searchQuery)
                                         ->orwhere('last_name', 'LIKE', $searchQuery)
                                         ->orwhere('status', 'LIKE', $searchQuery)
+                                        ->orderBy('sn_number', $Desc)
                                         ->latest()
                                         ->paginate($perPage),
 

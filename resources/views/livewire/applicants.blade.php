@@ -89,11 +89,45 @@
                      <div class="items-center px-4">
                             <table class="w-full md:table-fixed mt-4" style="width:100%">
                                 <thead class="font-bold">
-                                    <tr class="" sortable>
-                                        <th class="px-6 py-3 text-sm text-center font-medium leading-4  text-gray-900 bg-gray-50">
-                                            <div class="flex items-center justify-center">
-                                                <div class="ml-2">
-                                                   <p> DATE</p>  
+                                    <tr class="">
+                                        <th class="border-2 px-3 py-3 text-sm text-center font-medium leading-4  text-gray-900 bg-gray-50">
+                                            <div class="flex items-center justify-between">
+                                                <div class="">
+                                                   <p class="text-bold text-md"> DATE</p>  
+                                                </div>
+                                               
+                                                <div class="flex">
+                                                    <svg wire:model="Desc" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 7l4-4m0 0l4 4m-4-4v18" />
+                                                    </svg>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </th>
+
+                                        <th wire:model="desc" class="border-2 px-2 py-3 text-sm text-center font-medium leading-4  text-gray-900 bg-gray-50">
+                                            <div class="flex items-center justify-between">
+                                                <div class="">
+                                                   <p class="text-bold text-md"> #SN</p>  
+                                                </div>
+                                               
+                                                <div class="flex">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 7l4-4m0 0l4 4m-4-4v18" />
+                                                    </svg>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </th>
+
+                                        <th wire:model="desc" class="border-2 px-3 py-3 text-sm text-center font-medium leading-4  text-gray-900 bg-gray-50">
+                                            <div class="flex items-center justify-between">
+                                                <div class="">
+                                                   <p class="text-bold text-md"> FULLNAME</p>  
                                                 </div>
                                                
                                                 <div class="flex">
@@ -107,44 +141,56 @@
                                             </div>
                                         </th>
                                         
-                                        <th class="flex px-6 py-3 text-sm font-medium leading-4  text-gray-900 bg-gray-50 items-center">
-                                            <p class="">#SN</p> 
-                                            <span class="flex">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7l4-4m0 0l4 4m-4-4v18" />
-                                                </svg>
-                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M16 17l-4 4m0 0l-4-4m4 4V3" />
-                                                  </svg>
-                                            </span>
-                                            
+                                        <th wire:model="desc" class="border-2 px-3 py-3 text-sm text-center font-medium leading-4  text-gray-900 bg-gray-50">
+                                            <div class="flex items-center justify-between">
+                                                <div class="">
+                                                   <p class="text-bold text-md"> CLASS</p>  
+                                                </div>
+                                               
+                                                <div class="flex">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 7l4-4m0 0l4 4m-4-4v18" />
+                                                    </svg>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                                                    </svg>
+                                                </div>
+                                            </div>
                                         </th>
-                                        
+
+                                        <th wire:model="desc" class="border-2 px-3 py-3 text-sm text-center font-medium leading-4  text-gray-900 bg-gray-50">
+                                            <div class="flex items-center justify-between">
+                                                <div class="">
+                                                   <p class="text-bold text-md"> STATUS</p>  
+                                                </div>
+                                               
+                                                <div class="flex">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 7l4-4m0 0l4 4m-4-4v18" />
+                                                    </svg>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </th>
                                         <th
-                                            class="px-6 py-3 text-sm font-medium leading-4  text-gray-900 bg-gray-50 text-center">
-                                            FULLNAME</th>
-                                        <th
-                                            class="px-6 py-3 text-sm font-medium leading-4  text-gray-900 bg-gray-50 text-center">
-                                            CLASS</th>
-                                        <th
-                                            class="px-6 py-3 text-sm font-medium leading-4  text-gray-900 bg-gray-50">
-                                            STATUS</th>
-                                        <th
-                                            class="px-6 py-3 text-sm font-medium leading-4  text-gray-900 bg-gray-50">
+                                            class="border-2 px-6 py-3 text-sm font-medium leading-4  text-gray-900 bg-gray-50">
                                             VIEW</th>
+                                            
                                         <th
-                                            class="px-6 py-3 text-sm font-medium leading-4  text-gray-900 bg-gray-50">
+                                            class="border-2 px-6 py-3 text-sm font-medium leading-4  text-gray-900 bg-gray-50">
                                             EDIT</th>
 
                                         
                                         @if (auth()->user()->role_id == 1)
                                             <th
-                                            class="px-6 py-3 text-sm font-medium leading-4  text-gray-900 bg-gray-50">
+                                            class="border-2 px-6 py-3 text-sm font-medium leading-4  text-gray-900 bg-gray-50">
                                             DELETE</th>
                                         @else
                                             @can('delete')
                                             <th
-                                                class="px-6 py-3 text-sm font-medium leading-4  text-gray-900 bg-gray-50">
+                                                class="border-2 px-6 py-3 text-sm font-medium leading-4  text-gray-900 bg-gray-50">
                                                 DELETE</th>
                                             @endcan
                                             
