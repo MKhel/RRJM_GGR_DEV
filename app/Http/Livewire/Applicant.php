@@ -129,15 +129,18 @@ class Applicant extends Component
         $user_id =  User::all();
         $class  = classes::all();
 
-        $searchClass = $this->className;
-        $searchOrderby = $this->orderBy;
+        // $searchClass = $this->className;
+        // $searchOrderby = $this->orderBy;
         $searchQuery = '%'. $this->searchQuery . '%';
+        $searchOrderby = '%'. $this->orderBy .'%';
+        $searchClass = '%'. $this->className .'%';
         
        // $country_id = $this->country;
 
         
         // if ($this->searchQuery == null)
         // $searchQuery = '%'. $searchOrderby .'%';
+        // if ($this->searchQuery == null)
         // $searchQuery = '%'. $searchClass .'%';
         
         $perPage  = $this->perPage;
@@ -150,23 +153,23 @@ class Applicant extends Component
             // 'countries' => $countries,
             // 'states'   => $states,
 
+            'applicants' => Applicants::where('class_name', 'LIKE', '%'. $this->className .'%')
+                                        ->orwhere('first_name', 'LIKE', $searchQuery)
+                                        ->orwhere('middle_name', 'LIKE', $searchQuery)
+                                        ->orwhere('last_name', 'LIKE', $searchQuery)
+                                        ->orwhere('status', 'LIKE', $searchQuery)
+                                        ->orwhere('sn_number', 'LIKE', $searchQuery)
+                                        ->latest()
+                                        ->paginate($perPage),
+
             // 'applicants' => Applicants::where('sn_number', 'LIKE', $searchQuery)
             //                             ->orwhere('first_name', 'LIKE', $searchQuery)
             //                             ->orwhere('middle_name', 'LIKE', $searchQuery)
             //                             ->orwhere('last_name', 'LIKE', $searchQuery)
-            //                             ->orwhere('status', 'LIKE', $searchQuery)
-            //                             ->orwhere('class_name', 'LIKE', $searchQuery)
+            //                             ->orwhere('status', 'LIKE', '%'.$searchOrderby.'%')
+            //                             ->orwhere('class_name', 'LIKE', '%'.$searchClass.'%')
             //                             ->latest()
             //                             ->paginate($perPage),
-
-            'applicants' => Applicants::where('sn_number', 'LIKE', $searchQuery)
-                                        ->orwhere('first_name', 'LIKE', $searchQuery)
-                                        ->orwhere('middle_name', 'LIKE', $searchQuery)
-                                        ->orwhere('last_name', 'LIKE', $searchQuery)
-                                        ->orwhere('status', 'LIKE', '%'. $searchOrderby .'%')
-                                        ->orwhere('class_name', 'LIKE', '%'. $searchClass .'%')
-                                        ->latest()
-                                        ->paginate($perPage),
 
             // 'applicants' => Applicants::where('sn_number', 'LIKE', $searchQuery)
             //                             ->orWhere(function($searchQuery)

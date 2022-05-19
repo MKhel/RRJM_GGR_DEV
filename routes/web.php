@@ -6,6 +6,7 @@ use App\Http\Livewire\Applicant;
 use App\Http\Livewire\ApplicantInfo;
 use App\Http\Livewire\Classes;
 use App\Http\Livewire\Dashboard;
+use App\Http\Livewire\Announcements;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +54,10 @@ Route::middleware([ 'auth:sanctum', 'verified'])->get('/classes', Classes::class
 Route::middleware([ 'auth:sanctum', 'verified'])->get('/applicantinfo/{id}', ApplicantInfo::class, function () {
     return view('livewire.applicant-info');
 })->name('applicantinfo');
+
+Route::middleware([ 'auth:sanctum', 'verified'])->get('/announcements', Announcements::class, function () {
+    return view('livewire.announcements');
+})->name('announcements');
 // Route::middleware([ 'auth:sanctum', 'verified'])->get('/applicantinfo', ApplicantInfo::class, function () {
 //     return view('livewire.applicant-info');
 // })->name('applicantinfo');

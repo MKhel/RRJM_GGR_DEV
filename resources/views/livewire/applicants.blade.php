@@ -44,6 +44,7 @@
                                         <option value="For Manpower Pooling">For Manpower Pooling</option>
                                         <option value="GLT Ongoing">GLT Ongoing</option>
                                         <option value="ICU Training Ongoing">ICU Training Ongoing</option>
+                                        <option value="Not Qualified">Not Qualified</option>
                                         
                                     </select>
                                 </div>
