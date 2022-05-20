@@ -138,12 +138,16 @@ class Applicant extends Component
         
        // $country_id = $this->country;
 
-        if ($this->searchQuery){
+        // if ($this->searchQuery){
+        // $searchQuery = '%'. $searchOrderby . '%';
+        // }else{
+        // $searchQuery = '%'. $searchClass. '%';
+        // }
+        if ($this->searchQuery == null){
         $searchQuery = '%'. $searchOrderby . '%';
-        }else{
+        }elseif ($this->searchQuery == null){
         $searchQuery = '%'. $searchClass. '%';
         }
-
         
         $perPage  = $this->perPage;
         //$countries = Country::all();
