@@ -589,7 +589,7 @@
           
                                     <div class="col-span sm:col-span-4 mt-3">
                                         <x-jet-label for="email_address" value="{{ __('Email Address')}}" />
-                                        <x-jet-input id="email_address" type="email" class="mt-1 block w-full" wire:model="email_address" disabled/>
+                                        <x-jet-input id="email_address" type="email" class="mt-1 block w-full" wire:model="email_address"/>
                                         <x-jet-input-error for="email_address" class="mt-2" />
                                        
                                     </div>
