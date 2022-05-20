@@ -128,9 +128,7 @@ class Applicant extends Component
     
     public function render()
     {   
-        //$applicants = User::all();
-        // $applicants = Applicants::paginate(5);
-        
+
         $user_id =  User::all();
         $class  = classes::all();
 
@@ -140,12 +138,13 @@ class Applicant extends Component
         
        // $country_id = $this->country;
 
-        $Desc = $this->Desc;
-        if ($this->searchQuery == null){
+        if ($this->searchQuery){
         $searchQuery = '%'. $searchOrderby . '%';
-        }elseif ($this->searchQuery == null){
+        }else{
         $searchQuery = '%'. $searchClass. '%';
         }
+
+        
         $perPage  = $this->perPage;
         //$countries = Country::all();
         //$states = State::where('country_id', $country_id)->get()->dd(); 

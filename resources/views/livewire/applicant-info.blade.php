@@ -409,20 +409,30 @@
 
                           <div class="col-span sm:col-span-4 mt-3">
                               <x-jet-label for="contact_number" value="{{ __('Contact Number')}}" />
-                              <x-jet-input id="contact_number" type="number" class="mt-1 block w-full" wire:model="contact_number" placeholder="{{ $app_data->contact_number}}"/>
+                              <x-jet-input id="contact_number" type="number" class="mt-1 block w-full" wire:model="contact_number"/>
                               <x-jet-input-error for="contact_number" class="mt-2" />
                           </div>
 
-                          <div class="col-span sm:col-span-4 mt-3">
-                              <x-jet-label for="email_address" value="{{ __('Email Address')}}" />
-                              <x-jet-input id="email_address" type="email" class="mt-1 block w-full" wire:model="email_address" placeholder="{{ $app_data->email_address}}" disabled/>
-                              <x-jet-input-error for="email_address" class="mt-2" />
-                             
-                          </div>
+                         
+                          @if (auth()->user()->role_id == 1)
+                            <div class="col-span sm:col-span-4 mt-3">
+                                <x-jet-label for="email_address" value="{{ __('Email Address')}}" />
+                                <x-jet-input id="email_address" type="email" class="mt-1 block w-full" wire:model="email_address" />
+                                <x-jet-input-error for="email_address" class="mt-2" />
+                              
+                            </div>
+                          @else
+                            <div class="col-span sm:col-span-4 mt-3">
+                                <x-jet-label for="email_address" value="{{ __('Email Address')}}" />
+                                <x-jet-input id="email_address" type="email" class="mt-1 block w-full" wire:model="email_address" disabled/>
+                                <x-jet-input-error for="email_address" class="mt-2" />
+                              
+                            </div>
+                          @endif
 
                           <div class="col-span sm:col-span-4 mt-3">
                               <x-jet-label for="birthdate" value="{{ __('Birthdate')}}" />
-                              <x-jet-input name="birthdate" type="date" class="mt-1 block w-full" wire:model="birthdate" value="{{ $app_data->birthdate}}" placeholder="date"/>
+                              <x-jet-input name="birthdate" type="date" class="mt-1 block w-full" wire:model="birthdate" placeholder="date"/>
                               <i class="fas fa-calendar datepicker-toggle-icon"></i>   
                               <x-jet-input-error for="birthdate" class="mt-2" />
                           </div>
@@ -444,25 +454,25 @@
                         @if ($selectedCountry == 'PH')
                         <div class="col-span sm:col-span-4 mt-3">
                             <x-jet-label for="home_address" value="{{ __('Home Address')}}" />
-                            <x-jet-input id="home_address" type="text" class="mt-1 block w-full" wire:model="home_address" placeholder="{{ $app_data->home_address}}"/>
+                            <x-jet-input id="home_address" type="text" class="mt-1 block w-full" wire:model="home_address"/>
                             <x-jet-input-error for="home_address" class="mt-2" />
                         </div>
 
                         <div class="col-span sm:col-span-4 mt-3">
                             <x-jet-label for="city" value="{{ __('City')}}" />
-                            <x-jet-input id="city" type="text" class="mt-1 block w-full" wire:model="city" placeholder="{{ $app_data->city}}"/>
+                            <x-jet-input id="city" type="text" class="mt-1 block w-full" wire:model="city" />
                             <x-jet-input-error for="city" class="mt-2" />
                         </div>
 
                         <div class="col-span sm:col-span-4 mt-3">
                             <x-jet-label for="province" value="{{ __('Province')}}" />
-                            <x-jet-input id="province" type="text" class="mt-1 block w-full" wire:model="province" placeholder="{{ $app_data->province}}" />
+                            <x-jet-input id="province" type="text" class="mt-1 block w-full" wire:model="province" />
                             <x-jet-input-error for="province" class="mt-2" />
                         </div>
                         
                         <div class="col-span sm:col-span-4  mt-3">
                             <x-jet-label for="zip_code" value="{{ __('Zip Code')}}" />
-                            <x-jet-input id="zip_code" type="number" class="mt-1 block w-full" wire:model="zip_code" placeholder="{{ $app_data->zip_code}}"/>
+                            <x-jet-input id="zip_code" type="number" class="mt-1 block w-full" wire:model="zip_code"/>
                             <x-jet-input-error for="zip_code" class="mt-2" /> 
                         </div>
                         @endif
@@ -483,7 +493,7 @@
                           </x-jet-secondary-button>
               
                           <x-jet-button class="ml-3" wire:click.prevent="saveEditApplicant({{ $app_data->id}})" wire:loading.attr="disabled">
-                              {{ __('Save') }}
+                              {{ __('Update') }}
                           </x-jet-button>
                           
                       </x-slot>
