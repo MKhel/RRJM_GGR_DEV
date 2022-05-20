@@ -61,7 +61,7 @@
                             <div class="flex justify-between">
                                 
                                 <div class="text-sm text-gray-500">
-                                    Date Created: {{ $post->created_at}}
+                                    Last Posted: {{ $post->created_at->diffForHumans()}}
                                 </div>
                                 <div class="" wire:click="deleteAnnouncement({{$post->id}})">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

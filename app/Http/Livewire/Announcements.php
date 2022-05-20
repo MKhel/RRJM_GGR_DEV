@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Announcement;
 use Livewire\Component;
+use Carbon\Carbon;
 
 class Announcements extends Component
 {
@@ -16,7 +17,7 @@ class Announcements extends Component
     {   
         $post = Announcement::where('posted_by', 'like', auth()->user()->name)->latest()->get();
         return view('livewire.announcements', [
-            'posts' => $post
+            'posts' => $post,
         ]);
     }
 
