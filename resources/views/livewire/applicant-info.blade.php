@@ -40,7 +40,7 @@
                       </div>
                 </div>
 
-                <div class="px-0 py-5 px-3">
+                <div class="px-0 py-5 px-3 sm:px-0">
                   <div class="bg-white overflow-hidden mt-4">
                     <div class="">
                       <dl>
@@ -91,7 +91,7 @@
                   </div>
                 </div>
 
-                <div class="px-0 py-5 px-3">
+                <div class="px-0 py-5 px-3 sm:px-0">
                   <div class="py-5">
                     <h1 class="text-xl leading-6 font-extrabold text-gray-900">Progress Status</h1>
                       <div class="text-center mt-2 item-center">      
