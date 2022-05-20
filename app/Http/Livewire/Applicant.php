@@ -63,6 +63,10 @@ class Applicant extends Component
     public $old_photo;
 
 
+    public $sortColumn = 'created_at';
+    public $sortDirection = 'desc';
+
+
     public $abroad_address;
     public $countries;
     public $states;
@@ -158,7 +162,7 @@ class Applicant extends Component
                                         ->orwhere('middle_name', 'LIKE', $searchQuery)
                                         ->orwhere('last_name', 'LIKE', $searchQuery)
                                         ->orwhere('status', 'LIKE', $searchQuery)
-                                        ->orderBy('sn_number', $Desc)
+                                        ->orderBy($this->sortColumn, $this->sortDirection)
                                         ->latest()
                                         ->paginate($perPage),
 
@@ -216,6 +220,21 @@ class Applicant extends Component
         // //$this->reset(['photo']);
         $this->confirmingApplicantAdd = true;
          
+    }
+    public function sortBy($columnName)
+    {
+        if ($this->sortColumn === $columnName) {
+            $this->sortDirection = $this->swapSortDirection();
+        } else {
+            $this->sortDirection = 'asc';
+        }
+        
+        
+        $this->sortColumn = $columnName;
+    }
+    public function swapSortDirection()
+    {
+        return $this->sortDirection === 'asc' ? 'desc' : 'asc';
     }
     public function confirmClosesave()
     {   
