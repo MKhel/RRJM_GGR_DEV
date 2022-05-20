@@ -91,7 +91,7 @@ class ApplicantInfo extends Component
         // 'app_data.particular' => 'required|unique:users,particular',
         // ]);
 
-        //$this->validate();
+        $this->validate();
         //session()->flash('message', 'Status update successfully.');
         $useractivity = [
 
@@ -124,7 +124,6 @@ class ApplicantInfo extends Component
         $this->last_name = $this->app_edit->last_name;
         $this->suffix = $this->app_edit->suffix;
         $this->birthdate = $this->app_edit->birthdate;
-        $this->email_address = $this->app_edit->email_address;
         $this->contact_number = $this->app_edit->contact_number;
         $this->home_address = $this->app_edit->home_address;
         $this->abroad_address = $this->app_edit->abroad_address;

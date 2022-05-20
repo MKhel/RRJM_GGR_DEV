@@ -143,9 +143,9 @@ class Applicant extends Component
         // }else{
         // $searchQuery = '%'. $searchClass. '%';
         // }
-        if ($this->searchQuery == null){
+        if ($this->searchQuery === null){
         $searchQuery = '%'. $searchOrderby . '%';
-        }elseif ($this->searchQuery == null){
+        }elseif ($this->searchQuery === null){
         $searchQuery = '%'. $searchClass. '%';
         }
         
