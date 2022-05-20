@@ -57,9 +57,14 @@ class Applicant extends Component
     public $perPage = '';
     public $searchQuery = '';
     public $searchClass = '';
+    public $Desc = 'DESC';
 
     public $new_photo;
     public $old_photo;
+
+
+    public $sortColumn = 'created_at';
+    public $sortDirection = 'desc';
 
 
     public $abroad_address;
@@ -135,12 +140,12 @@ class Applicant extends Component
         
        // $country_id = $this->country;
 
-        
-        if ($this->searchQuery == null)
+        $Desc = $this->Desc;
+        if ($this->searchQuery == null){
         $searchQuery = '%'. $searchOrderby . '%';
-        elseif ($this->searchQuery == null)
+        }elseif ($this->searchQuery == null){
         $searchQuery = '%'. $searchClass. '%';
-        
+        }
         $perPage  = $this->perPage;
         //$countries = Country::all();
         //$states = State::where('country_id', $country_id)->get()->dd(); 
@@ -157,6 +162,7 @@ class Applicant extends Component
                                         ->orwhere('middle_name', 'LIKE', $searchQuery)
                                         ->orwhere('last_name', 'LIKE', $searchQuery)
                                         ->orwhere('status', 'LIKE', $searchQuery)
+                                        ->orderBy($this->sortColumn, $this->sortDirection)
                                         ->latest()
                                         ->paginate($perPage),
 
@@ -214,6 +220,21 @@ class Applicant extends Component
         // //$this->reset(['photo']);
         $this->confirmingApplicantAdd = true;
          
+    }
+    public function sortBy($columnName)
+    {
+        if ($this->sortColumn === $columnName) {
+            $this->sortDirection = $this->swapSortDirection();
+        } else {
+            $this->sortDirection = 'asc';
+        }
+        
+        
+        $this->sortColumn = $columnName;
+    }
+    public function swapSortDirection()
+    {
+        return $this->sortDirection === 'asc' ? 'desc' : 'asc';
     }
     public function confirmClosesave()
     {   

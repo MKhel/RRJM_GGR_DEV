@@ -35,4 +35,9 @@ class Announcements extends Component
         $this->reset(['post']);
         session()->flash('message', 'Announcement created successfully.');
     }
+    public function deleteAnnouncement($id)
+    {
+        Announcement::find($id)->delete();
+        session()->flash('delete', 'Announcement deleted successfully.');
+    }
 }
