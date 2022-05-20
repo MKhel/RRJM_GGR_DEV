@@ -57,24 +57,31 @@
                           </dt>
                         </div>
                         <div class="flex bg-white px-py sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                          <dt class="text-sm font-medium text-gray-500 uppercase">Birthdate:</dt>
-                          <dd class="mt-1 ml-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"> {!! date('F-d-Y', strtotime($app_data->birthdate)) !!}</dd>
+                          <dd class="text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                            <span class="text-sm font-medium text-gray-500 uppercase">Birthdate:</span>
+                             {!! date('F-d-Y', strtotime($app_data->birthdate)) !!}</dd>
                         </div>
                         <div class="flex bg-white px-py sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                          <dt class="text-sm font-medium text-gray-500 uppercase">Email address:</dt>
-                          <dd class="mt-1 ml-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ $app_data->email_address }}</dd>
+                          {{-- <dt class="text-sm font-medium text-gray-500 uppercase">Email address:</dt> --}}
+                          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                            <span class="text-sm font-medium text-gray-500 uppercase">Email Address:</span>
+                            {{ $app_data->email_address }}</dd>
                         </div>
                         <div class="flex bg-white px-py sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                          <dt class="text-sm font-medium text-gray-500 uppercase">Mobile Number:</dt>
-                          <dd class="mt-1 ml-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ $app_data->contact_number}}</dd>
+                          {{-- <dt class="text-sm font-medium text-gray-500 uppercase">Mobile Number:</dt> --}}
+                          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                            <span class="text-sm font-medium text-gray-500 uppercase">Mobile Number:</span>
+                            {{ $app_data->contact_number}}</dd>
                         </div>
                         <div class="flex bg-white px-py sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                          <dt class="text-sm font-medium text-gray-500 uppercase">Home Address:</dt>
-                          <dd class="mt-1 ml-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 truncate">{{ $app_data->home_address}}, {{ $app_data->city }}, {{ $app_data->province }}</dd>
+                          {{-- <dt class="text-sm font-medium text-gray-500 uppercase">Home Address:</dt> --}}
+                          <dd class="text-sm text-gray-900 sm:mt-0 sm:col-span-2 truncate"><span class="text-sm font-medium text-gray-500 uppercase">Home Address:</span>  {{ $app_data->home_address}}, {{ $app_data->city }}, {{ $app_data->province }}</dd>
                         </div>
                         <div class="flex bg-white px-py sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                          <dt class="text-sm font-medium text-gray-500 uppercase">Class:</dt>
-                          <dd class="mt-1 ml-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ $app_data->class_name }}</dd>
+                          {{-- <dt class="text-sm font-medium text-gray-500 uppercase">Class:</dt> --}}
+                          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                            <span class="text-sm font-medium text-gray-500 uppercase">Class:</span>
+                            {{ $app_data->class_name }}</dd>
                         </div>
                         <div class="flex mt-4 px-py sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                           <dt class="px-3 py-2 text-sm text-white bg-indigo-600 font-medium text-gray-500 border rounded uppercase">{{ $app_data->status}}</dt>
