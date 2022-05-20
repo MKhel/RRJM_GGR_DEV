@@ -19,9 +19,9 @@
           
           <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
             <div class="max-w-2xl max-w-2xl mx-auto">
-              <div class="sm:flex bg-white overflow-hidden px-6">
+              <div class="sm:flex bg-white overflow-hidden">
                 
-                <div class="px-0 py-6 ">
+                <div class="px-0 py-6 px-3">
                     @if ($app_data->photo != null)
                       <div class=" pb-3 pt-4">
                         <div class="box-content h-30 w-30 p-4 overflow-hidden border border-gray-200 hover:box-content">
@@ -40,7 +40,7 @@
                       </div>
                 </div>
 
-                <div class="px-0 py-5">
+                <div class="px-0 py-5 px-3">
                   <div class="bg-white overflow-hidden mt-4">
                     <div class="">
                       <dl>
@@ -84,8 +84,8 @@
                   </div>
                 </div>
 
-                <div class="px-0 py-5">
-                  <div class="px-4 py-5 sm:px-6">
+                <div class="px-0 py-5 px-3">
+                  <div class="py-5">
                     <h1 class="text-xl leading-6 font-extrabold text-gray-900">Progress Status</h1>
                       <div class="text-center mt-2 item-center">      
                         @foreach ($progress as $applicant)

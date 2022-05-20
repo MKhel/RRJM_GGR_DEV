@@ -86,12 +86,13 @@ class ApplicantInfo extends Component
 
     public function saveUserActivity($id)
     {
-        // $useractivity = $this->validate([
-        //     'app_data.remarks' => 'required|unique:users,remarks',
-        // 'app_data.particular' => 'required|unique:users,particular',
-        // ]);
+        $useractivity = $this->validate([
+            'app_data.remarks' => 'required|unique:users,id',
+            'app_data.particular' => 'required|unique:users,id',
+        ]);
 
-        $this->validate();
+        //$this->validate();
+        //$useractivity = $this->validate();
         //session()->flash('message', 'Status update successfully.');
         $useractivity = [
 
