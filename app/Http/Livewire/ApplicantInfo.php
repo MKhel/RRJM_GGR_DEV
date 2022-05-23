@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Http\Livewire\Applicant as LivewireApplicant;
+use App\Models\Adminpanel;
 use Livewire\Component;
 use App\Models\Applicant;
 use App\Models\UserActivities;
@@ -65,6 +66,7 @@ class ApplicantInfo extends Component
         $this->app_data = Applicant::find($id);
         $this->user_activity = UserActivities::find($id);
         $this->stats = UserActivities::where('applicant_id', $id)->latest()->first('particular');
+        $this->new_status = Adminpanel::all();
     }
     public function render()
     {   

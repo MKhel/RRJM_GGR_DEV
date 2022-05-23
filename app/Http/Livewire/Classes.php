@@ -8,6 +8,8 @@ use Livewire\WithPagination;
 use App\Models\classes as client;
 use App\Models\Applicant;
 use App\Models\classes as ModelsClasses;
+use App\Models\User;
+use App\Models\UserActivities;
 use Illuminate\Console\Application;
 
 class Classes extends Component
@@ -25,6 +27,7 @@ class Classes extends Component
     public $searchQuery;
 
     public $class_id;
+    public $viewApplicant = false;
 
     public $client_id;
     public $classes_name, $target_number;
@@ -128,6 +131,14 @@ class Classes extends Component
         ]); 
         session()->flash('message', 'Updated class successfully.');
         $this->confirmingClassUpdate = false;
+    }
+    public function showApplicant($id)
+    {
+        //return $this->class_name;
+        $this->class = Client::where('id',$id)->get();
+        $this->applicant = Applicant::where('class_name', "asklepios")->get();
+        $this->applicants = $this->applicant;
+        $this->viewApplicant = true;
     }
 }
 

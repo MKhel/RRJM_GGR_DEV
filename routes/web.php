@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApplicantController;
+use App\Http\Livewire\AdminPanel;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Applicant;
 use App\Http\Livewire\ApplicantInfo;
@@ -58,6 +59,9 @@ Route::middleware([ 'auth:sanctum', 'verified'])->get('/applicantinfo/{id}', App
 Route::middleware([ 'auth:sanctum', 'verified'])->get('/announcements', Announcements::class, function () {
     return view('livewire.announcements');
 })->name('announcements');
+Route::middleware([ 'auth:sanctum', 'verified'])->get('/admin-panel', AdminPanel::class, function () {
+    return view('livewire.admin-panel');
+})->name('admin_panel');
 // Route::middleware([ 'auth:sanctum', 'verified'])->get('/applicantinfo', ApplicantInfo::class, function () {
 //     return view('livewire.applicant-info');
 // })->name('applicantinfo');

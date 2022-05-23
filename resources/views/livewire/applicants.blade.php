@@ -27,7 +27,7 @@
 
                                 <div class="relative mt-0">
                                 
-                                    <select wire:model="orderBy" class="block w-full border-green-400 focus:border-green-400 focus:ring-opacity-50 rounded-md shadow-sm" {{ $isDisabled }}>
+                                    {{-- <select wire:model="orderBy" class="block w-full border-green-400 focus:border-green-400 focus:ring-opacity-50 rounded-md shadow-sm" {{ $isDisabled }}>
                                         <option value="">Search by Status</option>
                                         <option value="Encoded">Encoded</option>
                                         <option value="Schedule for Pre Interview">Schedule for Pre Interview</option>
@@ -46,6 +46,12 @@
                                         <option value="ICU Training Ongoing">ICU Training Ongoing</option>
                                         <option value="Not Qualified">Not Qualified</option>
                                         
+                                    </select> --}}
+                                    <select wire:model="orderBy" class="block w-full border-green-400 focus:border-green-400 focus:ring-opacity-50 rounded-md shadow-sm" {{ $isDisabled }}>
+                                        <option value="">Search by Status</option>
+                                        @foreach ($new_status as $status)
+                                        <option value="{{$status}}">{{$status->new_status}}</option>    
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="relative px-2">
@@ -383,6 +389,7 @@
                                                 <img src="{{ $photo->temporaryUrl() }}" width="100" class="mr-4">
                                             @endif
                                         </div>
+                            
                                     </div>
                                
                                     <div class="col-span sm:col-span-4  mt-6">
@@ -539,7 +546,7 @@
           
                                     <div class="col-span sm:col-span-4  mt-6">
                                         <x-jet-label for="sn_number" value="{{ __('#SN Number')}}" />
-                                        <x-jet-input id="sn_number" type="text" class="mt-1 block w-full" wire:model="sn_number" disabled />
+                                        <x-jet-input id="sn_number" type="text" class="mt-1 block w-full" wire:model="sn_number" />
                                         <x-jet-input-error for="sn_number" class="mt-2" />
                                     </div>
           

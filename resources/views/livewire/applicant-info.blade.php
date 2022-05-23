@@ -145,7 +145,7 @@
                               
                                 <div class="">
                                   <x-jet-label for="particular" value="{{ __('Job Application Status') }}" />
-                                  <select  wire:model="app_data.particular" name="particular" class="block mt-1 w-full">
+                                  {{-- <select  wire:model="app_data.particular" name="particular" class="block mt-1 w-full">
                                     <option value="0">--Select Status--</option>
                                     <option value="Schedule for Pre Interview">Schedule for Pre Interview</option>
                                     <option value="Schedule for final">Schedule for Final</option>
@@ -162,6 +162,12 @@
                                     <option value="GLT Ongoing">GLT Ongoing</option>
                                     <option value="ICU Training Ongoing">ICU Training Ongoing</option>
                                     <option value="Not Qualified">Not Qualified</option>
+                                  </select> --}}
+                                  <select wire:model="app_data.particular" class="block w-full border-green-400 focus:border-green-400 focus:ring-opacity-50 rounded-md shadow-sm">
+                                      <option value="">Search by Status</option>
+                                      @foreach ($new_status as $status)
+                                      <option value="{{$status}}">{{$status->new_status}}</option>    
+                                      @endforeach
                                   </select>
                                 @error('app_data.particular') <span class="text-sm text-red-600">{{ $message }}</span> @enderror
                                 {{-- <div class="col-span-6">
@@ -300,7 +306,7 @@
 
                           <div class="col-span sm:col-span-4  mt-6">
                               <x-jet-label for="sn_number" value="{{ __('#SN Number')}}" />
-                              <x-jet-input id="sn_number" type="text" class="mt-1 block w-full" wire:model="sn_number" disabled />
+                              <x-jet-input id="sn_number" type="text" class="mt-1 block w-full" wire:model="sn_number"/>
                               <x-jet-input-error for="sn_number" class="mt-2" />
                           </div>
 

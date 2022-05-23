@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Adminpanel;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Validator;
@@ -84,13 +85,16 @@ class Applicant extends Component
 
 
     public $isDisabled = '';
+
+
+    public $new_status;
     //public $notDisabled = '';
 
     
     
 
     protected $rules = [
-        'applicant.photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
+        'photo' => ['required', 'mimes:jpg,jpeg,png', 'max:1024'],
         'applicant.sn_number' => 'required',
         'applicant.class_name' => 'required',
         'applicant.birthdate' => 'required',
@@ -123,7 +127,7 @@ class Applicant extends Component
         $this->states = collect();
         //$this->cities - collect();
         
-        
+        $this->new_status = Adminpanel::all();
     }
     
     public function render()
