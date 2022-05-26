@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Adminpanel as ModelsAdminpanel;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -14,22 +15,17 @@ class AdminPanel extends Component
     public $isEdit = false;
     public $userdeleteConfirmation = false;
     public $userRegistrationConfirmation = false;
+    public $userEditConfirmation = false;
 
     public $user_id;
-
 
     // user component
     public $name, $role_id, $email, $password, $confirm_password;
 
     protected $rules = [
         'new_status' => 'required|unique:adminpanels,new_status',
-
-        'name' => 'required',
-        'role_id' => 'required',
-        'email' => 'required',
-        'password' => 'required',
-
     ];
+    
     public function render()
     {
         $users = User::latest()->paginate(5);
@@ -39,18 +35,18 @@ class AdminPanel extends Component
             'users' => $users,
         ]);
     }
-    public function saveNewStatus()
+    public function savedNewStatus()
     {
-        $annouce_data = $this->validate();
-        $annouce_data = [
+        $status_data = $this->validate();
+        $status_data = [
             'user_id' => auth()->user()->id,
             'new_status' => $this->new_status,
             'user_name' => auth()->user()->name,
         ];
-        ModelsAdminpanel::create($annouce_data);
+        ModelsAdminpanel::create($status_data);
         $this->reset(['new_status']);
         $this->isEdit = false;
-        session()->flash('message', 'Announcement created successfully.');
+        session()->flash('add-status', 'Status created successfully.');
     }
     public function updateNewStatus($id)
     {
@@ -60,7 +56,7 @@ class AdminPanel extends Component
         //     'user_name' => auth()->user()->name,
         // ];
         // ModelsAdminpanel::create($annouce_data);
-
+        
         ModelsAdminpanel::updateOrCreate(['id' => $id], [
             'user_id' => auth()->user()->id,
             'new_status' => $this->new_status,
@@ -68,7 +64,7 @@ class AdminPanel extends Component
         ]);
         $this->reset(['new_status']);
         $this->isEdit = false;
-        session()->flash('message', 'Status created successfully.');
+        session()->flash('status-update', 'Update status successfully.');
     }
     public function deleteNewStatus($id)
     {
@@ -101,7 +97,7 @@ class AdminPanel extends Component
         $this->reset(['new_status']);
         $this->isEdit = false;
         $this->userdeleteConfirmation = false;
-        session()->flash('delete', 'User deleted successfully.');
+        session()->flash('user-delete', 'User deleted successfully.');
     }
 
     public function openRegistration()
@@ -122,12 +118,18 @@ class AdminPanel extends Component
     }
     public function userRegister()
     {
-        $user_data = $this->validate();
+        $user_data = $this->validate([
+                'name' => 'required',
+            'role_id' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+        ]);
         $user_data = [
             'role_id' => $this->role_id,
             'name' => $this->name,
             'email' => $this->email,
-            'password' => $this->password,
+            'password' =>  Hash::make($this->password),
+           
         ];
         $user = [
             'role_id',
@@ -139,7 +141,50 @@ class AdminPanel extends Component
         User::create($user_data);
         $this->reset($user);
         $this->isEdit = false;
-        $this->userRegistrationConfirmation = true;
-        session()->flash('user-message', 'Announcement created successfully.');
+        session()->flash('user-register', 'Announcement created successfully.');
+        $this->userRegistrationConfirmation = false;
     }
+    public function editUser($id)
+    {
+        $this->userEditConfirmation = true;
+        $this->user_data = User::find($id);
+        $this->user_id = $id;
+        $this->name = $this->user_data->name;
+        $this->email = $this->user_data->email;
+        $this->password = $this->user_data->password;
+        $this->role_id = $this->user_data->role_id;
+    }
+    public function updateUser($id)
+    {
+        User::updateOrCreate(['id' => $id], [
+            'role_id' => $this->role_id,
+            'name' => $this->name,
+            'email' => $this->email,
+            'password' =>  Hash::make($this->password),
+        ]);
+        $user = [
+            'role_id',
+            'name',
+            'email',
+            'password',
+            'confirm_password'
+        ];
+        $this->reset($user);
+        $this->isEdit = false;
+        session()->flash('user-update', 'Update User successfully.');
+        $this->userEditConfirmation = false;
+    }
+    public function closeUpdate()
+    {
+        $user = [
+            'role_id',
+            'name',
+            'email',
+            'password',
+            'confirm_password'
+        ];
+        $this->reset($user);
+        $this->userEditConfirmation = false;
+    }
+    
 }

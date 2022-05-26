@@ -128,6 +128,7 @@ class ApplicantInfo extends Component
         $this->suffix = $this->app_edit->suffix;
         $this->birthdate = $this->app_edit->birthdate;
         $this->contact_number = $this->app_edit->contact_number;
+        $this->email_address = $this->app_edit->email_address;
         $this->home_address = $this->app_edit->home_address;
         $this->abroad_address = $this->app_edit->abroad_address;
         $this->city = $this->app_edit->city;
@@ -159,6 +160,7 @@ class ApplicantInfo extends Component
             'suffix' => $this->suffix ?? "None",
             'contact_number' => $this->contact_number,
             'birthdate' => $this->birthdate,
+            'email_address' => $this->email_address,
             'home_address' => $this->home_address,
             'city' => $this->city,
             'province' => $this->province,
@@ -168,24 +170,22 @@ class ApplicantInfo extends Component
         $photo->photo = $photo_data;
         $photo->save();
         
-        $this->confirmingeditApplicant = false;
-        session()->flash('message', 'Update Applicant successfully.');
+        ;
           
         //session()->flash('message', 'Status update successfully.');
-        // $useractivity = [
-        //     'user_id' => auth()->user()->id,
-        //     'role_id' => auth()->user()->role_id,
-        //     'user_name' => auth()->user()->name,
-        //     'applicant_id' => $id,
-        //     'remarks' => 'Update the status of this applicant.',
-        //     'particular' => 'Update Applicant'
+        $useractivity = [
+            'user_id' => auth()->user()->id,
+            'role_id' => auth()->user()->role_id,
+            'user_name' => auth()->user()->name,
+            'applicant_id' => $id,
+            'remarks' => 'Update the status of this applicant.',
+            'particular' => 'Update Applicant'
 
 
-        // ];
-        // UserActivities::create($useractivity);
-        // session()->flash('message', 'New applicant successfully created.');
-        // $this->confirmingApplicantAdd = false;
-        // $this->isDisabled = '';
+        ];
+        UserActivities::create($useractivity);
+        $this->confirmingeditApplicant = false;
+        session()->flash('message', 'Update Applicant successfully.');
     }
     
 }

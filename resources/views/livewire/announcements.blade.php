@@ -11,7 +11,7 @@
                     <h3 class="text-lg leading-6 font-medium text-gray-900">Create Announcement</h3>
                     @if (session()->has('message'))
                         <div class="flex justify-end px-4 mt-3">
-                                <x-jet-label class="text-green-400"> {{ session('message') }}</x-jet-label>
+                                <x-jet-label class="text-green-600"> {{ session('message') }}</x-jet-label>
                         </div>
                     @endif  
                     

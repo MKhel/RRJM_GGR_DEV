@@ -166,7 +166,7 @@
                                   <select wire:model="app_data.particular" class="block w-full border-green-400 focus:border-green-400 focus:ring-opacity-50 rounded-md shadow-sm">
                                       <option value="">Search by Status</option>
                                       @foreach ($new_status as $status)
-                                      <option value="{{$status}}">{{$status->new_status}}</option>    
+                                      <option value="{{$status->new_status}}">{{$status->new_status}}</option>    
                                       @endforeach
                                   </select>
                                 @error('app_data.particular') <span class="text-sm text-red-600">{{ $message }}</span> @enderror
@@ -194,9 +194,14 @@
                                 
                                  
                                  <div class="flex justify-between">
-                                  @if (session()->has('message'))
+                                  {{-- @if (session()->has('message'))
                                     <x-jet-label > {{ session('message') }}</x-jet-label>
-                                  @endif
+                                  @endif --}}
+                                  @if (session()->has('message'))
+                                  <div class="flex justify-end px-4 mt-3">
+                                          <x-jet-label class="text-green-600"> {{ session('message') }}</x-jet-label>
+                                  </div>
+                                  @endif  
                                  </div>
                                  <x-jet-button wire:loading.attr="disabled" wire:click="saveUserActivity({{ $app_data->id }})">
                                   {{ __('Save') }}

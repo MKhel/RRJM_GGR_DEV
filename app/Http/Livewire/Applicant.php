@@ -13,6 +13,7 @@ use Livewire\WithFileUploads;
 use App\Models\UserActivities;
 use App\Providers\AuthServiceProvider;
 use Illuminate\Support\Facades\Storage;
+use phpDocumentor\Reflection\Types\Null_;
 use phpDocumentor\Reflection\Types\This;
 use WisdomDiala\Countrypkg\Models\Country;
 use WisdomDiala\Countrypkg\Models\State;
@@ -53,17 +54,18 @@ class Applicant extends Component
     public $closeForm;
 
     //For  by Search
-    public $className = '';
-    public $orderBy = '';
+    public $OrderbyClassName = null;
+    public $OrderbyStatus = null;
     public $perPage = '';
     public $searchQuery = '';
+    public $searchOrderby ='';
     public $searchClass = '';
     public $Desc = 'DESC';
 
     public $new_photo;
     public $old_photo;
 
-
+    //For  sort by asc and desc
     public $sortColumn = 'created_at';
     public $sortDirection = 'desc';
 
@@ -136,70 +138,42 @@ class Applicant extends Component
         $user_id =  User::all();
         $class  = classes::all();
 
-        $searchClass = $this->className;
-        $searchOrderby = $this->orderBy;
+        $searchClass = $this->OrderbyClassName;
+        $perPage = $this->perPage;
         $searchQuery = '%'. $this->searchQuery . '%';
-        
-       // $country_id = $this->country;
+        $searchClass = '%'.$this->OrderbyClassName.'%';
+        // $searchStatus = '%'.$this->OrderbyStatus.'%';
 
-        // if ($this->searchQuery){
-        // $searchQuery = '%'. $searchOrderby . '%';
-        // }else{
-        // $searchQuery = '%'. $searchClass. '%';
+        // if ($this->searchQuery === null) 
+        // {
+        //     $searchQuery = '%'.$this->OrderbyClassName.'%';
         // }
-        if ($this->searchQuery === null){
-        $searchQuery = '%'. $searchOrderby . '%';
-        }elseif ($this->searchQuery === null){
-        $searchQuery = '%'. $searchClass. '%';
-        }
+        // elseif($this->searchQuery === '') {
+        //     $searchQuery = '%'.$this->OrderbyStatus.'%';
+        // }
+        // else
+        // {
+        //     $searchQuery = '%'.$this->searchQuery.'%';
+        // }
         
-        $perPage  = $this->perPage;
-        //$countries = Country::all();
-        //$states = State::where('country_id', $country_id)->get()->dd(); 
+
+        
 
         return view('livewire.applicants', [
             'user_id' => $user_id,
             'class' => $class,
-            // 'countries' => $countries,
-            // 'states'   => $states,
-
+            
             'applicants' => Applicants::where('sn_number', 'LIKE', $searchQuery)
-                                        ->orwhere('class_name', 'LIKE', $searchQuery)
+                                        ->orwhere('class_name', 'LIKE', $searchClass)
                                         ->orwhere('first_name', 'LIKE', $searchQuery)
                                         ->orwhere('middle_name', 'LIKE', $searchQuery)
                                         ->orwhere('last_name', 'LIKE', $searchQuery)
-                                        ->orwhere('status', 'LIKE', $searchQuery)
+                                        //->orwhere('status', 'LIKE', $searchStatus)
                                         ->orderBy($this->sortColumn, $this->sortDirection)
                                         ->latest()
                                         ->paginate($perPage),
-
-            // 'applicants' => Applicants::where('sn_number', 'LIKE', $searchQuery)
-            //                             ->orwhere('first_name', 'LIKE', $searchQuery)
-            //                             ->orwhere('middle_name', 'LIKE', $searchQuery)
-            //                             ->orwhere('last_name', 'LIKE', $searchQuery)
-            //                             ->orwhere('status', 'LIKE', '%'.$searchOrderby.'%')
-            //                             ->orwhere('class_name', 'LIKE', '%'.$searchClass.'%')
-            //                             ->latest()
-            //                             ->paginate($perPage),
-
-            // 'applicants' => Applicants::where('sn_number', 'LIKE', $searchQuery)
-            //                             ->orWhere(function($searchQuery)
-            //                             {
-            //                                 $searchQuery->where('status', 'LIKE', $searchQuery)
-            //                                     ->orwhere('class_name', 'LIKE', $searchQuery);
-            //                             })
-            //                             ->latest()
-            //                             ->paginate($this->perPage)
-
-            // 'applicants' => Applicants::when($this->orderBy, function($query, $searchQ){
-            //         return $query->where('status', 'LIKE', "%$searchQ%");
-            //         })->latest()->paginate($this->perPage),
-        
-            //'applicants' => Applicants::where('sn_number', $this->searchQuery)->paginate(10)
-            // 'applicants' => Applicants::query()
-            // ->when($this->searchQuery, function($query, $searchQuery){ $query->where('sn_number', 'LIKE', %.$searchQuery.%");})
-            // ->latest()->paginate(5)
-            // // 'applicants' => Applicants::where('sn_number', "$this->searchQuery")->paginate(5)
+                                        
+            
         ]);
 
     
@@ -320,22 +294,22 @@ class Applicant extends Component
         
         $this->confirmingeditApplicant = false;
         session()->flash('message', 'Applicant updated successfully.');
+
+
+        $useractivity = [
+            'user_id' => auth()->user()->id,
+            'role_id' => auth()->user()->role_id,
+            'user_name' => auth()->user()->name,
+            'applicant_id' => $id,
+            'remarks' => 'Update the status of this applicant',
+            'particular' => 'Update Applicant'
+
+
+        ];
+        UserActivities::create($useractivity);
+        $this->confirmingeditApplicant = false;
+        session()->flash('message', 'Update Applicant successfully.');
           
-        //session()->flash('message', 'Status update successfully.');
-        // $useractivity = [
-        //     'user_id' => auth()->user()->id,
-        //     'role_id' => auth()->user()->role_id,
-        //     'user_name' => auth()->user()->name,
-        //     'applicant_id' => $id,
-        //     'remarks' => 'Update the status of this applicant.',
-        //     'particular' => 'Update Applicant'
-
-
-        // ];
-        // UserActivities::create($useractivity);
-        // session()->flash('message', 'New applicant successfully created.');
-        // $this->confirmingApplicantAdd = false;
-        // $this->isDisabled = '';
     }
 
     public function saveApplicant()
@@ -409,10 +383,13 @@ class Applicant extends Component
         $this->confirmingApplicantDeletion = $id;
     }
 
-    public function DeleteApplicant( Applicants $applicant)
+    public function DeleteApplicant($id)
     {   
-        $applicant->delete();
+        //$applicant->delete();
+        Applicants::where('id',$id)->delete();
+        UserActivities::where('applicant_id',"$id")->delete();
         $this->confirmingApplicantDeletion = false;
         session()->flash('delete', 'Delete Applicant successfully.');
     }
+   
 }

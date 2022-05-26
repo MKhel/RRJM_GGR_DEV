@@ -34,12 +34,20 @@
                         {{ __('Announcements') }}
                     </x-jet-nav-link>
                 </div>
-
+                @if (auth()->user()->role_id == 1)
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('admin_panel') }}" :active="request()->routeIs('admin_panel')">
                         {{ __('Admin') }}
                     </x-jet-nav-link>
                 </div>
+                @else
+                    
+                @endif
+                {{-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-jet-nav-link href="{{ route('admin_panel') }}" :active="request()->routeIs('admin_panel')">
+                        {{ __('Admin') }}
+                    </x-jet-nav-link>
+                </div> --}}
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
