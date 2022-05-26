@@ -60,3 +60,10 @@ module.exports = {
       require('tw-elements/dist/plugin')
     ]
   }
+  module.exports = {
+    content: ["./src/**/*.{html,js}"],
+    theme: {
+      extend: {},
+    },
+    plugins: [],
+  }

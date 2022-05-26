@@ -1,6 +1,6 @@
 
-<div class="bg-gray-100 grid grid-cols-1 md:grid-cols-2">
-    <div class="p-6 border-gray-100">
+<div class="bg-gray-100 grid grid-cols-1 md:grid-cols-2 sm:grid-cols-2">
+    <div class="px-3 py-3 border-gray-100">
         <div class="flex justify-between px-3 py-4 bg-white">
             <div class="p-6">
                 <div class="flex items-center">
@@ -22,7 +22,7 @@
         </div>  
     </div>
 
-    <div class="p-6 border-gray-100 ">
+    <div class="px-3 py-3 border-gray-100 ">
         <div class="flex px-3 py-4 bg-white justify-between">
             <div class="p-6">
                 <div class="flex items-center">
@@ -44,7 +44,7 @@
         </div>  
     </div>
 
-    <div class="p-6 border-gray-100">
+    <div class="px-3 py-3 border-gray-100">
         <div class="flex px-3 py-4 bg-white justify-between">
             <div class="p-6">
                 <div class="flex items-center">
@@ -66,7 +66,7 @@
         </div>  
     </div>
 
-    <div class="p-6 border-gray-100">
+    <div class="px-3 py-3 mb-4 border-gray-100">
         <div class="flex px-3 py-4 bg-white justify-between">
             <div class="p-6">
                 <div class="flex items-center">

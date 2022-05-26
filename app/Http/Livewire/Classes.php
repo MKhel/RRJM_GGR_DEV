@@ -8,6 +8,8 @@ use Livewire\WithPagination;
 use App\Models\classes as client;
 use App\Models\Applicant;
 use App\Models\classes as ModelsClasses;
+use App\Models\User;
+use App\Models\UserActivities;
 use Illuminate\Console\Application;
 
 class Classes extends Component
@@ -25,6 +27,7 @@ class Classes extends Component
     public $searchQuery;
 
     public $class_id;
+    public $viewApplicant = false;
 
     public $client_id;
     public $classes_name, $target_number;
@@ -92,7 +95,15 @@ class Classes extends Component
         $this->client_id = $id;
         $this->confirmingClassDeletion = true;
     }
-
+    public function openClass()
+    {
+        
+    }
+    public function closeModal()
+    {
+        $this->confirmingClassUpdate = false;
+        $this->confirmingClassDeletion = false;
+    }
     public function DeleteClass()
     {   
         Client::find($this->client_id)->delete();
@@ -128,6 +139,20 @@ class Classes extends Component
         ]); 
         session()->flash('message', 'Updated class successfully.');
         $this->confirmingClassUpdate = false;
+    }
+    public function showApplicant($id, $class_name)
+    {
+        //return $this->class_name;
+        //$this->class = Client::where('id',$id)->get();
+        $this->applicant = Applicant::where('class_name', $class_name)->get();
+        $this->applicants = $this->applicant;
+        $this->class_name = $class_name;
+        $this->viewApplicant = true;
+    }
+    public function goBack()
+    {
+        $this->viewApplicant = false;
+        return route('classes');
     }
 }
 

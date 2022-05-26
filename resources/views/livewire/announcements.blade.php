@@ -5,13 +5,13 @@
         </div>
     </div>
 
-    <div class="px-4 py-4 sm:px-20 border-gray-200">
-        <div class="flex justify-between">
-            <div class="bg-white px-3 py-4 w-1/2 h-1/2 mr-4">
+    <div class="px-4 py-4 sm:px-10 border-gray-200">
+        <div class="sm:flex justify-items-between">
+            <div class="bg-white px-3 py-4 w-full mb-4">
                     <h3 class="text-lg leading-6 font-medium text-gray-900">Create Announcement</h3>
                     @if (session()->has('message'))
                         <div class="flex justify-end px-4 mt-3">
-                                <x-jet-label class="text-green-400"> {{ session('message') }}</x-jet-label>
+                                <x-jet-label class="text-green-600"> {{ session('message') }}</x-jet-label>
                         </div>
                     @endif  
                     
@@ -34,7 +34,7 @@
                 </div>
             </div>
             
-            <div class="ml-4">
+            <div class="py-auto w-full sm:ml-4">
             <div class="relative bg-white px-6 py-6 pt-10 pb-8 shadow-sm ">
                 <h3 class="text-2xl leading-6 font-medium text-gray-900">Latest Announcements</h3>
             </div>
@@ -61,7 +61,7 @@
                             <div class="flex justify-between">
                                 
                                 <div class="text-sm text-gray-500">
-                                    Date Created: {{ $post->created_at}}
+                                    Last Posted: {{ $post->created_at->diffForHumans()}}
                                 </div>
                                 <div class="" wire:click="deleteAnnouncement({{$post->id}})">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

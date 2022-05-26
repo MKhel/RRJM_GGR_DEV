@@ -16,18 +16,19 @@
                 <div class="flex flex-col mt-4">
                     <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">                            
                             <div class="flex mb-4">
-                                <input wire:keydown.escape = '' type="search" wire:model="searchQuery"
+                                <input wire:keydown.escape = '' type="search" wire:model="searchQuery" 
                                        class="w-full form-control rounded-md border-green-400 px-3 py-1.5 text-base font-normal text-green-700 bg-white bg-clip-padding transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-green-700 focus:outline-none"
                                        placeholder="Seach Applicant..."
                                        {{$isDisabled}} 
                                      />
                             </div>
-
+                            {{$OrderbyClassName}}
+                            {{$OrderbyStatus}}
                             <div class="w-full flex justify-end">
 
                                 <div class="relative mt-0">
                                 
-                                    <select wire:model="orderBy" class="block w-full border-green-400 focus:border-green-400 focus:ring-opacity-50 rounded-md shadow-sm" {{ $isDisabled }}>
+                                    {{-- <select wire:model="orderBy" class="block w-full border-green-400 focus:border-green-400 focus:ring-opacity-50 rounded-md shadow-sm" {{ $isDisabled }}>
                                         <option value="">Search by Status</option>
                                         <option value="Encoded">Encoded</option>
                                         <option value="Schedule for Pre Interview">Schedule for Pre Interview</option>
@@ -46,12 +47,18 @@
                                         <option value="ICU Training Ongoing">ICU Training Ongoing</option>
                                         <option value="Not Qualified">Not Qualified</option>
                                         
+                                    </select> --}}
+                                    <select wire:model="OrderbyStatus" class="block w-full border-green-400 focus:border-green-400 focus:ring-opacity-50 rounded-md shadow-sm" {{ $isDisabled }}>
+                                        <option value="">Search by Status</option>
+                                        @foreach ($new_status as $status)
+                                        <option value="{{$status->new_status}}">{{$status->new_status}}</option>    
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="relative px-2">
                                 
 
-                                    <select wire:model="className" class="block w-full border-green-400 focus:border-green-400 focus:ring-opacity-50 rounded-md shadow-sm" {{ $isDisabled }}>
+                                    <select wire:model="OrderbyClassName" class="block w-full border-green-400 focus:border-green-400 focus:ring-opacity-50 rounded-md shadow-sm" {{ $isDisabled }}>
                                         <option value="">Search by Class Name</option>
                                         @foreach ($class as $classes)
                                         <option value="{{ $classes->class_name }}">{{ $classes->class_name }}</option>
@@ -75,7 +82,7 @@
                             </div> 
                             @if (session()->has('message'))
                             <div class="flex justify-end px-4 mt-3">
-                                    <x-jet-label class="text-green-400"> {{ session('message') }}</x-jet-label>
+                                    <x-jet-label class="text-green-600"> {{ session('message') }}</x-jet-label>
                             </div>
                             @endif  
                             @if (session()->has('delete'))
@@ -383,6 +390,7 @@
                                                 <img src="{{ $photo->temporaryUrl() }}" width="100" class="mr-4">
                                             @endif
                                         </div>
+                            
                                     </div>
                                
                                     <div class="col-span sm:col-span-4  mt-6">
@@ -539,7 +547,7 @@
           
                                     <div class="col-span sm:col-span-4  mt-6">
                                         <x-jet-label for="sn_number" value="{{ __('#SN Number')}}" />
-                                        <x-jet-input id="sn_number" type="text" class="mt-1 block w-full" wire:model="sn_number" disabled />
+                                        <x-jet-input id="sn_number" type="text" class="mt-1 block w-full" wire:model="sn_number" />
                                         <x-jet-input-error for="sn_number" class="mt-2" />
                                     </div>
           
@@ -589,7 +597,7 @@
           
                                     <div class="col-span sm:col-span-4 mt-3">
                                         <x-jet-label for="email_address" value="{{ __('Email Address')}}" />
-                                        <x-jet-input id="email_address" type="email" class="mt-1 block w-full" wire:model="email_address" disabled/>
+                                        <x-jet-input id="email_address" type="email" class="mt-1 block w-full" wire:model="email_address"/>
                                         <x-jet-input-error for="email_address" class="mt-2" />
                                        
                                     </div>

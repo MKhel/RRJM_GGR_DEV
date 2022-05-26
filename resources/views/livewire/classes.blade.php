@@ -4,6 +4,10 @@
             Class List
         </div>
       </div>
+
+    @if ($this->viewApplicant === false)
+        
+    
     <div class="container my-12 py-4 mx-auto px-4">
         
         <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
@@ -56,7 +60,7 @@
                         </div>
                         @if (session()->has('message'))
                         <div class="flex justify-end px-4 mt-3">
-                                <x-jet-label class="text-green-400"> {{ session('message') }}</x-jet-label>
+                                <x-jet-label class="text-green-600"> {{ session('message') }}</x-jet-label>
                         </div>
                         @endif  
                         @if (session()->has('delete'))
@@ -104,8 +108,8 @@
                             {{ $content4}}
                           </button>
                         </span> --}}
-                        <span class="hidden sm:block">
-                          <button type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <span class="hidden sm:block"> 
+                          <button wire:click="showApplicant({{$class->id}}, '{{$class->class_name}}')" type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                             <svg class="-ml-1 mr-2 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                               <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
                             </svg>
@@ -189,6 +193,76 @@
 
         @endforeach
 
+        @else
+        <div class="container my-12 py-4 mx-auto px-4">
+          <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
+            <div class="px-4 py-5 sm:px-6 mt-2 bg-white">
+                        
+              @if (session()->has('delete'))
+              <div class="flex justify-end px-4 mt-3">
+                      <x-jet-label class="text-red-600"> {{ session('delete') }}</x-jet-label>
+              </div>
+              @endif 
+              <div class="flex justify-between">
+                <h3 class="text-2xl leading-6 font-medium text-gray-900">New Status</h3>
+                <x-jet-button class="ml-4" wire:click="goBack">
+                  {{ __('Go Back') }}
+                </x-jet-button>
+              </div>
+              <table class="border-2 w-full md:table-fixed mt-4">
+                  <thead class="border hover:bg-gray-50">
+                  <tr class="border-2">
+                      <th class="border-2 p-2">#</th>
+                      <th class="border-2 p-2" >Full Name</th>
+                      <th class="border-2 p-2">Status</th>
+                      <th class="border-2 p-2">Date Created</th>
+                      <th></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                      @forelse ($applicants as $post)
+                          <tr class="border-2 p-2">
+                              <td class="border-2 p-2">{{$post->id}}</td>
+                              <td class="border-2 p-2">{{$post->last_name}}, {{$post->first_name}}</td>
+                              <td class="border-2 p-2">{{$post->status}}</td>
+                              <td class="border-2 p-2 text-center">{{ $post->created_at->format('d M Y')}}</td>
+                              <td class="border-2 p-2 text-center">
+                                        
+                                                <a href="{{ route('applicantinfo',$post->id)}}">
+                                                <x-jet-secondary-button >
+                                                    <svg class="-ml-1 mr-2 h-5 w-5 text-white-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                                                    </svg>
+                                                </x-jet-secondary-button>
+                                                </a>
+                                            
+                                        </td>
+                          
+                      @empty
+                          <td
+                           class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                  <div class="text-center">
+                                      <p class="text-sm leading-none text-gray-600">Record not Found</p>  
+                                  </div>   
+                              
+                          </td>
+                          </tr>
+                      @endforelse
+                     
+                      
+                      
+                      
+                  </tbody>
+              </table>   
+              {{-- <div class=" mt-4 px-6 py-4 text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                  
+                  <p>{{ $class_name->links() }}</p>
+              </div> --}}
+          </div>  
+          </div>
+        </div>
+        @endif
+
 
         <x-jet-dialog-modal wire:model="confirmingClassAdd">
                                 
@@ -246,7 +320,7 @@
               Are you sure, you want to delete this class?
            </x-slot>
           <x-slot name="footer">
-              <x-jet-secondary-button wire:click="$set('confirmingClassDeletion', false)" wire:loading.attr="disabled">
+              <x-jet-secondary-button wire:click="closeModal" wire:loading.attr="disabled">
                   {{ __('Close') }}
               </x-jet-secondary-button>
 
@@ -292,7 +366,7 @@
               </x-slot>
 
               <x-slot name="footer">
-                  <x-jet-secondary-button wire:click="$set('confirmingClassUpdate', false)" wire:loading.attr="disabled">
+                  <x-jet-secondary-button wire:click="closeModal" wire:loading.attr="disabled">
                       {{ __('Close') }}
                   </x-jet-secondary-button>
 

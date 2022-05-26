@@ -119,13 +119,13 @@
                     <div class="px-4 py-1 sm:px-6 bg-white">
                         <div class="mt-3 px-4 py-4 bg-gray-100 rounded-md">
                             <div class="text-sm text-gray-500">
-                                Date Created: {{ $post->created_at}}
+                              Last Posted: {{ $post->created_at->diffForHumans()}}
                             </div>
                             <div class="mt-6 font-bold">
                                 {{ $post->announcement_post }}
                             </div>
                             <div class="mt-6 text-gray-500 text-right">
-                                Posted By: {{ $post->posted_by }}
+                                Posted by: {{ $post->posted_by }}
                             </div>
                         </div>
                     </div>                        
