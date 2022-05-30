@@ -7,7 +7,7 @@
 
     <div class="px-4 py-4 sm:px-10 border-gray-200">
         <div class=" justify-items-between">
-            <div class="bg-white px-3 py-4 w-full mb-4">
+            <div class="bg-white px-4 py-5 w-full mb-4">
                     @if ($isEdit === false)
                         <h3 class="text-lg leading-6 font-medium text-gray-900">Create New Status</h3>
                     @else
