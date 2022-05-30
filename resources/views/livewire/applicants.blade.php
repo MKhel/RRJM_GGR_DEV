@@ -22,8 +22,8 @@
                                        {{$isDisabled}} 
                                      />
                             </div>
-                            {{$OrderbyClassName}}
-                            {{$OrderbyStatus}}
+                            {{-- {{$OrderbyClassName}}
+                            {{$OrderbyStatus}} --}}
                             <div class="w-full flex justify-end">
 
                                 <div class="relative mt-0">

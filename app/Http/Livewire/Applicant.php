@@ -138,19 +138,19 @@ class Applicant extends Component
         $user_id =  User::all();
         $class  = classes::all();
 
-        $searchClass = $this->OrderbyClassName;
+        //$searchClass = $this->OrderbyClassName;
         $perPage = $this->perPage;
         $searchQuery = '%'. $this->searchQuery . '%';
-        $searchClass = '%'.$this->OrderbyClassName.'%';
-        // $searchStatus = '%'.$this->OrderbyStatus.'%';
+        // $searchQuery = '%'.$this->OrderbyClassName.'%';
+        // $searchQuery = '%'.$this->OrderbyStatus.'%';
 
-        // if ($this->searchQuery === null) 
-        // {
-        //     $searchQuery = '%'.$this->OrderbyClassName.'%';
-        // }
-        // elseif($this->searchQuery === '') {
-        //     $searchQuery = '%'.$this->OrderbyStatus.'%';
-        // }
+        if ($this->searchQuery === null) 
+        {
+            $searchQuery = '%'.$this->OrderbyClassName.'%';
+        }
+        elseif($this->searchQuery === null) {
+            $searchQuery = '%'.$this->OrderbyStatus.'%';
+        }
         // else
         // {
         //     $searchQuery = '%'.$this->searchQuery.'%';
@@ -164,11 +164,11 @@ class Applicant extends Component
             'class' => $class,
             
             'applicants' => Applicants::where('sn_number', 'LIKE', $searchQuery)
-                                        ->orwhere('class_name', 'LIKE', $searchClass)
+                                        ->orwhere('class_name', 'LIKE', $searchQuery)
                                         ->orwhere('first_name', 'LIKE', $searchQuery)
                                         ->orwhere('middle_name', 'LIKE', $searchQuery)
                                         ->orwhere('last_name', 'LIKE', $searchQuery)
-                                        //->orwhere('status', 'LIKE', $searchStatus)
+                                        ->orwhere('status', 'LIKE', $searchQuery)
                                         ->orderBy($this->sortColumn, $this->sortDirection)
                                         ->latest()
                                         ->paginate($perPage),
