@@ -138,7 +138,7 @@ class Applicant extends Component
         $perPage = $this->perPage;
 
 
-        return view('livewire.applicants', [
+        return view('livewire.applicant.show', [
             'user_id' => $user_id,
             'class' => $class,
                                         

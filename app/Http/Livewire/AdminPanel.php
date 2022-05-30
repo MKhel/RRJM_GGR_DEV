@@ -30,7 +30,7 @@ class AdminPanel extends Component
     {
         $users = User::latest()->paginate(5);
         $post = ModelsAdminpanel::latest()->paginate(5);
-        return view('livewire.admin-panel', [
+        return view('livewire.admin.show', [
             'posts' => $post,
             'users' => $users,
         ]);

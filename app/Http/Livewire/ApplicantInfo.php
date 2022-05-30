@@ -76,7 +76,7 @@ class ApplicantInfo extends Component
         //$stat = UserActivities::where('applicant_id', $this->app_data->id)->latest()->first('particular');
         //$status = UserActivities::where('applicant_id', $this->user_activity->id)->latest()->get('particular');
     
-        return view('livewire.applicant-info', [
+        return view('livewire.applicant.applicant-info', [
             'progress' => $progress,
             'applicants' => $applicant,
             'class' => $class,
