@@ -51,7 +51,7 @@ class Classes extends Component
         //$applicant_count =  Applicant::where('status', "LIKE","Encoded")->withcount('a');
        // $applicant_count = client::withcount('applicant')->get();
         //return "$applicant_count";
-        return view('livewire.classes', [
+        return view('livewire.class.show', [
                 
                 'clients' => client::when($this->searchQuery, function($query, $searchQuery){
                     return $query->where('class_name', 'LIKE', "%$searchQuery%" );

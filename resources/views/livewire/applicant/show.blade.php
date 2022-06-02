@@ -22,8 +22,8 @@
                                        {{$isDisabled}} 
                                      />
                             </div>
-                            {{$OrderbyClassName}}
-                            {{$OrderbyStatus}}
+                            {{-- {{$OrderbyClassName}}
+                            {{$OrderbyStatus}} --}}
                             <div class="w-full flex justify-end">
 
                                 <div class="relative mt-0">
@@ -48,17 +48,17 @@
                                         <option value="Not Qualified">Not Qualified</option>
                                         
                                     </select> --}}
-                                    <select wire:model="OrderbyStatus" class="block w-full border-green-400 focus:border-green-400 focus:ring-opacity-50 rounded-md shadow-sm" {{ $isDisabled }}>
+                                    <select wire:model="perStatus" class="block w-full border-green-400 focus:border-green-400 focus:ring-opacity-50 rounded-md shadow-sm" {{ $isDisabled }}>
                                         <option value="">Search by Status</option>
                                         @foreach ($new_status as $status)
-                                        <option value="{{$status->new_status}}">{{$status->new_status}}</option>    
+                                        <option wire:click="sortByClassname" value="{{$status->new_status}}">{{$status->new_status}}</option>    
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="relative px-2">
                                 
 
-                                    <select wire:model="OrderbyClassName" class="block w-full border-green-400 focus:border-green-400 focus:ring-opacity-50 rounded-md shadow-sm" {{ $isDisabled }}>
+                                    <select wire:model="perClass" class="block w-full border-green-400 focus:border-green-400 focus:ring-opacity-50 rounded-md shadow-sm" {{ $isDisabled }}>
                                         <option value="">Search by Class Name</option>
                                         @foreach ($class as $classes)
                                         <option value="{{ $classes->class_name }}">{{ $classes->class_name }}</option>

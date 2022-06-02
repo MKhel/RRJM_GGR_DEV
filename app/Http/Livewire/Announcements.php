@@ -16,7 +16,7 @@ class Announcements extends Component
     public function render()
     {   
         $post = Announcement::where('posted_by', 'like', auth()->user()->name)->latest()->get();
-        return view('livewire.announcements', [
+        return view('livewire.announcement.show', [
             'posts' => $post,
         ]);
     }

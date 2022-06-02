@@ -54,13 +54,10 @@ class Applicant extends Component
     public $closeForm;
 
     //For  by Search
-    public $OrderbyClassName = null;
-    public $OrderbyStatus = null;
     public $perPage = '';
     public $searchQuery = '';
-    public $searchOrderby ='';
-    public $searchClass = '';
-    public $Desc = 'DESC';
+    public $perClass = '';
+    public $perStatus = '';
 
     public $new_photo;
     public $old_photo;
@@ -138,47 +135,40 @@ class Applicant extends Component
         $user_id =  User::all();
         $class  = classes::all();
 
-        $searchClass = $this->OrderbyClassName;
         $perPage = $this->perPage;
-        $searchQuery = '%'. $this->searchQuery . '%';
-        $searchClass = '%'.$this->OrderbyClassName.'%';
-        // $searchStatus = '%'.$this->OrderbyStatus.'%';
 
-        // if ($this->searchQuery === null) 
-        // {
-        //     $searchQuery = '%'.$this->OrderbyClassName.'%';
-        // }
-        // elseif($this->searchQuery === '') {
-        //     $searchQuery = '%'.$this->OrderbyStatus.'%';
-        // }
-        // else
-        // {
-        //     $searchQuery = '%'.$this->searchQuery.'%';
-        // }
-        
 
-        
-
-        return view('livewire.applicants', [
+        return view('livewire.applicant.show', [
             'user_id' => $user_id,
             'class' => $class,
-            
-            'applicants' => Applicants::where('sn_number', 'LIKE', $searchQuery)
-                                        ->orwhere('class_name', 'LIKE', $searchClass)
-                                        ->orwhere('first_name', 'LIKE', $searchQuery)
-                                        ->orwhere('middle_name', 'LIKE', $searchQuery)
-                                        ->orwhere('last_name', 'LIKE', $searchQuery)
-                                        //->orwhere('status', 'LIKE', $searchStatus)
+                                        
+            'applicants' => Applicants::query()
+                                        ->when($this->perClass, function($query) {
+                                            return $query->where('class_name', $this->perClass);
+                                        })
+                                        ->when($this->perStatus, function($query) {
+                                            return $query->where('status', $this->perStatus);
+                                        })
+                                        ->when($this->searchQuery, function($query) {
+                                            return $query->where('sn_number', 'LIKE', '%'. $this->searchQuery . '%')
+                                                        ->orwhere('class_name', 'LIKE', '%'. $this->searchQuery . '%')
+                                                        ->orwhere('first_name', 'LIKE', '%'. $this->searchQuery . '%')
+                                                        ->orwhere('middle_name', 'LIKE', '%'. $this->searchQuery . '%')
+                                                        ->orwhere('last_name', 'LIKE', '%'. $this->searchQuery . '%')
+                                                        ->orwhere('status', 'LIKE', '%'. $this->searchQuery . '%');
+                                        })
                                         ->orderBy($this->sortColumn, $this->sortDirection)
                                         ->latest()
-                                        ->paginate($perPage),
-                                        
-            
+                                        ->paginate($perPage)
         ]);
-
-    
-            
       
+    }
+    public function sortByClassname()
+    {
+        return Applicants::query()
+        ->when($this->OrderbyClassName, function($query) {
+            return $query->where('class_name', $this->OrderbyClassName);
+        });
     }   
     public function updatedselectedCountry($country)
     {
