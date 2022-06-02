@@ -9,11 +9,13 @@
         @endif 
         <div class="flex justify-between mb-4">
             <h3 class="text-2xl leading-6 font-medium text-gray-900">User Activities</h3>
-            <x-jet-button class="ml-4" >
-                <a href="{{ route('admin_panel') }}">
-                    {{ __('Go Back') }}
-                </a>
-            </x-jet-button>
+            <a href="{{ route('admin_panel') }}">
+                <x-jet-button class="ml-4" >
+                    
+                        {{ __('Go Back') }}
+                    
+                </x-jet-button>
+            </a>    
           </div>
           <h3 class="text-xl leading-6 font-medium text-gray-900">{{$userData->name}} activity history</h3>
           

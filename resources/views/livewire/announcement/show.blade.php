@@ -20,7 +20,7 @@
                     <label for="about" class="block text-sm font-medium text-gray-700"> Announcement </label>
                     <div class="mt-1">
                       <textarea id="about" wire:model="post" name="about" rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md" 
-                      placeholder="{{auth()->user()->name}}, What you would to announce today?"></textarea>
+                      placeholder="{{auth()->user()->name}}, What you would like to announce for today?"></textarea>
                     </div>
                     <x-jet-input-error for="post" class="mt-2" />
                     
