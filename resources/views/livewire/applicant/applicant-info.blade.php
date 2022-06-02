@@ -86,6 +86,13 @@
                         <div class="flex mt-4 px-py sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                           <dt class="px-3 py-2 text-sm text-white bg-indigo-600 font-medium text-gray-500 border rounded uppercase">{{ $app_data->status}}</dt>
                         </div>
+                        <div class="flex mt-4 px-py sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <a href="{{ route('convert.pdfresume',$app_data->id)}}">
+                                <x-jet-button class="block">
+                                    {{ __('Export') }}
+                                </x-jet-button>
+                              </a>
+                        </div>
                       </dl>
                     </div>
                   </div>

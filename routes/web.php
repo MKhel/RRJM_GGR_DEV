@@ -9,6 +9,7 @@ use App\Http\Livewire\Classes;
 use App\Http\Livewire\Dashboard;
 use App\Http\Livewire\Announcements;
 use App\Http\Livewire\UserActivities;
+use App\Models\UserActivities as ModelsUserActivities;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,6 +73,32 @@ Route::middleware([ 'auth:sanctum', 'verified'])->get('/announcements', Announce
 Route::middleware([ 'auth:sanctum', 'verified'])->get('/admin-panel', AdminPanel::class, function () {
     return view('livewire.admin-panel');
 })->name('admin_panel');
+
+Route::middleware([ 'auth:sanctum', 'verified'])->get('/users/export', [App\Http\Controllers\UserExportController::class, 'export'], function () {
+    return view('livewire.applicant');
+})->name('export');
+Route::middleware([ 'auth:sanctum', 'verified'])->get('/users/exportActivities', [App\Http\Controllers\UserExportController::class, 'exportActivities'], function () {
+    return view('livewire.applicant');
+})->name('exportActivities');
+Route::get('/show-pdf', function()
+{
+    return view('livewire.admin.export.user-activities', [
+        'userDataActivity' =>  ModelsUserActivities::all()
+    ]);
+});
+
+//viewing pdf
+Route::get('/view/pdf/{id}', [App\Http\Controllers\PDFExportController::class, 'viewPDF'])->name('view.pdf');
+
+//view resume pdf
+Route::get('/pdf/resume/{id}', [App\Http\Controllers\PDFExportController::class, 'viewPDFresume'])->name('view.pdfresume');
+
+//convert resume pdf
+Route::get('/pdf/resume/{id}', [App\Http\Controllers\PDFExportController::class, 'convertPDFresume'])->name('convert.pdfresume');
+
+//conversion pdf
+Route::get('/convert/pdf/{id}', [App\Http\Controllers\PDFExportController::class, 'convertPDF'])->name('convertPDF');
+//Route::get('users/export', [App\Http\Controllers\UserExportController::class, 'export']);
 // Route::middleware([ 'auth:sanctum', 'verified'])->get('/applicantinfo', ApplicantInfo::class, function () {
 //     return view('livewire.applicant-info');
 // })->name('applicantinfo');

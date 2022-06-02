@@ -109,16 +109,16 @@
                                                 </button>
                                     
                                         </td>
-                                    
+                                    </tr>
                                 @empty
-                                    <td
+                                    <td colspan="2"
                                      class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                             <div class="text-center">
                                                 <p class="text-sm leading-none text-gray-600">Record not Found</p>  
                                             </div>   
                                         
                                     </td>
-                                    </tr>
+                                    
                                 @endforelse
                                
                                 

@@ -15,7 +15,14 @@
                         {{ __('Go Back') }}
                     
                 </x-jet-button>
-            </a>    
+            </a> 
+            <div class="mt-8">
+                <a href="{{ route('convertPDF',$userData->id)}}">
+                    <x-jet-button class="block">
+                        {{ __('Export') }}
+                    </x-jet-button>
+                </a>
+            </div>   
           </div>
           <h3 class="text-xl leading-6 font-medium text-gray-900">{{$userData->name}} activity history</h3>
           

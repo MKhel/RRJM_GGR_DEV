@@ -8,6 +8,13 @@
                 {{ __('Add Applicant') }}
             </x-jet-button>
         </div>
+        <div class="mt-8">
+            <a href="{{ route('export')}}">
+                <x-jet-button class="block">
+                    {{ __('Export') }}
+                </x-jet-button>
+            </a>
+        </div>
       </div>  
 
     <div class="container my-12 py-4 mx-auto px-4">
