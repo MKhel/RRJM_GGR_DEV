@@ -199,6 +199,14 @@
                 {{ __('Announcements') }}
             </x-jet-responsive-nav-link>
         </div>
+        @if (auth()->user()->role_id == 1)
+        <div class="pt-2 pb-3 space-y-1">
+            <x-jet-responsive-nav-link href="{{ route('admin_panel') }}" :active="request()->routeIs('admin_panel')">
+                {{ __('Admin') }}
+            </x-jet-responsive-nav-link>
+        </div>
+        @else
+        @endif
 
 
         <!-- Responsive Settings Options -->
