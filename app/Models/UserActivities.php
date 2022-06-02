@@ -21,6 +21,10 @@ class UserActivities extends Model
     
     public function applicant()
     {
-      return $this->belongsTo(Applicant::class, 'id', 'applicant_id');
+      return $this->hasMany(Applicant::class, 'id', 'applicant_id');
+    }
+    public function Applicants()
+    {
+        return $this->hasMany(Applicant::class, 'id', 'applicant_id');
     }
 }

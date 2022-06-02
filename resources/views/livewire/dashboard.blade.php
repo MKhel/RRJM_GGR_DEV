@@ -117,11 +117,15 @@
               </div>
               @foreach ($posts as $post)
                     <div class="px-4 py-1 sm:px-6 bg-white">
-                        <div class="mt-3 px-4 py-4 bg-gray-100 rounded-md">
-                            <div class="text-sm text-gray-500">
-                              Last Posted: {{ $post->created_at->diffForHumans()}}
+                        <div class="mt-3 px-6 py-4 bg-gray-100 rounded-md">
+                            <div class="flex">
+                                <img class="w-12 h-12 rounded-full object-cover shadow-sm border-gray-700 border-2" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
+                              <div class="justify-center px-2">
+                                <h1 class="font-bold text-lg">{{ $post->posted_by }}</h1>
+                                <p class="text-gray-500">Last Posted: {{ $post->created_at->diffForHumans()}}</p> 
+                              </div>
                             </div>
-                            <div class="mt-6 font-bold">
+                            <div class="mt-6 p-6 font-bold justify-center">
                                 {{ $post->announcement_post }}
                             </div>
                             <div class="mt-6 text-gray-500 text-right">

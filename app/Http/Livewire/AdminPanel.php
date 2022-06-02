@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Adminpanel as ModelsAdminpanel;
 use App\Models\User;
+use App\Models\UserActivities;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -16,7 +17,7 @@ class AdminPanel extends Component
     public $userdeleteConfirmation = false;
     public $userRegistrationConfirmation = false;
     public $userEditConfirmation = false;
-
+    public $viewUserActivity = false;
     public $user_id;
 
     // user component
@@ -186,5 +187,15 @@ class AdminPanel extends Component
         $this->reset($user);
         $this->userEditConfirmation = false;
     }
-    
+    public function viewAppAcitivities($id)
+    {
+        
+        $this->userActivity = UserActivities::where('user_id', 'LIKE', "$id")->get();
+        return $this->userActivity;
+        $this->viewUserActivity = true;   
+    }
+    public function goBack()
+    {
+        $this->viewUserActivity = false;
+    }
 }
