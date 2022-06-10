@@ -12,4 +12,9 @@ class Announcement extends Model
         'announcement_post',
         'posted_by',
       ];
+      public function user()
+      {
+          return $this->hasMany(User::class, 'name', 'posted_by');
+      }
 }
+

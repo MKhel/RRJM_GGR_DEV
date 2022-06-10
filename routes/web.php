@@ -91,7 +91,7 @@ Route::get('/show-pdf', function()
 Route::get('/view/pdf/{id}', [App\Http\Controllers\PDFExportController::class, 'viewPDF'])->name('view.pdf');
 
 //view resume pdf
-Route::get('/pdf/resume/{id}', [App\Http\Controllers\PDFExportController::class, 'viewPDFresume'])->name('view.pdfresume');
+Route::get('/view/resume/{id}', [App\Http\Controllers\PDFExportController::class, 'viewPDFresume'])->name('view.pdfresume');
 
 //convert resume pdf
 Route::get('/pdf/resume/{id}', [App\Http\Controllers\PDFExportController::class, 'convertPDFresume'])->name('convert.pdfresume');

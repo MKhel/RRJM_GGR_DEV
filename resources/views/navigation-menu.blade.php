@@ -102,13 +102,64 @@
                 @endif
 
                 <!-- Settings Dropdown -->
-                <div class="ml-3 relative">
+                <div class="ml-3 relative flex">
+                    <x-jet-dropdown>
+                        <x-slot name="trigger">
+                            <p class="inline-flex items-center py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+                                </svg>
+                            </p> 
+                        </x-slot>
+                        <x-slot name="content">
+                            <div class="px-4 py-4">
+                                
+                                <div class="flex text-sm pb-1 mt-1 border-b-2">
+                                    <div class="message" >
+                                        <p >This is notification</p>
+                                    </div>
+                                    <div class="link p-2">
+                                        <a href="#">View</a>
+                                    </div>
+                                    <hr>
+                                </div>
+                                <div class="flex text-sm pb-1 mt-1 border-b-2">
+                                    <div class="message" >
+                                        <p >This is notification</p>
+                                    </div>
+                                    <div class="link p-2">
+                                        <a href="#">View</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </x-slot>
+                    </x-jet-dropdown>
                     <x-jet-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-                                <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
-                                    <img class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
-                                </button>
+                            <span class="inline-flex rounded-md">
+                                        
+                                    
+                                    
+                                    <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition">
+                                        {{ Auth::user()->name }}
+
+                                        <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                        </svg>
+                                    </button>
+                                    <button >
+                                        {{-- <img class="h-8 w-8 rounded-full object-cover" src="{{ asset('storage/'.Auth::user()->profile_photo_path) }}" alt="{{ Auth::user()->name }}" /> --}}
+                                        @if (Auth::user()->profile_photo_path != null)
+                                        <img class="w-8 h-8 flex rounded-full object-cover border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition" src="{{ asset('storage/'.Auth::user()->profile_photo_path) }}" alt="{{ Auth::user()->name }}" />
+                                        @else
+                                        <div class="w-12 h-12 rounded-full items-center border-2 bg-green-700">
+                                        <p class="px-3 py-3 text-black text-center">{{ substr(Auth::user()->name, 0, 2) }}</p>    
+                                        </div>
+                                        @endif
+                                    </button>
+                                </span>
+                                
                             @else
                                 
                                 <span class="inline-flex rounded-md">
@@ -127,7 +178,7 @@
                                         </svg>
                                     </button>
                                     <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
-                                        <img class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
+                                        <img class="h-8 w-8 rounded-full object-cover" src="{{ asset('storage/'.Auth::user()->profile_photo_path) }}" alt="{{ Auth::user()->name }}" />
                                     </button>
                                 </span>
                             @endif
@@ -162,6 +213,7 @@
                             </form>
                         </x-slot>
                     </x-jet-dropdown>
+                    
                 </div>
             </div>
 
@@ -207,6 +259,7 @@
         </div>
         @else
         @endif
+        {{-- @endif --}}
 
 
         <!-- Responsive Settings Options -->
@@ -214,7 +267,7 @@
             <div class="flex items-center px-4">
                 @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                     <div class="shrink-0 mr-3">
-                        <img class="h-10 w-10 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
+                        <img class="h-10 w-10 rounded-full object-cover" src="{{ asset('storage/'.Auth::user()->profile_photo_path) }}" alt="{{substr(Auth::user()->name, 0, 1)}}" />
                     </div>
                 @endif
 

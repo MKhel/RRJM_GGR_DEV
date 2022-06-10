@@ -153,6 +153,7 @@ class ApplicantInfo extends Component
         
 
         Applicant::updateOrCreate(['id' => $id], [
+            'sn_number' => $this->sn_number,
             'class_name' => $this->class_name,
             'first_name' => $this->first_name,
             'middle_name' => $this->middle_name,

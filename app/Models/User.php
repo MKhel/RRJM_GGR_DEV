@@ -64,5 +64,9 @@ class User extends Authenticatable
     public function applicant() {
         return $this->belongsTo(Applicant::class, "id", "user_id")->where('user_id', auth()->user()->id);
     }
+
+    public function announcement() {
+        return $this->belongsTo(Announcement::class, "posted_by", "name");
+    }
     
 }

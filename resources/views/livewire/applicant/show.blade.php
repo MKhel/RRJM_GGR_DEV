@@ -8,13 +8,7 @@
                 {{ __('Add Applicant') }}
             </x-jet-button>
         </div>
-        <div class="mt-8">
-            <a href="{{ route('export')}}">
-                <x-jet-button class="block">
-                    {{ __('Export') }}
-                </x-jet-button>
-            </a>
-        </div>
+        
       </div>  
 
     <div class="container my-12 py-4 mx-auto px-4">
@@ -32,7 +26,13 @@
                             {{-- {{$OrderbyClassName}}
                             {{$OrderbyStatus}} --}}
                             <div class="w-full flex justify-end">
-
+                                <div class="relative px-2 items-left">
+                                    <a href="{{ route('export')}}">
+                                        <x-jet-button class="block">
+                                            {{ __('Export') }}
+                                        </x-jet-button>
+                                    </a>
+                                </div>
                                 <div class="relative mt-0">
                                 
                                     {{-- <select wire:model="orderBy" class="block w-full border-green-400 focus:border-green-400 focus:ring-opacity-50 rounded-md shadow-sm" {{ $isDisabled }}>
@@ -96,7 +96,7 @@
                             <div class="flex justify-end px-4 mt-3">
                                     <x-jet-label class="text-red-600"> {{ session('delete') }}</x-jet-label>
                             </div>
-                            @endif  
+                            @endif   
                         </div>
                      </div>
        

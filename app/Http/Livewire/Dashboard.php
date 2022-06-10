@@ -21,7 +21,8 @@ class Dashboard extends Component
         $class = classes::all();
         $Deployed = Applicant::where('status', 'like', "Deployed");
         $user = User::All();
-        $post = Announcement::latest()->get();
+        $post = Announcement::with('user')->get();
+        //$applicant = Applicant::where('id', 'LIKE',$id)->with('useractivities')->get();
         
         return view('livewire.dashboard', [
             'app_count' => $applicant,

@@ -119,17 +119,25 @@
                     <div class="px-4 py-1 sm:px-6 bg-white">
                         <div class="mt-3 px-6 py-4 bg-gray-100 rounded-md">
                             <div class="flex">
-                                <img class="w-12 h-12 rounded-full object-cover shadow-sm border-gray-700 border-2" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
+                              
+                              @foreach ($post->user as $user)
+                              
+                                @if ($user->profile_photo_path != null)
+                                <img class="w-12 h-12 rounded-full object-cover shadow-sm border-gray-700 border-2" src="{{ asset('storage/'.$user->profile_photo_path) }}" alt="{{  substr($post->posted_by, 0, 1) }}" />
+                                @else
+                                <div class="w-12 h-12 rounded-full items-center border-2 bg-white">
+                                  <p class="px-3 py-3 text-black text-center">{{ substr($user->name, 0, 2) }}</p>    
+                                </div>
+                                @endif
+                              @endforeach
+                                
                               <div class="justify-center px-2">
                                 <h1 class="font-bold text-lg">{{ $post->posted_by }}</h1>
                                 <p class="text-gray-500">Last Posted: {{ $post->created_at->diffForHumans()}}</p> 
                               </div>
                             </div>
-                            <div class="mt-6 p-6 font-bold justify-center">
+                            <div class="mt-6 p-6 ml-6 font-bold justify-center">
                                 {{ $post->announcement_post }}
-                            </div>
-                            <div class="mt-6 text-gray-500 text-right">
-                                Posted by: {{ $post->posted_by }}
                             </div>
                         </div>
                     </div>                        

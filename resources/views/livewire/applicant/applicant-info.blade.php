@@ -89,7 +89,7 @@
                         <div class="flex mt-4 px-py sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                             <a href="{{ route('convert.pdfresume',$app_data->id)}}">
                                 <x-jet-button class="block">
-                                    {{ __('Export') }}
+                                    {{ __('Export PDF') }}
                                 </x-jet-button>
                               </a>
                         </div>

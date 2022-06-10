@@ -252,12 +252,17 @@ class Applicant extends Component
     {   
 
 
+        $applicant = Applicants::findOrFail($id);
         $photo = Applicants::findOrFail($id);
         $photo_data = "";
         $destination=public_path('storage\\'.$photo->photo);
         if ($this->new_photo) {
             Storage::disk('avatars')->delete($photo);
-            $photo_data = $this->new_photo->store('avatars', 'public');
+            //$photo_data = $this->new_photo->store('avatars', 'public');
+            $first_name = $applicant->first_name;
+            $last_name = $applicant->last_name;
+            $middle_name = $applicant->middle_name;
+            $photo_data = $this->new_photo->storeAs('avatars', ("$first_name $middle_name $last_name"));
         } else {
             $photo_data = $this->old_photo;
         }
@@ -305,8 +310,10 @@ class Applicant extends Component
     public function saveApplicant()
     {   
         $upload = $this->validate();
-
-        $uploadPhoto = $this->photo->storeAs('avatars', $this->applicant['last_name']);
+        $first_name = $this->applicant['first_name'];
+        $last_name = $this->applicant['last_name'];
+        $middle_name = $this->applicant['middle_name'];
+        $uploadPhoto = $this->photo->storeAs('avatars', ("$first_name $middle_name $last_name"));
         $upload = new Applicants;
         $upload->photo=$uploadPhoto;
         $upload->user_id = auth()->id();

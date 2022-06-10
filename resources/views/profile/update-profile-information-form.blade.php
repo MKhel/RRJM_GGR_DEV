@@ -28,7 +28,14 @@
 
                 <!-- Current Profile Photo -->
                 <div class="mt-2" x-show="! photoPreview">
-                    <img src="{{ $this->user->profile_photo_url }}" alt="{{ $this->user->name }}" class="rounded-full h-20 w-20 object-cover">
+                    
+                    @if (Auth::user()->profile_photo_path != null)
+                    <img src="{{ asset('storage/'.$this->user->profile_photo_path) }}" alt="{{ $this->user->name }}" class="rounded-full h-20 w-20 object-cover">
+                    @else
+                    <div class="w-12 h-12 rounded-full items-center border-2 bg-green-700">
+                    <p class="px-3 py-3 text-black text-center">{{ substr(Auth::user()->name, 0, 2) }}</p>    
+                    </div>
+                    @endif
                 </div>
 
                 <!-- New Profile Photo Preview -->
