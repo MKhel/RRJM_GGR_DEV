@@ -11,12 +11,15 @@ use App\Models\Applicant as Applicants;
 Use App\Models\classes;
 use Livewire\WithFileUploads;
 use App\Models\UserActivities;
+use App\Notifications\addApplicantNotif;
 use App\Providers\AuthServiceProvider;
 use Illuminate\Support\Facades\Storage;
 use phpDocumentor\Reflection\Types\Null_;
 use phpDocumentor\Reflection\Types\This;
 use WisdomDiala\Countrypkg\Models\Country;
 use WisdomDiala\Countrypkg\Models\State;
+use Illuminate\Notifications\Notification;
+
 
 
 
@@ -288,6 +291,8 @@ class Applicant extends Component
         
         
         $this->confirmingeditApplicant = false;
+        // $thread->addApplicant($request->body);
+       
         session()->flash('message', 'Applicant updated successfully.');
 
 
@@ -367,11 +372,24 @@ class Applicant extends Component
 
         ];
         UserActivities::create($useractivity);
+
+        $user = User::first();
+        auth()->user()->notify(new addApplicantNotif($user));
         session()->flash('message', 'New applicant successfully created.');
         $this->confirmingApplicantAdd = false;
         $this->isDisabled = '';
         $this->reset(['applicant']);
+        
 
+    }
+    public function markasread($id)
+    {
+        if($id)
+        {
+            auth()->user()->unreadNotifications->where('id',$id)->markasread();
+        }
+        return back();
+        //dd($id);
     }
 
     public function confirmApplicantDelete($id)

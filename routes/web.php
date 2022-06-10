@@ -98,22 +98,8 @@ Route::get('/pdf/resume/{id}', [App\Http\Controllers\PDFExportController::class,
 
 //conversion pdf
 Route::get('/convert/pdf/{id}', [App\Http\Controllers\PDFExportController::class, 'convertPDF'])->name('convertPDF');
-//Route::get('users/export', [App\Http\Controllers\UserExportController::class, 'export']);
-// Route::middleware([ 'auth:sanctum', 'verified'])->get('/applicantinfo', ApplicantInfo::class, function () {
-//     return view('livewire.applicant-info');
-// })->name('applicantinfo');
-
-// route()
 
 
-// Route::middleware([
-//     'auth:sanctum',
-//     config('jetstream.auth_session'),
-//     'verified'
-// ])->group(function () {
-//     // Route::resource('/applicants', ApplicantController::class);
-//     // Route::get('/applicant', Applicant::class);
-//     Route::resource('client', ApplicantController::class); 
-// });
-
+Route::middleware([ 'auth:sanctum', 'verified'])->get('/notify', Applicant::class, 'notify');
+Route::get('/markasread/{id}', [App\Http\Livewire\Applicant::class, 'markasread'])->name('markasread');
 

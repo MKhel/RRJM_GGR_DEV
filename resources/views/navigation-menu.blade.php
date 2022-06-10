@@ -105,32 +105,51 @@
                 <div class="ml-3 relative flex">
                     <x-jet-dropdown>
                         <x-slot name="trigger">
-                            <p class="inline-flex items-center py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                    <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
-                                </svg>
-                            </p> 
+                            <div class="flex">
+                                <p class="inline-flex items-center py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+                                    </svg>
+                                </p>   
+                            
+                                 @if (auth()->user()->unreadnotifications)
+                                 <div class="flex text-sm pb-1 mt-1 border-b-2 rounded-full bg-red-500">
+                                    <div class="message" >
+                                        <p>{{auth()->user()->unreadnotifications->count()}}</p>
+                                    </div>
+                                </div>
+                                @else
+                                
+                                @endif
+                            </div>
+                                
                         </x-slot>
-                        <x-slot name="content">
+                        <x-slot name="content" class="w-1/2">
                             <div class="px-4 py-4">
                                 
-                                <div class="flex text-sm pb-1 mt-1 border-b-2">
-                                    <div class="message" >
-                                        <p >This is notification</p>
-                                    </div>
-                                    <div class="link p-2">
-                                        <a href="#">View</a>
-                                    </div>
-                                    <hr>
-                                </div>
-                                <div class="flex text-sm pb-1 mt-1 border-b-2">
-                                    <div class="message" >
-                                        <p >This is notification</p>
-                                    </div>
-                                    <div class="link p-2">
-                                        <a href="#">View</a>
-                                    </div>
-                                </div>
+                                @foreach (auth()->user()->notifications as $notif)
+                                    @if ($notif->read_at == null)
+                                        <div class="flex text-sm pb-1 mt-1 border-b-2">
+                                            <div class="message" >
+                                                <p >{{$notif->data['name']}} added new applicant.</p>
+                                            </div>
+                                            <div class="link p-2">
+                                                <a href="{{ route('markasread', $notif->id) }}">Mark as Read</a>
+                                            </div>
+                                            <hr>
+                                        </div>
+                                    @else
+                                        
+                                    @endif
+                                   
+                                @endforeach
+                                
+                                
+
+
+                        
+                                
+                                
                             </div>
                         </x-slot>
                     </x-jet-dropdown>
