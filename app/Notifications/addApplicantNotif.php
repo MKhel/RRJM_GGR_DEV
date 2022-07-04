@@ -12,15 +12,17 @@ class addApplicantNotif extends Notification
 {
     use Queueable;
     public $user;
+    public $action;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($user, $action)
     {
         $this->user = $user;
+        $this->action = $action;
     }
 
     /**
@@ -37,9 +39,11 @@ class addApplicantNotif extends Notification
     public function toArray($notifiable)
     {
         return [
+            'role_id' => $this->user['role_id'],
             'user_id' => $this->user['id'],
             'name' => $this->user['name'],
-            'email' => $this->user['email'] 
+            'email' => $this->user['email'],
+            'action' => $this->action
         ];
     }
 }

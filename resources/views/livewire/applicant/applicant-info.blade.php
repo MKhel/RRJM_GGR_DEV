@@ -25,7 +25,7 @@
                     @if ($app_data->photo != null)
                       <div class=" pb-3 pt-4">
                         <div class="box-content h-30 w-30 p-4 overflow-hidden border border-gray-200 hover:box-content">
-                          <img style="max-width:auto; max-height:200px;" class="w-full object-cover" src="{{asset('storage')}}/{{$app_data->photo}}" alt="Extra large avatar">
+                          <img style="width:200px;height:200px;max-width:none;" class="rounder-md" src="{{asset('storage')}}/{{$app_data->photo}}" alt="Extra large avatar">
                         </div>
                       </div>
                     @else
@@ -152,24 +152,7 @@
                               
                                 <div class="">
                                   <x-jet-label for="particular" value="{{ __('Job Application Status') }}" />
-                                  {{-- <select  wire:model="app_data.particular" name="particular" class="block mt-1 w-full">
-                                    <option value="0">--Select Status--</option>
-                                    <option value="Schedule for Pre Interview">Schedule for Pre Interview</option>
-                                    <option value="Schedule for final">Schedule for Final</option>
-                                    <option value="Selected">Selected</option>
-                                    <option value="Rejected">Rejected</option>
-                                    <option value="Pending">Pending</option>
-                                    <option value="Signed EL">Signed EL</option>
-                                    <option value="Refused EL">Refused EL</option>
-                                    <option value="Assigned to class">Assigned to class</option>
-                                    <option value="Endorsed to processing">Endorsed to processing</option>
-                                    <option value="Deployed">Deployed</option>
-                                    <option value="For Recall">For Recall</option>
-                                    <option value="For Manpower Pooling">For Manpower Pooling</option>
-                                    <option value="GLT Ongoing">GLT Ongoing</option>
-                                    <option value="ICU Training Ongoing">ICU Training Ongoing</option>
-                                    <option value="Not Qualified">Not Qualified</option>
-                                  </select> --}}
+
                                   <select wire:model="app_data.particular" class="block w-full border-green-400 focus:border-green-400 focus:ring-opacity-50 rounded-md shadow-sm">
                                       <option value="">Search by Status</option>
                                       @foreach ($new_status as $status)
@@ -177,10 +160,7 @@
                                       @endforeach
                                   </select>
                                 @error('app_data.particular') <span class="text-sm text-red-600">{{ $message }}</span> @enderror
-                                {{-- <div class="col-span-6">
-                                  <label for="remarks" class="block text-sm font-medium text-gray-700">Remarks</label>
-                                  <input type="text" wire:model="app_data.remarks" autocomplete="street-address" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                </div> --}}
+
 
                                 <div class="col-span-6 sm:col-span-6  mt-3">
                                   <x-jet-label for="remarks" value="{{ __('Remarks')}}" />

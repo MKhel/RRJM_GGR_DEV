@@ -103,6 +103,9 @@
 
                 <!-- Settings Dropdown -->
                 <div class="ml-3 relative flex">
+                    {{-- @if (auth()->user()->role_id == 1) --}}
+                        
+                    
                     <x-jet-dropdown>
                         <x-slot name="trigger">
                             <div class="flex">
@@ -112,36 +115,40 @@
                                     </svg>
                                 </p>   
                             
-                                 @if (auth()->user()->unreadnotifications)
-                                 <div class="flex text-sm pb-1 mt-1 border-b-2 rounded-full bg-red-500">
-                                    <div class="message" >
-                                        <p>{{auth()->user()->unreadnotifications->count()}}</p>
+                                 @if (auth()->user()->unreadnotifications->count(0))
+                                    <div class="items-center">
+                                    <div class="inline-flex justify-center rounded-full bg-red-600 w-4 px-2 transition">
+                                        <p class="text-xs text-white">{{auth()->user()->unreadnotifications->count()}}</p>
                                     </div>
-                                </div>
+                                    </div>
+                                    
+                               
                                 @else
                                 
                                 @endif
                             </div>
                                 
                         </x-slot>
-                        <x-slot name="content" class="w-1/2">
+                        <x-slot name="content" class="w-60">
                             <div class="px-4 py-4">
+                                {{-- @foreach (\App\Models\User::where('role_id', 'LIKE','1')->first()->unreadnotifications as $item)
+                                     --}}
                                 
-                                @foreach (auth()->user()->notifications as $notif)
-                                    @if ($notif->read_at == null)
+                                @foreach (auth()->user()->unreadnotifications as $notif)
+                              
                                         <div class="flex text-sm pb-1 mt-1 border-b-2">
                                             <div class="message" >
-                                                <p >{{$notif->data['name']}} added new applicant.</p>
+                                                <p >{{$notif->data['name']}}, {{$notif->data['action']}}</p>
                                             </div>
-                                            <div class="link p-2">
+                                            <div class="text-gray-400 p-2 text-xs hover:text-red-600">
+                                           
                                                 <a href="{{ route('markasread', $notif->id) }}">Mark as Read</a>
                                             </div>
                                             <hr>
                                         </div>
-                                    @else
-                                        
-                                    @endif
                                    
+                                   
+                                {{-- @endforeach --}}
                                 @endforeach
                                 
                                 
@@ -153,6 +160,9 @@
                             </div>
                         </x-slot>
                     </x-jet-dropdown>
+                    {{-- @else
+                        
+                    @endif --}}
                     <x-jet-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())

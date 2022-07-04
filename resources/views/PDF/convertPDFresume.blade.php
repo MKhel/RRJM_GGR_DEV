@@ -20,6 +20,9 @@ html {
   border: 1px solid rgb(71, 71, 71);
   padding: 8px;
 }
+table {
+  width: 100%;
+}
 
 #status-content tr:nth-child(even){background-color: #f2f2f2;}
 
@@ -102,7 +105,7 @@ html {
         </div>
       </div>
       <div id="status-content">
-        <table >
+        <table>
           <thead >
             <tr>
               <th>DATE</th>

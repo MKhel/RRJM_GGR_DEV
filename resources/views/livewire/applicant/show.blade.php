@@ -217,56 +217,58 @@
                              @forelse($applicants as $applicant)
                                         
                                    
-                                    <tr tabindex="0" class="focus:outline-none h-16 border border-gray-100 rounded">
-                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                    <tr tabindex="0" class="focus:outline-none h-16 border border-gray-100 rounded hover:bg-gray-50">
+                                        <td class="px-0 py-4 whitespace-no-wrap border border-gray-200">
                                             <div class="text-center">
                                                 <p class="text-sm leading-none text-gray-600">{{ $applicant->created_at->format('d M Y') }}</p>
                                             </div>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                        <td class="px-0 py-4 whitespace-no-wrap border border-gray-200">
                                             <div class="text-center">
                                                 <p class="text-sm leading-none text-gray-600">{{ $applicant->sn_number }}</p>  
                                             </div>   
                                         </td>
-                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                        <td class="px-2 py-4 whitespace-no-wrap border border-gray-200">
                                             <div class="flex items-center">
-                                                <div class="flex-shrink-0 w-10 h-10">
-                                                    @if($applicant->photo == null)
-
-                                                    <div class="flex items-center">
+                                        
+                                               
+                                                <div class="flex">
+                                                    <div class="py-2">
+                                                    @if($applicant->photo != null)
+                                                        <img style="max-width: none;" class="w-12 h-12 rounded-full object-cover shadow-sm border-gray-700 border-2" src="{{asset('storage')}}/{{$applicant->photo}}" alt="M">
+                                                    @else
                                                         <div class="w-full h-full bg-gray-100 rounded-full items-center">
                                                             <p class="px-3 py-2 text-black text-center">{{ substr($applicant->first_name, 0, 1) }}</p>    
                                                         </div>
-                                                    </div>
-                                                    @else
-                                                    
-                                                    <img class=" rounded-full" src="{{asset('storage')}}/{{$applicant->photo}}" alt="profile">
-                                                    
-                                                    @endif
-                                                </div>
-                                               
-                        
-                                                <div class="px-3 py-4 text-left">
-                                                    <div class="text-sm font-medium leading-5 text-gray-900">
+                                                    @endif 
+                                                    </div>                            
+                                                    <div class="items-center px-2 py-2 text-sm">
+                                                        <p>
                                                         {{ $applicant->last_name }}, {{ $applicant->first_name }}
-                                                        @if ($applicant->suffix == "None")
-                                                            
+                                                        @if ($applicant->suffix != "None")
+                                                        {{ $applicant->suffix }}
                                                         @else
-                                                        
-                                                            {{ $applicant->suffix }}
                                                         @endif
+                                                        </p>
+                                                        <p>{{ $applicant->email_address }}</p>
                                                     </div>
                                                 </div>
+
+                                                {{-- <div class="px-3 py-4 text-left">
+                                                    <div class="text-sm font-medium leading-5 text-gray-900">
+                                                        
+                                                    </div>
+                                                </div> --}}
                                             </div>
                                         </td>
                                         
-                                        <td class="pl-24 py-4 whitespace-no-wrap border-b border-gray-200">
+                                        <td class="pl-24 py-4 whitespace-no-wrap border border-gray-200">
                                             <div class="text-center">
                                             
                                                 <p class="text-sm font-medium leading-5 text-gray-900">{{ $applicant->class_name }}</p>
                                             </div>
                                         </td>
-                                        <td class="whitespace-no-wrap border-b border-gray-200">
+                                        <td class="whitespace-no-wrap border border-gray-200">
                                             <div class="text-center">
                                                 {{-- @forelse ($applicants as $status)
                                                     <p class="text-sm font-medium leading-5 text-gray-900">{{ $status }}</p>
@@ -278,7 +280,7 @@
                                         </td>
                                     
                                         {{-- <td
-                                            class="px-3 py-6 text-sm leading-5 text-red-500 whitespace-no-wrap border-b border-gray-200">
+                                            class="px-3 py-6 text-sm leading-5 text-red-500 whitespace-no-wrap border border-gray-200">
                                         
                                             <x-jet-secondary-button wire:click="viewApplicant( {{ $applicant->id }} )" wire:loading.attr="disabled">
                                                 <svg class="-ml-1 mr-2 h-5 w-5 text-white-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -289,7 +291,7 @@
                                         </td> --}}
                                         <div class="ml-4">
                                         <td
-                                            class="text-center leading-5 text-red-500 whitespace-no-wrap border-b border-gray-200">
+                                            class="text-center leading-5 text-red-500 whitespace-no-wrap border border-gray-200">
                                         
                                             {{-- <x-jet-secondary-button wire:click="viewApplicant({{ $applicant->id }})">
                                                 <svg class="-ml-1 mr-2 h-5 w-5 text-white-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -308,7 +310,7 @@
                                                 </a>
                                             
                                         </td>
-                                        <td class="text-center leading-5 text-red-500 whitespace-no-wrap border-b border-gray-200">
+                                        <td class="text-center leading-5 text-red-500 whitespace-no-wrap border border-gray-200">
                                         
                                             <x-jet-button wire:click="editApplicant({{$applicant->id}})" wire:loading.attr="disabled">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-400" fill="none"
@@ -321,7 +323,7 @@
                                         </td>
                                         @if(auth()->user()->role_id == 1)
                                             
-                                            <td class="text-center leading-5 text-red-500 whitespace-no-wrap border-b border-gray-200">
+                                            <td class="text-center leading-5 text-red-500 whitespace-no-wrap border border-gray-200">
                                                 
                                                 <x-jet-danger-button wire:click="confirmApplicantDelete( {{ $applicant->id }} )" wire:loading.attr="disabled">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-400" fill="none"
@@ -335,7 +337,7 @@
                                           
                                         @else
                                            @can('cannot delete applicant')
-                                            <td class="text-center leading-5 text-red-500 whitespace-no-wrap border-b border-gray-200">
+                                            <td class="text-center leading-5 text-red-500 whitespace-no-wrap border border-gray-200">
                                             
                                                 <x-jet-danger-button wire:click="confirmApplicantDelete( {{ $applicant->id }} )" wire:loading.attr="disabled">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-400" fill="none"
@@ -356,7 +358,7 @@
                                     </tr>
                                 @empty
                                 <tr>
-                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                    <td class="px-6 py-4 whitespace-no-wrap border border-gray-200">
                                         <div class="text-center">
                                             <p class="text-sm leading-none text-gray-600">Record not Found</p>  
                                         </div>   

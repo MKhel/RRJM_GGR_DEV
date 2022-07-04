@@ -314,6 +314,7 @@ class Applicant extends Component
 
     public function saveApplicant()
     {   
+        
         $upload = $this->validate();
         $first_name = $this->applicant['first_name'];
         $last_name = $this->applicant['last_name'];
@@ -373,8 +374,11 @@ class Applicant extends Component
         ];
         UserActivities::create($useractivity);
 
-        $user = User::first();
-        auth()->user()->notify(new addApplicantNotif($user));
+        $this->user_data = Applicants::where('id', $this->app_id->id)->latest()->first(['first_name', 'last_name']);
+        
+        $user = User::where('role_id',1)->first();
+        $action = "added ".$this->user_data->first_name.",".$this->user_data->last_name." as new applicant. ";
+        $user->notify(new addApplicantNotif($user, $action));
         session()->flash('message', 'New applicant successfully created.');
         $this->confirmingApplicantAdd = false;
         $this->isDisabled = '';
@@ -389,6 +393,8 @@ class Applicant extends Component
             auth()->user()->unreadNotifications->where('id',$id)->markasread();
         }
         return back();
+
+
         //dd($id);
     }
 
@@ -403,6 +409,10 @@ class Applicant extends Component
         //$applicant->delete();
         Applicants::where('id',$id)->delete();
         UserActivities::where('applicant_id',"$id")->delete();
+        $this->user_data = Applicants::where('id', $id)->latest()->first(['first_name', 'last_name']);
+        $user = auth()->user();
+        $action = "Deleted an applicant. ";
+        $user->notify(new addApplicantNotif($user, $action));
         $this->confirmingApplicantDeletion = false;
         session()->flash('delete', 'Delete Applicant successfully.');
     }
